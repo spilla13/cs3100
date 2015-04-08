@@ -22,9 +22,6 @@ public class Login extends Activity {
         final EditText username = (EditText) findViewById(R.id.userName);
         final EditText password = (EditText) findViewById(R.id.password);
         Button loginButton = (Button) findViewById(R.id.loginButton);
-        //Final because they won't change directly
-        final TextView textView1 = (TextView) findViewById(R.id.textView1);
-        final TextView textView2 = (TextView) findViewById(R.id.textView2);
         //final TextView rando = (TextView) findViewById(R.id.randomText);
 
 

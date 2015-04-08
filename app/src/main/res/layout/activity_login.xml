@@ -15,7 +15,7 @@
         android:hint="Username"
         android:inputType="none" />
 
-    <EditText android:id="@+id/password"
+    <EditText android:id="@id/password"
         style="@style/loginBoxSize"
         android:layout_centerVertical="true"
         android:hint="Password"
@@ -34,6 +34,6 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_below="@id/loginButton"
-        />
+        android:text="HELLO!"/>
     -->
 </RelativeLayout>

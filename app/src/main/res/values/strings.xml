@@ -2,7 +2,7 @@
     <string name="app_name">ChalkBoard</string>
     <string name="action_settings">Settings</string>
     <string name="loginButtonText">Login</string>
-
+    <string name="password">password</string>
 
     <color name="white">#F3F2F2</color>
     <color name="black">#000000</color>
