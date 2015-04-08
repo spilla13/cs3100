@@ -1,0 +1,29 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <!--Style that defines the Class Overview theme-->
+    <style name="ClassOverview" parent="Theme.AppCompat.Light.DarkActionBar" >
+
+    </style>
+
+    <!--Style that defines the login boxes-->
+    <style name="loginBoxSize" parent="AppTheme">
+        <item name="android:layout_width">200dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerHorizontal">true</item>
+    </style>
+
+    <!--Style that defines the layout cards-->
+    <style name="card_layout" parent="AppTheme">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">200dp</item>
+        <item name="android:layout_margin">20dp</item>
+        <item name="android:background">@color/white</item>
+
+    </style>
+
+</resources>
