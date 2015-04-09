@@ -18,6 +18,7 @@ public class Home extends Activity{
         setContentView(R.layout.home_layout);
 
         Button sendClassOverView = (Button) findViewById(R.id.classOverViewButton);
+        Button sendAddButtonClick = (Button) findViewById(R.id.addButton);
         TextView tv1 = (TextView) findViewById(R.id.textView1);
         TextView tv2 = (TextView) findViewById(R.id.textView2);
 
@@ -34,6 +35,13 @@ public class Home extends Activity{
             public void onClick(View v) {
                 //Send to class overview activity
                 sendToClassOverView();
+            }
+        });
+
+        sendAddButtonClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onAddButtonClick();
             }
         });
     }
@@ -66,5 +74,8 @@ public class Home extends Activity{
     }
 
 
-
+    protected void onAddButtonClick() {
+        Intent AddClass = new Intent(this, AddClass.class);
+        startActivity(AddClass);
+    }
 }

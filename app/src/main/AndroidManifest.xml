@@ -18,13 +18,15 @@
         </activity>
         <activity
             android:name=".Home"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
-
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
         </activity>
         <activity
             android:name=".ClassOverView"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
-
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
+        </activity>
+        <activity
+            android:name=".AddClass"
+            android:label="@string/title_activity_add_class" >
         </activity>
     </application>
 

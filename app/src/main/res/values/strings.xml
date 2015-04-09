@@ -6,4 +6,7 @@
 
     <color name="white">#F3F2F2</color>
     <color name="black">#000000</color>
+    <string name="title_activity_add_class">AddClass</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>

@@ -13,10 +13,37 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout">
+
+        <TextView android:id="@+id/Current_grade_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Current Classes"
+            android:textSize="40sp"/>
+
+        <TextView android:id="@+id/current_grade"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3" />
+
+    </LinearLayout>
+
     <Button android:id="@+id/classOverViewButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="To Class Overview"/>
+        android:text="To Class Overview" />
+
+    <Button android:id="@+id/addButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="Add Class"
+        android:onClick="onAddButtonClick"/>
 
     <!--
     <TextView
