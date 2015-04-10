@@ -6,8 +6,8 @@
     </style>
 
     <!--Style that defines the Class Overview theme-->
-    <style name="ClassOverview" parent="Theme.AppCompat.Light.DarkActionBar" >
-
+    <style name="ClassOverview" parent="@android:style/Theme.Holo.Light.DarkActionBar" >
+        <item name="android:actionBarStyle">@style/ClassOverview</item>
     </style>
 
     <!--Style that defines the login boxes-->
@@ -22,10 +22,23 @@
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">150dp</item>
         <item name="android:layout_marginTop">10dp</item>
-        <item name="android:layout_marginBottom">0dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
         <item name="android:layout_marginLeft">15dp</item>
         <item name="android:layout_marginRight">15dp</item>
-        <item name="android:background">@color/white</item>
+        <item name="android:background">@color/card_background_color</item>
+    </style>
+
+    <!--Style for the title of the cards-->
+    <style name="card_title_layout" parent="AppTheme">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+
+        <item name="android:background">@drawable/title_gradient</item>
+        <item name="android:textSize">28dp</item>
+        <item name="android:textColor">@color/black</item>
 
     </style>
 
