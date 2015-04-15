@@ -3,7 +3,8 @@ from django.http import HttpResponse
 from tokenapi.http import JsonResponse, JsonError
 import json
 from tokenapi.decorators import token_required
-from tracker.models import Course, Homework, Category
+from tracker.models import Course, Homework, Category, Grade
+from django.contrib.auth.models import User
 
 # check our input
 def check(request):
@@ -95,7 +96,7 @@ def addHomework(request):
     if len(data['name']) < 4:
         return HttpResponse(JsonError("The name provided for the homework is too short."))
     try:
-        Category.get(id=data['categoryid'])
+        Category.objects.get(id=data['categoryid'])
     except:
         return HttpResponse(JsonError("The categoryid provided for the homework isn't valid."))
 
@@ -112,7 +113,45 @@ def addHomework(request):
 
 @token_required
 def addGrade(request):
+    """
+        courseid: <courseid>
+        homeworkid: <homeworkid>
+        
+        optional:
+         pointsreceived: <# points>
+
+    """
+
     if check(request) is not None:
         return check(request)
-    return HttpResponse("This is the API for chalkboard.")
+    data = request.POST
+
+    if not 'courseid' in data:
+        return HttpResponse(JsonError("A courseid field is required to create a grade."))
+    if not 'homeworkid' in data:
+        return HttpResponse(JsonError("A homeworkid field is required to create a grade."))
+
+    try:
+        User.objects.get(id=data['user'])
+    except:
+        return HttpResponse(JsonError("The userid provided for the grade isn't valid."))
+
+    try:
+        Course.objects.get(id=data['courseid'])
+    except:
+        return HttpResponse(JsonError("The courseid provided for the grade isn't valid."))
+
+    try:
+        Homework.objects.get(id=data['homeworkid'])
+    except:
+        return HttpResponse(JsonError("The homeworkid provided for the grade isn't valid."))
+
+    grade = Grade(course=data['courseid'], homework=data['homeworkid'], user=data['userid'])
+
+    if 'pointsreceived' in data:
+        grade.points_received = data['pointsreceived']
+
+    grade.save()
+
+    return HttpResponse(JsonResponse({"data": { "id": grade.id }, "success": True}))
 
