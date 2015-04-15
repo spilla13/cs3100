@@ -8,9 +8,11 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^add/course/', 'tracker.views.addCourse'),
-    url(r'^get/courses/', 'tracker.views.getCourses'),
+    url(r'^add/category/', 'tracker.views.addCategory'),
     url(r'^add/homework/', 'tracker.views.addHomework'),
     url(r'^add/grade/', 'tracker.views.addGrade'),
+
+    url(r'^get/courses/', 'tracker.views.getCourses'),
 
     url('^', include('django.contrib.auth.urls', namespace="auth")), 
     url('^', include('registration.backends.default.urls')),
