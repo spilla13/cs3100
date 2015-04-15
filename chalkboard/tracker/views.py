@@ -3,15 +3,13 @@ from django.http import HttpResponse
 from tokenapi.http import JsonResponse, JsonError
 import json
 from tokenapi.decorators import token_required
+from tracker.models import Course, Homework
 
 # check our input
 def check(request):
-    if request.method != 'POST' or not ('data' in request.data):
-        return JsonError("Must use POST json.")
+    if request.method != 'POST':
+        return JsonError("Must use POST with json.")
     return None
-
-def get(request):
-    return json.load(requests.data['data'])
 
 def index(request):
     return HttpResponse("This is the API for chalkboard.")
@@ -21,11 +19,27 @@ def authenticate(request):
 
 @token_required
 def addCourse(request):
+    """
+    name: coursename
+    school: school name
+    """
     if check(request) is not None:
         return HttpResponse(check(request))
-    data = get(request)
+    data = request.POST
+
+    if not 'name' in data:
+        return HttpResponse(JsonError("A name field is required to create a course."))
+    if not 'school' in data:
+        return HttpResponse(JsonError("A school field is required to create a course."))
+    if len(data['name']) < 4:
+        return HttpResponse(JsonError("The name provided for the course is too short."))
+    if len(data['school']) < 4:
+        return HttpResponse(JsonError("The name provided for the school is too short."))
+
+    course = Course(name=data['name'], school=data['school'])
+    course.save()
     
-    return JsonError("This is the API for chalkboard.")
+    return HttpResponse(JsonResponse({"id": course.id, "success": True}))
 
 @token_required
 def addHomework(request):
