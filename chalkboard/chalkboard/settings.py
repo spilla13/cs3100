@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'tracker',
     'registration',
+    'tokenapi'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -53,14 +54,19 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'tokenapi.backends.TokenBackend'
+)
+
 ROOT_URLCONF = 'chalkboard.urls'
 
 LOGIN_REDIRECT_URL = '/'
 
-ACCOUNT_ACTIVATION_DAYS=31
+ACCOUNT_ACTIVATION_DAYS = 31
+TOKEN_TIMEOUT_DAYS = 1
 
 WSGI_APPLICATION = 'chalkboard.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
