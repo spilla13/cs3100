@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tracker',
+    'registration',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -53,6 +54,10 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'chalkboard.urls'
+
+LOGIN_REDIRECT_URL = '/'
+
+ACCOUNT_ACTIVATION_DAYS=31
 
 WSGI_APPLICATION = 'chalkboard.wsgi.application'
 
