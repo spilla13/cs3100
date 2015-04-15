@@ -7,8 +7,8 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^auth/', 'tokenapi.views.api_token_new'),
     url(r'^add/course/', 'tracker.views.addCourse'),
+    url(r'^get/courses/', 'tracker.views.getCourses'),
     url(r'^add/homework/', 'tracker.views.addHomework'),
     url(r'^add/grade/', 'tracker.views.addGrade'),
 

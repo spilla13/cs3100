@@ -42,10 +42,27 @@ def addCourse(request):
     return HttpResponse(JsonResponse({"id": course.id, "success": True}))
 
 @token_required
+def getCourses(request):
+    if check(request) is not None:
+        return check(request)
+    data = request.POST
+    response = [ ]
+
+    for course in Course.objects.all():
+        response.append( [course.id, course.name, course.school ])
+
+    return HttpResponse(JsonResponse({"data": response, "success": True}))
+
+
+@token_required
 def addHomework(request):
+    if check(request) is not None:
+        return check(request)
     return HttpResponse("This is the API for chalkboard.")
 
 @token_required
 def addGrade(request):
+    if check(request) is not None:
+        return check(request)
     return HttpResponse("This is the API for chalkboard.")
 
