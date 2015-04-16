@@ -35,7 +35,7 @@ Failed calls to the API will return interesting (read: varied) JSON-encoded data
 ```json
   {
     "success": 0,
-    "error": "messagehere"
+    "errors": "messagehere"
   }  
 ```
 
@@ -73,7 +73,7 @@ This will authenticate user utest with password ptest. For now, send these in pl
 ```json
   {
     "success": false,
-    "errors": "Unable to log you in, please try again."             <--- note the s, this isn't my API... I'll fix this if I have time.
+    "errors": "Unable to log you in, please try again."
   }
 ```
 

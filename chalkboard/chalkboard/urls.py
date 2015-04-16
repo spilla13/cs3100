@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     url(r'^add/category/', 'tracker.views.addCategory'),
     url(r'^add/homework/', 'tracker.views.addHomework'),
     url(r'^add/grade/', 'tracker.views.addGrade'),
+    url(r'^add/user/', 'tracker.views.register' ),
 
     url(r'^get/courses/', 'tracker.views.getCourses'),
 

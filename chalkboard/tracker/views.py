@@ -5,6 +5,7 @@ import json
 from tokenapi.decorators import token_required
 from tracker.models import Course, Homework, Category, Grade
 from django.contrib.auth.models import User
+from django.views.decorators.csrf import csrf_exempt
 
 # check our input
 def check(request):
@@ -14,6 +15,43 @@ def check(request):
 
 def index(request):
     return HttpResponse("This is the API for chalkboard.")
+
+@csrf_exempt
+def register(request):
+    """
+        "username": username
+        "password": password
+        "email": email
+    """
+    if check(request) is not None:
+        return check(request)
+    data = request.POST
+
+    #Username
+    if not 'username' in data:
+        return JsonError("'username' is a required field.")
+    if len(data['username']) < 4 or len(data['username']) > 25:
+        return JsonError("Usernames must be between 4 and 25 characters.")
+    if User.objects.filter(username=data['username']).exists():
+        return JsonError("Username already exists")
+    
+    if not 'password' in data:
+        return JsonError("'password' is a required field.")
+    if len(data['password']) < 5:
+        return JsonError("A password must be at least 5 characters long.")
+    
+    if not 'email' in data:
+        return JsonError("'email' is a required field.")
+    if len(data['email']) < 5:
+        return JsonError("Email is too short")
+
+    user = User(username=data['username'], email=data['email'])
+    user.set_password(data['password'])
+    user.save()
+
+    return JsonResponse({"success": True, "data": {"id": user.id}})
+
+
 
 @token_required
 def addCategory(request):
