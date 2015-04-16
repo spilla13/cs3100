@@ -13,22 +13,26 @@ Successful Calls
 
 Successful calls to the API will return JSON-encoded date in the format below:
   
+```json
   {
     "success": 1,
     "data": {
       <data>
     }
   }
+```
 
 Failed Calls
 ============
 
 Failed calls to the API will return interesting (read: varied) JSON-encoded data in the format below:
 
+```json
   {
-    "success": 0,                 <--- sometimes (to be fixed) 
+    "success": 0,
     "error": "messagehere"
   }  
+```
 
 Unauthentication calls are an exception, since instead of returning HTTP 200 (successful) they will return HTTP 403 (Forbidden).
 
@@ -53,25 +57,31 @@ http://cs3100.brod.es:3100/token/new.json
 
 For example:
 
+```json
   {
     "username": "utest",
     "password": "ptest"
   }
+```
 
 This will authenticate user utest with password ptest. For now, send these in plaintext. The server will respond one of two ways:
 
+```json
   {
     "success": false,
     "errors": "Unable to log you in, please try again."             <--- note the s, this isn't my API... I'll fix this if I have time.
   }
+```
 
 Or, if successful:
 
+```json
   {
     "success": true,
     "user": 3,
     "token": "40y-47bf2a0b3acc6953475d"
   }
+```
 
 This token and user must be sent in all privileged API calls (such as the ones listed below). I will probably inconsistently
 show them where need be. 
