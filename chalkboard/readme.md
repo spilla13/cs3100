@@ -1,11 +1,17 @@
-soon™
-
 #Summary
 
 All API calls should be made over HTTP (HTTPS is currently not supported, but if we want to go that route we can) with POST. 
 All data should be encoded in JSON. Responses will be encoded in JSON as well. A 403 response will be returned if a user isn't authenticated, with no data.
 
 Note that all urls must end in a /.
+
+#Administration
+
+You can administrate the server by using the django-provided admin interface at /admin/. For this project, it's:
+
+http://cs3100.brod.es:3100/admin/
+
+The username and password must be that of a superuser.
 
 #API
 ##Results
