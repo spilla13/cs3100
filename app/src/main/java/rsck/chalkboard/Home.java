@@ -2,6 +2,7 @@ package rsck.chalkboard;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +18,10 @@ public class Home extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_layout);
 
+        //Set the font type
+        String chalkFontPath = "fonts/chalk_font.ttf";
+        Typeface tf = Typeface.createFromAsset(getAssets(), chalkFontPath);
+
         Button sendClassOverView = (Button) findViewById(R.id.classOverViewButton);
         Button sendAddButtonClick = (Button) findViewById(R.id.addButton);
         TextView tv1 = (TextView) findViewById(R.id.textView1);
@@ -29,6 +34,13 @@ public class Home extends Activity{
         //Change the text for both text views
         tv1.setText(username);
         tv2.setText(password);
+
+        //connect the text view
+        TextView currentClasses = (TextView) findViewById(R.id.Current_grade_text);
+        TextView buttonClassOverview = (TextView) findViewById(R.id.classOverViewButton);
+        //Set the new typeface (font)
+        currentClasses.setTypeface(tf);
+        buttonClassOverview.setTypeface(tf);
 
         sendClassOverView.setOnClickListener(new View.OnClickListener() {
             @Override
