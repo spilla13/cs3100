@@ -40,7 +40,7 @@ Unauthenticated calls are an exception, since instead of returning HTTP 200 (suc
 ###Registering
 
 Currently there is no API for registering. However, POST data can be sent to /register/ which matches the id fields of the forms at that location. 
-It requires that you 
+It requires that you confirm your e-mail address afterwards, however this currently has no effect on the API (this can be fixed if desired).
 
 http://cs3100.brod.es:3100/register/
 
@@ -181,3 +181,69 @@ This will return an id in a data array. This is the unique id of the new categor
 
 Errors can be returned for the lack of names in JSON or ids being too short.
 
+### Add Homework
+
+http://cs3100.brod.es:3100/add/homework/
+
+Adds an assignment to the tracker. Anyone can use this assignment.
+
+weight and pointspossible are optional fields. They, respectively, default to
+1 and 0.
+
+```json
+  {
+    "user": 1,
+    "token": "40y-47bf2a0b3acc6953475d",
+    "name": "name of the assignment, 4-100 chars",
+    "categoryid": 1,
+    
+
+    "weight": 0.13,
+    "pointspossible": 100
+  }
+``` 
+
+This will return an id in a data array. This is the unique id of the new assignment.
+
+```json
+  {
+    "success": 1,
+    "data": {
+              "id": 1
+            }
+  }
+```
+
+Errors can be returned for the lack of fields in the JSON-encoded data, ids not existing, or fields being too short.
+
+### Add Grade
+
+http://cs3100.brod.es:3100/add/grade/
+
+Adds a grade to the tracker. Only the owner can see their grades (right..?).
+
+pointsreceived is an optional field, it defaults to 0.
+
+```json
+  {
+    "user": 1,
+    "token": "40y-47bf2a0b3acc6953475d",
+    "courseid": 3,
+    "homewordid": 1,
+
+    "pointsreceived": 100
+  }
+``` 
+
+This will return an id in a data array. This is the unique id of the new grade.
+
+```json
+  {
+    "success": 1,
+    "data": {
+              "id": 1
+            }
+  }
+```
+
+Errors are either that the ids were missing from the input data or are not valid ids.
