@@ -59,7 +59,7 @@ def addCourse(request):
     course = Course(name=data['name'], school=data['school'])
     course.save()
     
-    return HttpResponse(JsonResponse({"id": course.id, "success": True}))
+    return HttpResponse(JsonResponse({"data": {"id": course.id}, "success": True}))
 
 @token_required
 def getCourses(request):

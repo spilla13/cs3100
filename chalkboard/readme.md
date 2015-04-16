@@ -97,7 +97,7 @@ All access calls can be found under `/get/` which separates them from those call
 
 ### Access Courses
 
-http://cs3100.brod.es/get/courses/
+http://cs3100.brod.es:3100/get/courses/
 
 This call allows you to get a list of all courses. It currently does not allow filtering of courses, and will 
 just return all of them listed. Here is an example call:
@@ -116,8 +116,68 @@ like so:
   {
     "data": [
               [ courseid, "coursename", "courseschoolname" ],
-              [ ... ],
-              ...
-            ]
+              [ "<more>" ],
+              "<more>",
+            ],
+    "success": 1
   }
 ```
+## Add Calls
+
+All add calls can be found under `/add/` which seperates them from those calls which get or remove items.
+
+### Add Course
+
+http://cs3100.brod.es:3100/add/course/
+
+Adding a course takes a name and school and only filters to make sure that they are at least 4 characters long.
+
+```json
+  {
+    "user": 1,
+    "token": "40y-47bf2a0b3acc6953475d",
+    "name": "name of the course, 4-100 chars",
+    "school": "name of the school, 4-100 chars"
+  }
+``` 
+
+This will return an id in a data array. This is the unique id of the new course in the database.
+
+```json
+  {
+    "success": 1,
+    "data": {
+              "id": 4
+            }
+  }
+```
+
+Errors are returned following the general format at the top. This includes fields missing or names being too short.
+
+### Add Category
+
+http://cs3100.brod.es:3100/add/category/
+
+Takes a name in for a category, checks its size, and creates a new one.
+
+```json
+  {
+    "user": 1,
+    "token": "40y-47bf2a0b3acc6953475d",
+    "name": "name of the new category, 4-100 chars",
+  }
+``` 
+
+This will return an id in a data array. This is the unique id of the new category.
+
+```json
+  {
+    "success": 1,
+    "data": {
+              "id": 1
+            }
+  }
+```
+
+Errors can be returned for the lack of names in JSON or ids being too short.
+
