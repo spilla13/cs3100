@@ -45,13 +45,28 @@ Unauthenticated calls are an exception, since instead of returning HTTP 200 (suc
 
 ###Registering
 
-Currently there is no API for registering. However, POST data can be sent to /register/ which matches the id fields of the forms at that location. 
-It requires that you confirm your e-mail address afterwards, however this currently has no effect on the API (this can be fixed if desired).
+Registration can be done graphically:
 
 http://cs3100.brod.es:3100/register/
 
-An API will be implemented for this ASAP.
+An API also exists, which requires username, password, and e-mail to be passed like so:
 
+```json
+  {
+    "username": "utest",
+    "password": "ptest",
+    "email": "ptest@aol.com"
+  }
+```
+
+This can be done at `/add/user/`, for the production site:
+
+http://cs3100.brod.es:3100/add/user/
+
+A standard response will then be returned if successful, with data containing the new user id.
+
+Errors will be returned if the username is too short, too long, the password is too short, the email is too short,
+or the username already exists. Status will be false for these.
 
 ###Authentication
 
