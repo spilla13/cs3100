@@ -7,6 +7,26 @@
     <string name="title_activity_add_class">AddClass</string>
     <string name="hello_world">Hello world!</string>
 
+    <!--Class Types-->
+    <string-array name="class_type">
+        <item>Aerospace Engineering</item>
+        <item>Biology</item>
+        <item>Civil Engineering</item>
+        <item>Chemical Engineering</item>
+        <item>Chemistry</item>
+        <item>Computer Science</item>
+        <item>Computer Engineering</item>
+        <item>Electrical Engineering</item>
+        <item>Engineering Management</item>
+        <item>English</item>
+        <item>History</item>
+        <item>Mathematics</item>
+        <item>Mechanical Engineering</item>
+        <item>Petroleum Engineering</item>
+        <item>Psychology</item>
+
+    </string-array>
+
     <!--Colors-->
     <color name="white">#F3F2F2</color>
     <color name="black">#000000</color>
