@@ -20,17 +20,19 @@
         android:id="@+id/linearLayout">
 
         <TextView android:id="@+id/Current_grade_text"
-            android:layout_width="fill_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="@color/white"
             android:text="Current Classes"
             android:textSize="40sp"/>
 
+        <!--
         <TextView android:id="@+id/current_grade"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:layout_weight="3" />
+         -->
 
     </LinearLayout>
 
@@ -42,13 +44,18 @@
         android:text="&#8226; To Class Overview"
         android:textSize="20sp"/>
 
-    <Button android:id="@+id/addButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:text="Add Class"
-        android:onClick="onAddButtonClick"/>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="bottom|end">
 
+        <Button android:id="@+id/addButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Class"/>
+
+    </LinearLayout>
     <!--
     <TextView
         android:layout_width="wrap_content"
