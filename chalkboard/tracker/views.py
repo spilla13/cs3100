@@ -92,12 +92,11 @@ def addHomework(request):
         return JsonError("A categoryid field is required to create a homework.")
     if len(data['name']) < 4:
         return JsonError("The name provided for the homework is too short.")
-    try:
-        Category.objects.get(id=data['categoryid'])
-    except:
+    
+    if not Category.objects.filter(id=data['categoryid']).exists():
         return JsonError("The categoryid provided for the homework isn't valid.")
-
-    homework = Homework(name=data['name'], category=data['categoryid']) 
+    
+    homework = Homework(name=data['name'], category=Category.objects.get(id=data['categoryid'])) 
 
     if 'weight' in data:
         homework.weight = data['weight']
@@ -128,22 +127,17 @@ def addGrade(request):
     if not 'homeworkid' in data:
         return JsonError("A homeworkid field is required to create a grade.")
 
-    try:
-        User.objects.get(id=data['user'])
-    except:
+    if not User.objects.filter(id=data['user']).exists():
         return JsonError("The userid provided for the grade isn't valid.")
 
-    try:
-        Course.objects.get(id=data['courseid'])
-    except:
+    if not Course.objects.filter(id=data['courseid']).exists():
         return JsonError("The courseid provided for the grade isn't valid.")
 
-    try:
-        Homework.objects.get(id=data['homeworkid'])
-    except:
+    if not Homework.objects.filter(id=data['homeworkid']).exists():
         return JsonError("The homeworkid provided for the grade isn't valid.")
 
-    grade = Grade(course=data['courseid'], homework=data['homeworkid'], user=data['userid'])
+    grade = Grade(course=Course.objects.get(id=data['courseid']), homework=Homework.objects.get(id=data['homeworkid']), 
+            user=request.user)
 
     if 'pointsreceived' in data:
         grade.points_received = data['pointsreceived']
