@@ -118,11 +118,10 @@ All access calls can be found under `/get/` which separates them from those call
 
 ### Access Courses
 
-http://cs3100.brod.es:3100/get/courses/
+http://cs3100.brod.es:3100/get/course/
 
-This call allows you to get a list of all courses. It currently does not allow filtering of courses, and will 
-just return all of them listed. Here is an example call:
-
+This call allows you to get a list courses which match your query. Here is a query which gets all courses:
+ 
 ```json
   {
     "user": 3,
@@ -138,11 +137,23 @@ like so:
     "data": [
               [ courseid, "coursename", "courseschoolname" ],
               [ "<more>" ],
-              "<more>",
+              "<more>"
             ],
     "success": 1
   }
 ```
+
+An example query with maximum filtering:
+
+```json
+  {
+    "user": 3,
+    "token": "40y-47bf2a0b3acc6953475d",
+    "school": "blue eye",
+    "name": "CS3100"
+  }
+```
+
 ## Add Calls
 
 All add calls can be found under `/add/` which seperates them from those calls which get or remove items.

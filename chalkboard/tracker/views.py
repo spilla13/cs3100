@@ -97,19 +97,6 @@ def addCourse(request):
     return JsonResponse({"data": {"id": course.id}, "success": True})
 
 @token_required
-def getCourses(request):
-    if check(request) is not None:
-        return check(request)
-    data = request.POST
-    response = [ ]
-
-    for course in Course.objects.all():
-        response.append( [course.id, course.name, course.school ])
-
-    return JsonResponse({"data": response, "success": True})
-
-
-@token_required
 def addHomework(request):
     """
        categoryid: <categoryid>
@@ -184,3 +171,44 @@ def addGrade(request):
 
     return JsonResponse({"data": { "id": grade.id }, "success": True})
 
+@token_required
+def getCourse(request):
+    if check(request) is not None:
+        return check(request)
+    data = request.POST.dict()
+    response = [ ]
+
+    res = translate(data)
+    if res is not None:
+        return res
+
+    for key in data.keys():
+        if not key in Course._meta.get_all_field_names():
+            return JsonError(''.join(["No field for course: ", key]))
+
+    print(data)
+    print(Course.objects.filter(**data))
+    for course in Course.objects.filter(**data):
+        response.append({"id": course.id, "name": course.name, "school": course.school})
+
+    return JsonResponse({"data": response})
+
+def translate(data):
+    del data['user']
+    del data['token']
+    for key in data.keys():
+        if key == "Category":
+            if not Hategory.objects.filter(id=data['Category']).exists():
+                return JsonError("Category provided does not exist.")
+            data[key] = Category.objects.get(id=data['Category'])
+        elif key == "Homework":
+            if not Homework.objects.filter(id=data['Homework']).exists():
+                return jsonerror("Homework provided does not exist.")
+            data[key] = Homework.objects.get(id=data['Homework'])
+        else:
+            print(data[key])
+            if isinstance(data[key], list) and len(data[key]) == 1:
+                data[key] = data[key][0]
+                print(decomped)
+
+    return None

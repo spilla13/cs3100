@@ -15,7 +15,7 @@ urlpatterns = patterns('',
     url(r'^add/grade/', 'tracker.views.addGrade'),
     url(r'^add/user/', 'tracker.views.register' ),
 
-    url(r'^get/courses/', 'tracker.views.getCourses'),
+    url(r'^get/course/', 'tracker.views.getCourse'),
 
     url('^', include('django.contrib.auth.urls', namespace="auth")), 
     url('^', include('registration.backends.default.urls')),
