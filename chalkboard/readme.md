@@ -3,13 +3,15 @@
 All API calls should be made over HTTP (HTTPS is currently not supported, but if we want to go that route we can) with POST. 
 All data should be encoded in JSON. Responses will be encoded in JSON as well. A 403 response will be returned if a user isn't authenticated, with no data.
 
-Note that all urls must end in a /.
+Note that all urls must end in a /. All calls that aren't registration must include token and user afterwards, ie:
+
+  http://cs3100.brod.es:3100/get/grade/?user=1&token=40x-012c09abe700d7fg102
 
 #Administration
 
 You can administrate the server by using the django-provided admin interface at /admin/. For this project, it's:
 
-http://cs3100.brod.es:3100/admin/
+  http://cs3100.brod.es:3100/admin/
 
 The username and password must be that of a superuser.
 
@@ -22,9 +24,18 @@ Successful calls to the API will return JSON-encoded date in the format below:
 ```json
   {
     "success": 1,
-    "data": {
-      <data>
-    }
+    "data": [ 
+      { 
+        "row in table": "value", 
+        "more rows": "more values", 
+        "id": 3, 
+        "...":"..." 
+      },
+      {
+        "...": "..."
+      },
+      "..."
+    ]
   }
 ```
 
@@ -47,7 +58,7 @@ Unauthenticated calls are an exception, since instead of returning HTTP 200 (suc
 
 Registration can be done graphically:
 
-http://cs3100.brod.es:3100/register/
+  http://cs3100.brod.es:3100/register/
 
 An API also exists, which requires username, password, and e-mail to be passed like so:
 
@@ -61,7 +72,7 @@ An API also exists, which requires username, password, and e-mail to be passed l
 
 This can be done at `/add/user/`, for the production site:
 
-http://cs3100.brod.es:3100/add/user/
+  http://cs3100.brod.es:3100/add/user/
 
 A standard response will then be returned if successful, with data containing the new user id.
 
@@ -72,11 +83,11 @@ or the username already exists. Status will be false for these.
 
 To authenticate, send via GET (in the url) user and token to:
 
-http://cs3100.brod.es:3100/token/new.json
+  http://cs3100.brod.es:3100/token/new.json
 
 For example:
 
-http://cs3100.brod.es:3100/token/new.json?username=utest&password=ptest
+  http://cs3100.brod.es:3100/token/new.json?username=utest&password=ptest
 
 This will authenticate user utest with password ptest. For now, send these in plaintext. The server will respond one of two ways:
 
@@ -115,7 +126,8 @@ calls can be made with filtering arguments, or without them. These arguments sha
 For a simple example, filtering on name is as simple as passing `"name": "homework name"`. 
 
 Where the query was sent to:
-http://cs3100.brod.es:3100/get/homework/?user=1&token=40y-abeg1907d63f8512c
+
+  http://cs3100.brod.es:3100/get/homework/?user=1&token=40y-abeg1907d63f8512c
 
 ```json
   {
@@ -196,7 +208,7 @@ or have 500 elements.
 
 ### Access Courses
 
-http://cs3100.brod.es:3100/get/course/
+  http://cs3100.brod.es:3100/get/course/
 
 This call allows you to get a list courses which match your query. Here is a query which gets all courses:
 
@@ -235,7 +247,7 @@ Format returned matches:
 
 ### Access Categories
 
-http://cs3100.brod.es:3100/get/category/
+  http://cs3100.brod.es:3100/get/category/
 
 This call lets you list categories which match your query. The standard blank query will return all categories.
 
@@ -268,7 +280,7 @@ Except since id was specified, there will be only one match in the array.
 
 ### Access Homework
 
-http://cs3100.brod.es:3100/get/homework/
+  http://cs3100.brod.es:3100/get/homework/
 
 This call allows you to get a list of homework which match your query. The standard blank query returns
 all homework.
@@ -309,7 +321,7 @@ Which will return a list of matches, following the format below:
 
 ### Access Grades
 
-http://cs3100.brod.es:3100/get/grades/
+  http://cs3100.brod.es:3100/get/grade/
 
 This call allows you to get a list of grades which match your query. The standard blank query returns
 all grades.
@@ -374,7 +386,7 @@ All add calls can be found under `/add/` which seperates them from those calls w
 
 ### Add Course
 
-http://cs3100.brod.es:3100/add/course/
+  http://cs3100.brod.es:3100/add/course/
 
 Adding a course takes a name and school and only filters to make sure that they are at least 4 characters long.
 
@@ -400,7 +412,7 @@ Errors are returned following the general format at the top. This includes field
 
 ### Add Category
 
-http://cs3100.brod.es:3100/add/category/
+  http://cs3100.brod.es:3100/add/category/
 
 Takes a name in for a category, checks its size, and creates a new one.
 
@@ -425,7 +437,7 @@ Errors can be returned for the lack of names in JSON or ids being too short.
 
 ### Add Homework
 
-http://cs3100.brod.es:3100/add/homework/
+  http://cs3100.brod.es:3100/add/homework/
 
 Adds an assignment to the tracker. Anyone can use this assignment.
 
@@ -458,7 +470,7 @@ Errors can be returned for the lack of fields in the JSON-encoded data, ids not 
 
 ### Add Grade
 
-http://cs3100.brod.es:3100/add/grade/
+  http://cs3100.brod.es:3100/add/grade/
 
 Adds a grade to the tracker. Only the owner can see their grades (right..?).
 
