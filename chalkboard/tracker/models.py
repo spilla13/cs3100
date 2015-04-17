@@ -1,12 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# check our input
-def check(request):
-    if request.method != 'POST':
-        return JsonError("Must use POST with json.")
-    return None
-
 class Category( models.Model ):
     name = models.CharField( max_length=100 )
 

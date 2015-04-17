@@ -1,12 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from tokenapi.http import JsonResponse, JsonError
 import json
 from tokenapi.decorators import token_required
 from tracker.models import Course, Homework, Category, Grade
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
-from token.utils import getWrapper, check
+from tracker.utils import getWrapper, check
 
 def index(request):
     return HttpResponse("This is the API for chalkboard.")

@@ -1,33 +1,51 @@
+from tokenapi.decorators import token_required
+from tokenapi.http import JsonResponse, JsonError
 from tracker.models import Course, Homework, Category, Grade
+import json
+
+# check our input
+def check(request):
+    if request.method != 'POST':
+        return JsonError("Must use POST with json.")
+    return None
+
 
 @token_required
 def getWrapper(request, model, keep=[]):
-    if check(request) is not None:
-        return check(request)
-    data = request.POST.dict()
     response = [ ]
 
-    if not 'user' in keep:
-        del data['user']
-    if not 'token' in keep:
-        del data['token']
+    res = check(request)
+    if res is not None:
+        return res
 
+    data = json.loads(request.body.decode('utf-8'))
+    # A map for input fields and their appropriate model... don't eval crap.
+    modelmap = { "category": Category, "homework": Homework, "course": Course }
+    
     for key in data.keys():
-        if key == "Category":
-            if not Hategory.objects.filter(id=data['Category']).exists():
-                return JsonError("Category provided does not exist.")
-            data[key] = Category.objects.get(id=data['Category'])
-        elif key == "Homework":
-            if not Homework.objects.filter(id=data['Homework']).exists():
-                return JsonError("Homework provided does not exist.")
-            data[key] = Homework.objects.get(id=data['Homework'])
-        elif key == "user":
-            data[key] = User.objects.get(id=data[key])
+        if key in modelmap.keys():
+            res = modelHasKeys(modelmap[key], data[key]) 
+            if res is not None:
+                return res
 
-    for key in data.keys():
-        if not key in model._meta.get_all_field_names():
-            return JsonError(''.join(["No field for ", model.__name__, ": ", key]))
+            obs = modelmap[key].objects.filter(**data[key])
+            if not obs.exists():
+                return JsonError(''.join([modelmap[key].__name__, " does not exist."]))
+            elif len(obs) > 1:
+                return JsonError(''.join(["Filter for ", modelmap[key].__name__, " matches more than one element."]))
+            data[key] = obs.first
+
+
+    res = modelHasKeys(model, data)
+    if res is not None:
+        return res 
 
     response = list(model.objects.filter(**data).values())
 
     return JsonResponse({"data": response})
+
+def modelHasKeys(model, data):
+    for key in data.keys():
+        if not key in model._meta.get_all_field_names():
+            return JsonError(''.join(["No field for ", model.__name__, ": ", key]))
+    return None
