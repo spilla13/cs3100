@@ -70,18 +70,13 @@ or the username already exists. Status will be false for these.
 
 ###Authentication
 
-To authenticate, send via POST JSON to:
+To authenticate, send via GET (in the url) user and token to:
 
 http://cs3100.brod.es:3100/token/new.json
 
 For example:
 
-```json
-  {
-    "username": "utest",
-    "password": "ptest"
-  }
-```
+http://cs3100.brod.es:3100/token/new.json?username=utest&password=ptest
 
 This will authenticate user utest with password ptest. For now, send these in plaintext. The server will respond one of two ways:
 
@@ -102,8 +97,8 @@ Or, if successful:
   }
 ```
 
-This token and user must be sent in all privileged API calls (such as the ones listed below). I will probably inconsistently
-show them where need be. 
+This token and user must be sent in the url of all privileged API calls (such as the ones listed below). 
+I will probably inconsistently show them where need be. 
 
 Note that token may become invalid after one of the below happen:
   * Source code of the server is modified
@@ -114,45 +109,132 @@ In this case, all API calls will return HTTP 403 (forbidden) and you must reauth
 
 ## Access Calls
 
-All access calls can be found under `/get/` which separates them from those calls which add or remove items.
+All access calls can be found under `/get/` which separates them from those calls which add or remove items. Access
+calls can be made with filtering arguments, or without them. These arguments share the name of the model rows / elements. 
+
+For a simple example, filtering on name is as simple as passing `"name": "homework name"`. 
+
+Where the query was sent to:
+http://cs3100.brod.es:3100/get/homework/?user=1&token=40y-abeg1907d63f8512c
+
+```json
+  {
+    "name": "homework name"
+  }
+```
+
+For a more complex example, grade has homework which is a foreign key. So if we filter by 
+homework we have to include a nested hash like so:
+
+```json
+  {
+    "homework": {
+                  "name": "hw2"
+                }
+  }
+```
+
+This returns all grades with the name hw2.
+
+To take this further, grade has another foreign key, course. You can also filter on course which will
+return ALL matches.
+
+```json
+  {
+    "homework": {
+                  "name": "hw2"
+                },
+    "course": {
+                "name": "3100",
+                "school": "Missouri S&T"
+              }
+  }
+```
+
+This returns all categories with name catname and id 2.
+
+For a final, complex, example you can filter homework results on category. Since category is a table,
+you can also filter category results within homework. For example:
+
+```json
+  {
+    "homework": {
+                  "name": "hw2",
+                  "category": {
+                                "name": "Computer Science" 
+                              }
+                },
+    "course": {
+                "name": "3100",
+                "school": "Missouri S&T"
+              }
+  }
+```
+
+This will return all grades for homework with a name of hw2, in a category with the name of computer science,
+for a course with the name of 3100 at a school Missouri S&T. 
+
+This API will allow you to filter on any table recursively, as shown above. However, the not top level responses 
+MUST return only one result. 
+
+
+Returns will follow this format:
+
+```json
+  {
+    "data": [
+              { "course_id": 2, "homework_id": 1, "user_id": 3, "id": 1 },
+              { "^^^" },
+              "..."
+            ],
+    "success": 1
+  }
+```
+
+Where data is an array of matches. This array can be zero length (no matches but successful query), have one element,
+or have 500 elements.
 
 ### Access Courses
 
 http://cs3100.brod.es:3100/get/course/
 
 This call allows you to get a list courses which match your query. Here is a query which gets all courses:
- 
+
 ```json
   {
-    "user": 3,
-    "token": "40y-47bf2a0b3acc6953475d"
+
   }
 ```
 
 So it takes no arguments, just authentication for who you are. This fetches, then, a list of all classes
 like so:
 
-```json
-  {
-    "data": [
-              [ courseid, "coursename", "courseschoolname" ],
-              [ "<more>" ],
-              "<more>"
-            ],
-    "success": 1
-  }
-```
-
 An example query with maximum filtering:
 
 ```json
   {
-    "user": 3,
-    "token": "40y-47bf2a0b3acc6953475d",
     "school": "blue eye",
     "name": "CS3100"
   }
 ```
+
+Format returned matches: 
+```json
+  {
+    "success": true,
+    "data": [
+              { "school": "schoolname",
+                "name": "coursename",
+                "id": 2
+              },
+              { "more ^^", "..." },
+              "..."
+            ]
+  
+  }
+```
+
+##
 
 ## Add Calls
 
