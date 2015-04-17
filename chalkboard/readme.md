@@ -211,8 +211,8 @@ An example query with maximum filtering:
 ```json
   {
     "school": "blue eye",
-    "name": "CS3100"
-    "id": 1,
+    "name": "CS3100",
+    "id": 1
   }
 ```
 
@@ -265,7 +265,7 @@ Which will return a list of matches, following the format below:
 
 ### Access Homework
 
-http://cs3100.brod.es:3100/get/course/
+http://cs3100.brod.es:3100/get/homework/
 
 This call allows you to get a list of homework which match your query. The standard blank query returns
 all homework.
@@ -280,7 +280,7 @@ An example query with maximum filtering:
     "category": {
                   "id": 1,
                   "name": "computer science"
-                }
+                },
     "id": 1
   }
 ```
