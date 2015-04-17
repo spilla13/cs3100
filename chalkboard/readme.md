@@ -206,19 +206,18 @@ This call allows you to get a list courses which match your query. Here is a que
   }
 ```
 
-So it takes no arguments, just authentication for who you are. This fetches, then, a list of all classes
-like so:
-
 An example query with maximum filtering:
 
 ```json
   {
     "school": "blue eye",
     "name": "CS3100"
+    "id": 1,
   }
 ```
 
 Format returned matches: 
+
 ```json
   {
     "success": true,
@@ -234,8 +233,76 @@ Format returned matches:
   }
 ```
 
-##
+### Access Categories
 
+http://cs3100.brod.es:3100/get/category/
+
+This call lets you list categories which match your query. The standard blank query will return all categories.
+Here is a query with maximum filtering:
+
+```json
+  {
+    "name": "category name",
+    "id": 2
+  }
+```
+
+Which will return a list of matches, following the format below:
+
+```json
+  {
+    "success": true,
+    "data": [
+              { "name": "catname",
+                "id": 2
+              },
+              { "...": "..." },
+              "..."
+            ]
+  
+  }
+```
+
+### Access Homework
+
+http://cs3100.brod.es:3100/get/course/
+
+This call allows you to get a list of homework which match your query. The standard blank query returns
+all homework.
+
+An example query with maximum filtering:
+
+```json
+  {
+    "name": "homework name",
+    "points_possible": 100.4,
+    "weight": 0.2,
+    "category": {
+                  "id": 1,
+                  "name": "computer science"
+                }
+    "id": 1
+  }
+```
+
+Which will return a list of matches, following the format below:
+
+```json
+  {
+    "success": true,
+    "data": [
+              { "name": "homework1",
+                "id": 1,
+                "points_possible": 500.1,
+                "weight": 30,
+                "category_id": 2
+              },
+              { "...": "..." },
+              "..."
+            ]
+  
+  }
+```
 ## Add Calls
 
 All add calls can be found under `/add/` which seperates them from those calls which get or remove items.
