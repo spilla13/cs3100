@@ -37,10 +37,10 @@ public class Home extends Activity{
 
         //connect the text view
         TextView currentClasses = (TextView) findViewById(R.id.Current_grade_text);
-        TextView buttonClassOverview = (TextView) findViewById(R.id.classOverViewButton);
+
         //Set the new typeface (font)
         currentClasses.setTypeface(tf);
-        buttonClassOverview.setTypeface(tf);
+        sendClassOverView.setTypeface(tf);
 
         sendClassOverView.setOnClickListener(new View.OnClickListener() {
             @Override

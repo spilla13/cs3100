@@ -30,7 +30,8 @@
     <!--Colors-->
     <color name="white">#F3F2F2</color>
     <color name="black">#000000</color>
-    <color name="card_title_color">#8FB8B0</color>
+    <!--<color name="card_title_color">#8FB8B0</color>-->
+    <color name="card_title_color">#33CC00</color>
     <color name="card_background_color">#F8F4FF</color>
 
 
