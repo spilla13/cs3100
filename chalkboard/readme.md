@@ -227,7 +227,7 @@ Format returned matches:
                 "name": "coursename",
                 "id": 2
               },
-              { "more ^^", "..." },
+              { "...": "..." },
               "..."
             ]
   
@@ -248,8 +248,6 @@ Adding a course takes a name and school and only filters to make sure that they 
 
 ```json
   {
-    "user": 1,
-    "token": "40y-47bf2a0b3acc6953475d",
     "name": "name of the course, 4-100 chars",
     "school": "name of the school, 4-100 chars"
   }
@@ -276,8 +274,6 @@ Takes a name in for a category, checks its size, and creates a new one.
 
 ```json
   {
-    "user": 1,
-    "token": "40y-47bf2a0b3acc6953475d",
     "name": "name of the new category, 4-100 chars",
   }
 ``` 
@@ -306,8 +302,6 @@ weight and pointspossible are optional fields. They, respectively, default to
 
 ```json
   {
-    "user": 1,
-    "token": "40y-47bf2a0b3acc6953475d",
     "name": "name of the assignment, 4-100 chars",
     "categoryid": 1,
     
@@ -340,8 +334,6 @@ pointsreceived is an optional field, it defaults to 0.
 
 ```json
   {
-    "user": 1,
-    "token": "40y-47bf2a0b3acc6953475d",
     "courseid": 3,
     "homewordid": 1,
 
