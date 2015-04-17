@@ -173,29 +173,33 @@ def addGrade(request):
 
 @token_required
 def getCourse(request):
+    return getWrapper(request, Course)
+
+@token_required
+def getGrade(request):
+    return getWrapper(request, Grade, ['user'])
+
+@token_required
+def getCategory(request):
+    return getWrapper(request, Category)
+
+@token_required
+def getHomework(request):
+    return getWrapper(request, Homework)
+
+
+@token_required
+def getWrapper(request, model, keep=[]):
     if check(request) is not None:
         return check(request)
     data = request.POST.dict()
     response = [ ]
 
-    res = translate(data)
-    if res is not None:
-        return res
+    if not 'user' in keep:
+        del data['user']
+    if not 'token' in keep:
+        del data['token']
 
-    for key in data.keys():
-        if not key in Course._meta.get_all_field_names():
-            return JsonError(''.join(["No field for course: ", key]))
-
-    print(data)
-    print(Course.objects.filter(**data))
-    for course in Course.objects.filter(**data):
-        response.append({"id": course.id, "name": course.name, "school": course.school})
-
-    return JsonResponse({"data": response})
-
-def translate(data):
-    del data['user']
-    del data['token']
     for key in data.keys():
         if key == "Category":
             if not Hategory.objects.filter(id=data['Category']).exists():
@@ -203,12 +207,15 @@ def translate(data):
             data[key] = Category.objects.get(id=data['Category'])
         elif key == "Homework":
             if not Homework.objects.filter(id=data['Homework']).exists():
-                return jsonerror("Homework provided does not exist.")
+                return JsonError("Homework provided does not exist.")
             data[key] = Homework.objects.get(id=data['Homework'])
-        else:
-            print(data[key])
-            if isinstance(data[key], list) and len(data[key]) == 1:
-                data[key] = data[key][0]
-                print(decomped)
+        elif key == "user":
+            data[key] = User.objects.get(id=data[key])
 
-    return None
+    for key in data.keys():
+        if not key in model._meta.get_all_field_names():
+            return JsonError(''.join(["No field for ", model.__name__, ": ", key]))
+
+    response = list(model.objects.filter(**data).values())
+
+    return JsonResponse({"data": response})
