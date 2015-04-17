@@ -338,18 +338,18 @@ An example query with maximum filtering:
 
 ```json
   {
-    course: {
+    "course": {
                 "id": "name",
                 "name": "course name",
                 "school": "school name"
             },
-    homework: {
+    "homework": {
                 "name": "homework name",
                 "id": 1,
                 "points_possible": 100.2,
                 "weight": 1.2,
                 "category": {
-                              "name": category name",
+                              "name": "category name",
                               "id": 2
                             },
     "points_received": 100.4,
