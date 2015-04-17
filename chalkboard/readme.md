@@ -238,6 +238,7 @@ Format returned matches:
 http://cs3100.brod.es:3100/get/category/
 
 This call lets you list categories which match your query. The standard blank query will return all categories.
+
 Here is a query with maximum filtering:
 
 ```json
@@ -262,6 +263,8 @@ Which will return a list of matches, following the format below:
   
   }
 ```
+
+Except since id was specified, there will be only one match in the array.
 
 ### Access Homework
 
@@ -303,6 +306,68 @@ Which will return a list of matches, following the format below:
   
   }
 ```
+
+### Access Grades
+
+http://cs3100.brod.es:3100/get/grades/
+
+This call allows you to get a list of grades which match your query. The standard blank query returns
+all grades.
+
+Grades are always filtered for the user id and token provided. You cannot receive another user's grades.
+
+An example query with maximum filtering:
+
+    course = models.ForeignKey( Course )
+    user = models.ForeignKey( User )
+    homework = models.ForeignKey( Homework )
+    
+    points_received = models.FloatField( default=0 )
+
+```json
+  {
+    course: {
+                "id": "name",
+                "name": "course name",
+                "school": "school name"
+            },
+    homework: {
+                "name": "homework name",
+                "id": 1,
+                "points_possible": 100.2,
+                "weight": 1.2,
+                "category": {
+                              "name": category name",
+                              "id": 2
+                            },
+    "points_received": 100.4,
+    "id": 1
+  }
+```
+
+So, all nested queries (as stated at the beginning of this parent section) must return one result.
+That being said, you can omit as much of this data as you want, you may just get several results depending on
+what you omit.
+
+Queries return a list of matches, following the format below:
+
+```json
+  {
+    "success": true,
+    "data": [
+              { "course_id": 2,
+                "id": 1,
+                "points_received": 52.9,
+                "homework_id": 2
+              },
+              { "...": "..." },
+              "..."
+            ]
+  }
+```
+
+As always, every hash in data will have the same number of values if there are any results.
+
 ## Add Calls
 
 All add calls can be found under `/add/` which seperates them from those calls which get or remove items.
