@@ -19,7 +19,7 @@ def register(request):
     """
     if check(request) is not None:
         return check(request)
-    data = request.POST
+    data = json.loads(request.body.decode('utf-8'))
 
     #Username
     if not 'username' in data:
@@ -54,7 +54,7 @@ def addCategory(request):
     """
     if check(request) is not None:
         return check(request)
-    data = request.POST
+    data = json.loads(request.body.decode('utf-8'))
 
     if not 'name' in data:
         return JsonError("A name field is required to create a category.")
@@ -74,7 +74,7 @@ def addCourse(request):
     """
     if check(request) is not None:
         return check(request)
-    data = request.POST
+    data = json.loads(request.body.decode('utf-8'))
 
     if not 'name' in data:
         return JsonError("A name field is required to create a course.")
@@ -103,7 +103,7 @@ def addHomework(request):
     """
     if check(request) is not None:
         return check(request)
-    data = request.POST
+    data = json.loads(request.body.decode('utf-8'))
     
     if not 'name' in data:
         return JsonError("A name field is required to create a homework.")
@@ -139,7 +139,7 @@ def addGrade(request):
 
     if check(request) is not None:
         return check(request)
-    data = request.POST
+    data = json.loads(request.body.decode('utf-8'))
 
     if not 'courseid' in data:
         return JsonError("A courseid field is required to create a grade.")
@@ -171,7 +171,7 @@ def getCourse(request):
 
 @token_required
 def getGrade(request):
-    return getWrapper(request, Grade, ['user'])
+    return getWrapper(request, Grade)
 
 @token_required
 def getCategory(request):
