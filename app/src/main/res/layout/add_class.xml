@@ -68,12 +68,11 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Class Name:" />
 
-        <Spinner
-            android:id="@+id/classNameSpinner"
+        <EditText
+            android:id="@+id/classNameTextBox"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@android:drawable/btn_dropdown"
-            android:spinnerMode="dropdown"
+            android:inputType="textCapWords|text"
             android:padding="5dp"/>
 
     </LinearLayout>
@@ -84,13 +83,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/linearLayoutField2">
 
-        <TextView android:id="@+id/dateText"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Date: "/>
 
-        <EditText
+        <EditText android:id="@+id/dateText"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:inputType="date"/>
@@ -107,7 +106,7 @@
         android:layout_alignParentStart="true"
         android:id="@+id/textView" />
 
-    <EditText android:id="@+id/editText"
+    <EditText android:id="@+id/noteBox"
         android:layout_width="fill_parent"
         android:layout_height="200dp"
         android:inputType="textMultiLine"

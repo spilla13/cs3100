@@ -8,37 +8,46 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+
+import java.util.Arrays;
 
 
 public class AddClass extends ActionBarActivity {
 
     private Spinner classSpinner;
-    private Spinner nameSpinner;
-    private String[] classes;
+    private String[] classType;
+    private EditText className;
+    private EditText date;
+    private EditText note;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_class);
 
-        classes = getResources().getStringArray(R.array.class_type);
+        classType = getResources().getStringArray(R.array.class_type);
         classSpinner = (Spinner) findViewById(R.id.classTypeSpinner);
-        nameSpinner = (Spinner) findViewById(R.id.classNameSpinner);
+        className = (EditText) findViewById(R.id.classNameTextBox);
+        date = (EditText) findViewById(R.id.dateText);
+        note = (EditText) findViewById(R.id.noteBox);
 
         Button sendAddButtonClick = (Button) findViewById(R.id.addAClass);
 
         sendAddButtonClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onAddButtonClick();
+                String var;
+                var = String.valueOf(classSpinner.getSelectedItem());
+                onAddButtonClick(Arrays.toString(classType), String.valueOf(note), String.valueOf(className), String.valueOf(date));
             }
         });
 
         /*Creates a new ArrayAdapter, which binds each item in the string array to the initial
         appearance for the Spinner (which is how each item will appear in the spinner when selected)*/
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, classes);
+                android.R.layout.simple_spinner_item, classType);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         classSpinner.setAdapter(dataAdapter);
 
@@ -67,7 +76,7 @@ public class AddClass extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    protected void onAddButtonClick() {
+    protected void onAddButtonClick(String classType, String note, String className, String date) {
         Intent Home = new Intent(this, Home.class);
         startActivity(Home);
     }
