@@ -295,8 +295,8 @@ An example query with maximum filtering:
     "points_possible": 100.4,
     "category": {
                   "id": 1,
-                  "name": "computer science"
-                  "weight": 0.2,
+                  "name": "computer science",
+                  "weight": 0.2
                 },
     "id": 1
   }
@@ -350,8 +350,8 @@ An example query with maximum filtering:
                 "points_possible": 100.2,
                 "category": {
                               "name": "category name",
-                              "id": 2
-                              "weight": 1.2,
+                              "id": 2,
+                              "weight": 1.2
                             },
     "points_received": 100.4,
     "id": 1
