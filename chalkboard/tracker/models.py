@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 class Category( models.Model ):
     name = models.CharField( max_length=100 )
+    weight = models.FloatField( default=1 )
 
 class Course( models.Model ):
     school = models.CharField( max_length=255 )
@@ -10,7 +11,6 @@ class Course( models.Model ):
 
 class Homework( models.Model ):
     category = models.ForeignKey( Category )
-    weight = models.FloatField( default=1 )
     name = models.CharField( max_length=100 )
 
     points_possible = models.FloatField( default=0 )
