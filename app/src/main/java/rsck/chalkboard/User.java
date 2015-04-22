@@ -17,7 +17,7 @@ public class User {
         courses = new ArrayList<Course>();
     }
 
-    //Getter
+    //Getters
     public String getUserName(){return username;}
 
     public String getToken(){return token;}
@@ -35,9 +35,7 @@ public class User {
      */
     public boolean login(final String user, final String password){
         DjangoFunctions django =  new DjangoFunctions();
-
         JSONObject response = django.authenticate(user,password);
-
         boolean success = false;
 
         try {
@@ -49,7 +47,6 @@ public class User {
 
                 //TODO: getClasses, grades, etc. upon login.
                 //loadCourses();
-
             } else {
                 //TODO: Handle unsuccessfull login.
             }
@@ -95,8 +92,6 @@ public class User {
         return response.getBoolean("success");
     }*/
 
-
-
     /*
         Loads all courses for the user from the server.
 
@@ -110,22 +105,19 @@ public class User {
         * URL = http://cs3100.brod.es:3100/get/course/?token='token'&user='ID'
         * "{}"
         */
-        String query = "{}";
-        JSONObject JSONQuery = new JSONObject(query);
-
-        JSONObject response = django.access("course", Integer.toString(ID), token);//, JSONQuery);
+        JSONObject JSONQuery = new JSONObject();
+        JSONObject response = django.access("course", Integer.toString(ID), token, JSONQuery);
 
         if(response.getBoolean("success")){
             JSONArray data = response.getJSONArray("data");
 
-            for(int i = 0; i < data.length(); i++){//JSONObject courseJSON : data){
+            for(int i = 0; i < data.length(); i++){
                 JSONObject courseJSON = data.getJSONObject(i);
 
                 Course newCourse = new Course(courseJSON, ID, token);
 
                 courses.add(newCourse);
             }
-
         } else {
             //TODO: Handle Failed Course request.
         }

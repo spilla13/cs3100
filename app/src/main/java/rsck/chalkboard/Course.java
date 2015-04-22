@@ -26,17 +26,11 @@ public class Course {
     }
 
     //Getters.
-    public int getID() {
-        return ID;
-    }
+    public int getID() {return ID;}
 
-    public String getCourseName() {
-        return courseName;
-    }
+    public String getCourseName() {return courseName;}
 
-    public String getSchoolName() {
-        return schoolName;
-    }
+    public String getSchoolName() {return schoolName;}
 
     //Loads all grades for this Course.
     public void loadGrades(int user_ID, String token){
@@ -49,14 +43,13 @@ public class Course {
         *  sendString = "{ \"course_id\" = ID,}"
         *
         * */
-
-
         JSONObject JSONQuery = new JSONObject();
         JSONQuery.put("course_id", ID);
 
         DjangoFunctions django = new DjangoFunctions();
-        JSONObject response = django.access("grade", Integer.toString(user_ID), token);//, JSONQuery);
+        JSONObject response = django.access("grade", Integer.toString(user_ID), token, JSONQuery);
 
+        
         //Now grab all unique Cat_IDs for the course...
         if(response.getBoolean("success")){
             JSONArray data = response.getJSONArray("data");
@@ -76,7 +69,7 @@ public class Course {
                 query.put("id", grade.getInt("homework_id"));
 
 
-                JSONObject homework = django.access("homework", Integer.toString(user_ID), token);//, query);
+                JSONObject homework = django.access("homework", Integer.toString(user_ID), token, query);
                 JSONObject matchedHomework = homework.getJSONArray("data").getJSONObject(0);
 
                 int categoryID = matchedHomework.getInt("category_id");
