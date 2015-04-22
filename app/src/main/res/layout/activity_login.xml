@@ -29,11 +29,11 @@
         android:onClick="login"
         android:text="@string/loginButtonText" />
 
-    <!--
-    <TextView android:id="@+id/randomText"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_below="@id/loginButton"
-        android:text="HELLO!"/>
-    -->
+    <Button android:id="@+id/signUpButton"
+        style="@style/loginBoxSize"
+        android:background="@android:color/transparent"
+        android:textSize="25dp"
+        android:onClick="login"
+        android:text="Sign Up"
+        android:layout_below="@id/loginButton"/>
 </RelativeLayout>

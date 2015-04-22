@@ -2,6 +2,7 @@ package rsck.chalkboard;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +23,7 @@ public class Login extends Activity {
         final EditText username = (EditText) findViewById(R.id.userName);
         final EditText password = (EditText) findViewById(R.id.password);
         Button loginButton = (Button) findViewById(R.id.loginButton);
+        Button signUpButton = (Button) findViewById(R.id.signUpButton);
         //final TextView rando = (TextView) findViewById(R.id.randomText);
 
 
@@ -32,9 +34,30 @@ public class Login extends Activity {
 
                 String userName = String.valueOf(username.getText());
                 String passWord = String.valueOf(password.getText());
+<<<<<<< HEAD
+                /*
+                Check if passwords match, if not, clear textboxes and ask user to input again
+                If they do, show chalk check mark and allow submission
+                 */
+
+
                 sendToHome(v, userName, passWord);
+=======
+
+                User user = new User();
+
+                sendToHome(v, user);
+>>>>>>> origin/master
                 //Finish the login activity and prevent users from going back
                 finish();
+            }
+        });
+
+        signUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toSignUp = new Intent(Intent.ACTION_VIEW, Uri.parse("http://cs3100.brod.es:3100/register/"));
+                startActivity(toSignUp);
             }
         });
     }
@@ -63,12 +86,12 @@ public class Login extends Activity {
     }
 
     //The login function for the login page
-    public void sendToHome(View view, String x, String y){
+    public void sendToHome(View view, User user){
         /*If the user name is valid then send to homescreen */
         Intent sendToHome = new Intent(this, Home.class);
         //Send the username and password to the database and then next activity
-        sendToHome.putExtra("theUser", x);
-        sendToHome.putExtra("password", y);
+        sendToHome.putExtra("theUser", user.getUserName());
+        sendToHome.putExtra("password", user.getToken());
         //Start the activity (aka go to the next screen)
         startActivity(sendToHome);
     }

@@ -22,7 +22,6 @@ public class Home extends Activity{
         String chalkFontPath = "fonts/chalk_font.ttf";
         Typeface tf = Typeface.createFromAsset(getAssets(), chalkFontPath);
 
-        Button sendClassOverView = (Button) findViewById(R.id.classOverViewButton);
         Button sendAddButtonClick = (Button) findViewById(R.id.addButton);
         TextView tv1 = (TextView) findViewById(R.id.textView1);
         TextView tv2 = (TextView) findViewById(R.id.textView2);
@@ -40,15 +39,6 @@ public class Home extends Activity{
 
         //Set the new typeface (font)
         currentClasses.setTypeface(tf);
-        sendClassOverView.setTypeface(tf);
-
-        sendClassOverView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Send to class overview activity
-                sendToClassOverView();
-            }
-        });
 
         sendAddButtonClick.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,12 +69,6 @@ public class Home extends Activity{
 
         return super.onOptionsItemSelected(item);
     }
-
-    protected void sendToClassOverView(){
-        Intent classOverView = new Intent(this, ClassOverView.class);
-        startActivity(classOverView);
-    }
-
 
     protected void onAddButtonClick() {
         Intent AddClass = new Intent(this, AddClass.class);
