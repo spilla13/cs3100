@@ -126,7 +126,7 @@
         android:layout_height="wrap_content"
         android:text="Finish"
         android:onClick="onAddAClassClick"
-        android:layout_below="@+id/editText"
+        android:layout_below="@+id/noteBox"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
