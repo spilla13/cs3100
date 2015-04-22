@@ -21,12 +21,15 @@ public class WeightedGrades {
 
         /*
         * Calls: http://cs3100.brod.es:3100/get/category/?token='token'&user='ID'
-        * Where: {"id":1}
+        * Where: {"id":ID}
         */
 
         DjangoFunctions django = new DjangoFunctions();
 
-        JSONObject response = django.access("category", Integer.toString(user_ID), token);
+        JSONObject query = new JSONObject();
+        query.put("id", ID);
+
+        JSONObject response = django.access("category", Integer.toString(user_ID), token);//, query);
         JSONObject category = response.getJSONArray("data").getJSONObject(0);
 
         weight = category.getDouble("weight");
@@ -71,7 +74,11 @@ public class WeightedGrades {
         * Calls: http://cs3100.brod.es:3100/get/homework/?token='token'&user='ID'
         * Where: {"category_id": 'ID'}
         */
-        JSONObject hwResponse = django.access("homework", Integer.toString(user_ID), token);
+        JSONObject query = new JSONObject();
+        query.put("category_id", ID);
+
+
+        JSONObject hwResponse = django.access("homework", Integer.toString(user_ID), token);//, query);
         JSONArray homeworks = hwResponse.getJSONArray("data");
 
 

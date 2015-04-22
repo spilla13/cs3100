@@ -20,6 +20,8 @@ public class User {
     //Getter
     public String getUserName(){return username;}
 
+    public String getToken(){return token;}
+
     /*
         This function authenticates a user with the server.
 
@@ -106,10 +108,12 @@ public class User {
         /*
         * Calls:
         * URL = http://cs3100.brod.es:3100/get/course/?token='token'&user='ID'
-        *
+        * "{}"
         */
+        String query = "{}";
+        JSONObject JSONQuery = new JSONObject(query);
 
-        JSONObject response = django.access("course", Integer.toString(ID), token);
+        JSONObject response = django.access("course", Integer.toString(ID), token);//, JSONQuery);
 
         if(response.getBoolean("success")){
             JSONArray data = response.getJSONArray("data");

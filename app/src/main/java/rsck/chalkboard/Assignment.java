@@ -18,7 +18,13 @@ public class Assignment {
         * Where: {"homework_id": 'assignment.getInt("id");'}
         */
         DjangoFunctions django = new DjangoFunctions();
-        JSONObject gradeResponse = django.access("grade", Integer.toString(user_ID), token);
+
+        JSONObject query = new JSONObject();
+        query.put("homework_id", assignment.getInt("id"));
+
+
+
+        JSONObject gradeResponse = django.access("grade", Integer.toString(user_ID), token);//, query);
         JSONObject grade = gradeResponse.getJSONArray("data").getJSONObject(0);
 
         pointsReceived = grade.getDouble("points_received");
