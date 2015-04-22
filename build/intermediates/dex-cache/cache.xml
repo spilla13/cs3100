@@ -2,39 +2,39 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\justi_000\Documents\GitHub\cs3100\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\libs\internal_impl-21.0.3.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
-        <dex dex="C:\Users\justi_000\Documents\GitHub\cs3100\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-b5221c0a2602f92b60f3356af05225463be0c5bb.jar" />
-    </item>
-    <item
-        jar="C:\Users\justi_000\Documents\GitHub\cs3100\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
-        <dex dex="C:\Users\justi_000\Documents\GitHub\cs3100\app\build\intermediates\pre-dexed\debug\classes-3747ec271a6f546c5e37e32711a2b8913807a244.jar" />
-    </item>
-    <item
-        jar="C:\Users\justi_000\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
-        <dex dex="C:\Users\justi_000\Documents\GitHub\cs3100\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-f5811dbd6b0909774fce01a58a2252718ecbce58.jar" />
-    </item>
-    <item
-        jar="C:\Users\justi_000\Documents\GitHub\cs3100\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
-        <dex dex="C:\Users\justi_000\Documents\GitHub\cs3100\app\build\intermediates\pre-dexed\debug\classes-c3198821b075993d2411dae8436d8ba5b33984cd.jar" />
-    </item>
-    <item
-        jar="C:\Users\justi_000\Documents\GitHub\cs3100\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\21.0.3\classes.jar"
+        jar="D:\School\CS3100-SE\cs3100\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\21.0.3\classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="00b0b7233e1ec64acebfac40d4983d32d4712426">
-        <dex dex="C:\Users\justi_000\Documents\GitHub\cs3100\app\build\intermediates\pre-dexed\debug\classes-b158ac8b1030be81bcbd65326a1db73d64b4f0bf.jar" />
+        <dex dex="D:\School\CS3100-SE\cs3100\app\build\intermediates\pre-dexed\debug\classes-47f51cac444b371d69b8c1564d6adabd32884264.jar" />
+    </item>
+    <item
+        jar="D:\Program Files\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
+        <dex dex="D:\School\CS3100-SE\cs3100\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-a6066fa93aeaf35db8806181b83af09f6972c97d.jar" />
+    </item>
+    <item
+        jar="D:\School\CS3100-SE\cs3100\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="D:\School\CS3100-SE\cs3100\app\build\intermediates\pre-dexed\debug\classes-b1862062591468b3783151b820735d24e6a18bbd.jar" />
+    </item>
+    <item
+        jar="D:\School\CS3100-SE\cs3100\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="D:\School\CS3100-SE\cs3100\app\build\intermediates\pre-dexed\debug\classes-36d82035441c6c87e88b232487144ed0cf036504.jar" />
+    </item>
+    <item
+        jar="D:\School\CS3100-SE\cs3100\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\libs\internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="D:\School\CS3100-SE\cs3100\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-7f7ea47416afc82adfaace2738415b97e602ad73.jar" />
     </item>
 
 </items>

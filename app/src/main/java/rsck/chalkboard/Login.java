@@ -34,6 +34,7 @@ public class Login extends Activity {
 
                 String userName = String.valueOf(username.getText());
                 String passWord = String.valueOf(password.getText());
+<<<<<<< HEAD
                 /*
                 Check if passwords match, if not, clear textboxes and ask user to input again
                 If they do, show chalk check mark and allow submission
@@ -41,6 +42,12 @@ public class Login extends Activity {
 
 
                 sendToHome(v, userName, passWord);
+=======
+
+                User user = new User();
+
+                sendToHome(v, user);
+>>>>>>> origin/master
                 //Finish the login activity and prevent users from going back
                 finish();
             }
@@ -79,12 +86,12 @@ public class Login extends Activity {
     }
 
     //The login function for the login page
-    public void sendToHome(View view, String x, String y){
+    public void sendToHome(View view, User user){
         /*If the user name is valid then send to homescreen */
         Intent sendToHome = new Intent(this, Home.class);
         //Send the username and password to the database and then next activity
-        sendToHome.putExtra("theUser", x);
-        sendToHome.putExtra("password", y);
+        sendToHome.putExtra("theUser", user.getUserName());
+        sendToHome.putExtra("password", user.getToken());
         //Start the activity (aka go to the next screen)
         startActivity(sendToHome);
     }

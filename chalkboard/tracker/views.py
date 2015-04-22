@@ -147,9 +147,6 @@ def addGrade(request):
     if not 'homeworkid' in data:
         return JsonError("A homeworkid field is required to create a grade.")
 
-    if not User.objects.filter(id=data['user']).exists():
-        return JsonError("The userid provided for the grade isn't valid.")
-
     if not Course.objects.filter(id=data['courseid']).exists():
         return JsonError("The courseid provided for the grade isn't valid.")
 

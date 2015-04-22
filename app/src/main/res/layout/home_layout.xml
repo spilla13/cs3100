@@ -36,13 +36,24 @@
 
     </LinearLayout>
 
-    <Button android:id="@+id/classOverViewButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        style="?android:attr/borderlessButtonStyle"
-        android:text="&#8226; To Class Overview"
-        android:textSize="20sp"/>
+    <RelativeLayout android:id="@+id/classList"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <!--<Button android:id="@+id/classOverViewButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            style="?android:attr/borderlessButtonStyle"
+            android:text="&#8226; To Class Overview"
+            android:textSize="20sp"/>-->
+
+        <fragment android:id="@+id/classOverList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            class="rsck.chalkboard.ClassTitleFragment"/>
+
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"

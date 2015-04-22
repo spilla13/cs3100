@@ -256,7 +256,8 @@ Here is a query with maximum filtering:
 ```json
   {
     "name": "category name",
-    "id": 2
+    "id": 2,
+    "weight": 0.13
   }
 ```
 
@@ -267,7 +268,8 @@ Which will return a list of matches, following the format below:
     "success": true,
     "data": [
               { "name": "catname",
-                "id": 2
+                "id": 2,
+                "weight": 0.3
               },
               { "...": "..." },
               "..."
@@ -291,10 +293,10 @@ An example query with maximum filtering:
   {
     "name": "homework name",
     "points_possible": 100.4,
-    "weight": 0.2,
     "category": {
                   "id": 1,
-                  "name": "computer science"
+                  "name": "computer science",
+                  "weight": 0.2
                 },
     "id": 1
   }
@@ -309,7 +311,6 @@ Which will return a list of matches, following the format below:
               { "name": "homework1",
                 "id": 1,
                 "points_possible": 500.1,
-                "weight": 30,
                 "category_id": 2
               },
               { "...": "..." },
@@ -347,10 +348,10 @@ An example query with maximum filtering:
                 "name": "homework name",
                 "id": 1,
                 "points_possible": 100.2,
-                "weight": 1.2,
                 "category": {
                               "name": "category name",
-                              "id": 2
+                              "id": 2,
+                              "weight": 1.2
                             },
     "points_received": 100.4,
     "id": 1
@@ -414,11 +415,13 @@ Errors are returned following the general format at the top. This includes field
 
   http://cs3100.brod.es:3100/add/category/
 
-Takes a name in for a category, checks its size, and creates a new one.
+Takes a name in for a category, checks its size, and creates a new one. Weight is an optional field and defaults to 1.
 
 ```json
   {
     "name": "name of the new category, 4-100 chars",
+
+    "weight": 0.2
   }
 ``` 
 
@@ -441,7 +444,7 @@ Errors can be returned for the lack of names in JSON or ids being too short.
 
 Adds an assignment to the tracker. Anyone can use this assignment.
 
-weight and pointspossible are optional fields. They, respectively, default to
+pointspossible is an optional fields. They, respectively, default to
 1 and 0.
 
 ```json
@@ -450,7 +453,6 @@ weight and pointspossible are optional fields. They, respectively, default to
     "categoryid": 1,
     
 
-    "weight": 0.13,
     "pointspossible": 100
   }
 ``` 
