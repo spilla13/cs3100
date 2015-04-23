@@ -1,6 +1,7 @@
 package rsck.chalkboard;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 
@@ -52,7 +53,7 @@ public class User {
             }
         }
         catch (Exception e){
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
 
         return success;
@@ -106,20 +107,24 @@ public class User {
         * "{}"
         */
         JSONObject JSONQuery = new JSONObject();
-        JSONObject response = django.access("course", Integer.toString(ID), token, JSONQuery);
+        JSONObject response = django.access("course", Integer.toString(ID), token);//, JSONQuery);
 
-        if(response.getBoolean("success")){
-            JSONArray data = response.getJSONArray("data");
+        try {
+            if(response.getBoolean("success")){
+                JSONArray data = response.getJSONArray("data");
 
-            for(int i = 0; i < data.length(); i++){
-                JSONObject courseJSON = data.getJSONObject(i);
+                for(int i = 0; i < data.length(); i++){
+                    JSONObject courseJSON = data.getJSONObject(i);
 
-                Course newCourse = new Course(courseJSON, ID, token);
+                    Course newCourse = new Course(courseJSON, ID, token);
 
-                courses.add(newCourse);
+                    courses.add(newCourse);
+                }
+            } else {
+                //TODO: Handle Failed Course request.
             }
-        } else {
-            //TODO: Handle Failed Course request.
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 

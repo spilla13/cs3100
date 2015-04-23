@@ -1,6 +1,7 @@
 package rsck.chalkboard;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Array;
@@ -25,13 +26,18 @@ public class WeightedGrades {
         */
         DjangoFunctions django = new DjangoFunctions();
         JSONObject query = new JSONObject();
-        query.put("id", ID);
 
-        JSONObject response = django.access("category", Integer.toString(user_ID), token);//, query);
-        JSONObject category = response.getJSONArray("data").getJSONObject(0);
+        try {
+            query.put("id", ID);
 
-        weight = category.getDouble("weight");
-        name = category.getString("name");
+            JSONObject response = django.access("category", Integer.toString(user_ID), token);//, query);
+            JSONObject category = response.getJSONArray("data").getJSONObject(0);
+
+            weight = category.getDouble("weight");
+            name = category.getString("name");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         loadAssignments(user_ID, token);
     }
@@ -72,18 +78,23 @@ public class WeightedGrades {
         * Where: {"category_id": 'ID'}
         */
         JSONObject query = new JSONObject();
-        query.put("category_id", ID);
 
-        JSONObject hwResponse = django.access("homework", Integer.toString(user_ID), token, query);
-        JSONArray homeworks = hwResponse.getJSONArray("data");
+        try {
+            query.put("category_id", ID);
 
-        for(int i = 0; i < homeworks.length(); i++){
-            JSONObject assignment = homeworks.getJSONObject(i);
+            JSONObject hwResponse = django.access("homework", Integer.toString(user_ID), token);//, query);
+            JSONArray homeworks = hwResponse.getJSONArray("data");
 
-            //TODO: Add to Assignments.
-            Assignment newAssignemt = new Assignment(assignment, user_ID, token);
+            for(int i = 0; i < homeworks.length(); i++){
+                JSONObject assignment = homeworks.getJSONObject(i);
 
-            assignments.add(newAssignemt);
+                //TODO: Add to Assignments.
+                Assignment newAssignment = new Assignment(assignment, user_ID, token);
+
+                assignments.add(newAssignment);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 }
