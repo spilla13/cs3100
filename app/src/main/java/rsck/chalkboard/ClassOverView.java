@@ -25,6 +25,10 @@ public class ClassOverView extends ActionBarActivity {
         TextView currentGradeText = (TextView) findViewById(R.id.Current_grade_text);
         TextView currentGrade = (TextView) findViewById(R.id.current_grade);
         TextView homework = (TextView) findViewById(R.id.homework_title);
+        TextView tests = (TextView) findViewById(R.id.tests_title);
+        TextView quizes = (TextView) findViewById(R.id.quizes_title);
+        TextView projects = (TextView) findViewById(R.id.projects_title);
+        TextView labs = (TextView) findViewById(R.id.labs_title);
 
         //Make the new typeface (font)
         Typeface tf = Typeface.createFromAsset(getAssets(), chalkFontPath);
@@ -34,6 +38,10 @@ public class ClassOverView extends ActionBarActivity {
         currentGradeText.setTypeface(tf);
         currentGrade.setTypeface(tf);
         homework.setTypeface(tf);
+        tests.setTypeface(tf);
+        quizes.setTypeface(tf);
+        projects.setTypeface(tf);
+        labs.setTypeface(tf);
         //cardTitles.setTypeface(rl);
 
 

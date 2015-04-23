@@ -34,20 +34,12 @@ public class Login extends Activity {
 
                 String userName = String.valueOf(username.getText());
                 String passWord = String.valueOf(password.getText());
-<<<<<<< HEAD
                 /*
                 Check if passwords match, if not, clear textboxes and ask user to input again
                 If they do, show chalk check mark and allow submission
-                 */
-
-
-                sendToHome(v, userName, passWord);
-=======
-
+                */
                 User user = new User();
-
                 sendToHome(v, user);
->>>>>>> origin/master
                 //Finish the login activity and prevent users from going back
                 finish();
             }
