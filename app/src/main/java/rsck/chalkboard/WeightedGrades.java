@@ -30,7 +30,7 @@ public class WeightedGrades {
         try {
             query.put("id", ID);
 
-            JSONObject response = django.access("category", Integer.toString(user_ID), token);//, query);
+            JSONObject response = django.access("category", Integer.toString(user_ID), token, query);
             JSONObject category = response.getJSONArray("data").getJSONObject(0);
 
             weight = category.getDouble("weight");
@@ -82,7 +82,7 @@ public class WeightedGrades {
         try {
             query.put("category_id", ID);
 
-            JSONObject hwResponse = django.access("homework", Integer.toString(user_ID), token);//, query);
+            JSONObject hwResponse = django.access("homework", Integer.toString(user_ID), token, query);
             JSONArray homeworks = hwResponse.getJSONArray("data");
 
             for(int i = 0; i < homeworks.length(); i++){

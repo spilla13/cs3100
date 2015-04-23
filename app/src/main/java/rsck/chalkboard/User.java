@@ -47,7 +47,7 @@ public class User {
                 username = user;
 
                 //TODO: getClasses, grades, etc. upon login.
-                //loadCourses();
+                loadCourses();
             } else {
                 //TODO: Handle unsuccessfull login.
             }
@@ -107,7 +107,7 @@ public class User {
         * "{}"
         */
         JSONObject JSONQuery = new JSONObject();
-        JSONObject response = django.access("course", Integer.toString(ID), token);//, JSONQuery);
+        JSONObject response = django.access("course", Integer.toString(ID), token, JSONQuery);
 
         try {
             if(response.getBoolean("success")){

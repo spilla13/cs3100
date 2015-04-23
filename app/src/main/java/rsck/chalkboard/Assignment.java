@@ -28,7 +28,7 @@ public class Assignment {
         try {
             query.put("homework_id", assignment.getInt("id"));
 
-            JSONObject gradeResponse = django.access("grade", Integer.toString(user_ID), token);//, query);
+            JSONObject gradeResponse = django.access("grade", Integer.toString(user_ID), token, query);
             JSONObject grade = gradeResponse.getJSONArray("data").getJSONObject(0);
 
             pointsReceived = grade.getDouble("points_received");

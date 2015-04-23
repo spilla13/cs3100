@@ -30,18 +30,24 @@ public class Login extends Activity {
         //Method to call the login function on the button press
         loginButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                //Call the login function and let it do the rest
+                new Thread(new Runnable() {
+                    public void run() {
+                        //Call the login function and let it do the rest
 
-                String userName = String.valueOf(username.getText());
-                String passWord = String.valueOf(password.getText());
+                        String userName = String.valueOf(username.getText());
+                        String passWord = String.valueOf(password.getText());
                 /*
                 Check if passwords match, if not, clear textboxes and ask user to input again
                 If they do, show chalk check mark and allow submission
                 */
-                User user = new User();
-                sendToHome(v, user);
-                //Finish the login activity and prevent users from going back
-                finish();
+                        User user = new User();
+                        if(user.login(userName, passWord)) {
+                            sendToHome(user);
+                            //Finish the login activity and prevent users from going back
+                            finish();
+                        }
+                    }
+                }).start();
             }
         });
 
@@ -78,7 +84,7 @@ public class Login extends Activity {
     }
 
     //The login function for the login page
-    public void sendToHome(View view, User user){
+    public void sendToHome(User user){
         /*If the user name is valid then send to homescreen */
         Intent sendToHome = new Intent(this, Home.class);
         //Send the username and password to the database and then next activity

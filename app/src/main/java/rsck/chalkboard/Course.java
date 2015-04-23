@@ -57,7 +57,7 @@ public class Course {
         }
 
         DjangoFunctions django = new DjangoFunctions();
-        JSONObject response = django.access("grade", Integer.toString(user_ID), token);//, JSONQuery);
+        JSONObject response = django.access("grade", Integer.toString(user_ID), token, JSONQuery);
 
         
         //Now grab all unique Cat_IDs for the course...
@@ -80,7 +80,7 @@ public class Course {
                     query.put("id", grade.getInt("homework_id"));
 
 
-                    JSONObject homework = django.access("homework", Integer.toString(user_ID), token);//, query);
+                    JSONObject homework = django.access("homework", Integer.toString(user_ID), token, query);
                     JSONObject matchedHomework = homework.getJSONArray("data").getJSONObject(0);
 
                     int categoryID = matchedHomework.getInt("category_id");

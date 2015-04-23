@@ -6,10 +6,12 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.json.*;
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 
 public class DjangoFunctions
 {
@@ -47,7 +49,14 @@ public class DjangoFunctions
 
     public JSONObject authenticate(final String username, final String password)
     {
-        String urlString = "http://cs3100.brod.es:3100/token/new.json?username=" + username + "&password=" + password;
+        String urlString = "http://cs3100.brod.es:3100/token/new.json";
+
+        ArrayList<NameValuePair> postParameters;
+        postParameters = new ArrayList<>();
+        postParameters.add(new BasicNameValuePair("username", username));
+        postParameters.add(new BasicNameValuePair("password", password));
+
+
         JSONObject returnJSON = null;
         try
         {
@@ -57,6 +66,7 @@ public class DjangoFunctions
 
             //passes the Django server the JSON for registration
             httppost.addHeader("content-type", "application/x-www-form-urlencoded");
+            httppost.setEntity(new UrlEncodedFormEntity(postParameters));
             HttpResponse response = httpclient.execute(httppost);
 
             //return string from Django server
@@ -66,7 +76,7 @@ public class DjangoFunctions
         }
         catch(Exception e)
         {
-
+            e.printStackTrace();
         }
 
         return returnJSON;
@@ -102,21 +112,21 @@ public class DjangoFunctions
     }
 
     /************* General Access Function *************/
-    public JSONObject access(final String dataToGet, final String userID, final String token)
+    public JSONObject access(final String dataToGet, final String userID, final String token, JSONObject query)
     {
         String urlString = "http://cs3100.brod.es:3100/get/" + dataToGet + "/?user=" + userID + "&token=" + token;
-        JSONObject passedJSON = null;
+
         JSONObject returnedJSON = null;
         try
         {
-            passedJSON = new JSONObject(dataToGet);
+
 
             //HTTP code to contact the Django server and send it the JSON to register
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(urlString);
 
             //passes the Django server the JSON for registration
-            StringEntity regString = new StringEntity(passedJSON.toString());
+            StringEntity regString = new StringEntity(query.toString());
             httppost.addHeader("content-type", "application/x-www-form-urlencoded");
             httppost.setEntity(regString);
 
