@@ -1,8 +1,11 @@
 package rsck.chalkboard;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.lang.reflect.Type;
@@ -19,6 +22,8 @@ public class ClassOverView extends ActionBarActivity {
         String chalkFontPath = "fonts/chalk_font.ttf";
         String robotoFontPath = "fonts/roboto_light.ttf";
 
+        Button sendAddAssignmentClick = (Button) findViewById(R.id.addAssignmentButton);
+        Button sendHomeClick = (Button) findViewById(R.id.returnHomeButton);
 
         //Connect the text view
         //TextView cardTitles = (TextView) findViewById(R.id.card_title_id);
@@ -42,8 +47,32 @@ public class ClassOverView extends ActionBarActivity {
         quizes.setTypeface(tf);
         projects.setTypeface(tf);
         labs.setTypeface(tf);
+        sendAddAssignmentClick.setTypeface(tf);
+        sendHomeClick.setTypeface(tf);
         //cardTitles.setTypeface(rl);
 
+        sendAddAssignmentClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onAddAssignmentClick();
+            }
+        });
 
+        sendHomeClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onHomeClick();
+            }
+        });
+
+    }
+
+    protected void onAddAssignmentClick() {
+        Intent AddAssignment = new Intent(this, AddAssignment.class);
+        startActivity(AddAssignment);
+    }
+
+    protected void onHomeClick() {
+        finish();
     }
 }

@@ -45,6 +45,31 @@
 
         </LinearLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button android:id="@+id/returnHomeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:textColor="@color/white"
+                style="?android:attr/borderlessButtonStyle"
+                android:text="Return Home"/>
+
+            <Button android:id="@+id/addAssignmentButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:textColor="@color/white"
+                style="?android:attr/borderlessButtonStyle"
+                android:text="Add Assignment"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            </RelativeLayout>
+
         <!--The cards-->
         <FrameLayout
             android:layout_width="fill_parent"
@@ -176,5 +201,6 @@
         </FrameLayout>
 
     </LinearLayout>
+
 
 </ScrollView>

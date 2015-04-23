@@ -1,6 +1,7 @@
 package rsck.chalkboard;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.Arrays;
 
@@ -27,12 +29,17 @@ public class AddClass extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_class);
 
+        String chalkFontPath = "fonts/chalk_font.ttf";
+        Typeface tf = Typeface.createFromAsset(getAssets(), chalkFontPath);
+
+        TextView title = (TextView) findViewById(R.id.Current_grade_text);
         classType = getResources().getStringArray(R.array.class_type);
         classSpinner = (Spinner) findViewById(R.id.classTypeSpinner);
         className = (EditText) findViewById(R.id.classNameTextBox);
         date = (EditText) findViewById(R.id.dateText);
         note = (EditText) findViewById(R.id.noteBox);
 
+        title.setTypeface(tf);
         Button sendAddButtonClick = (Button) findViewById(R.id.addAClass);
 
         sendAddButtonClick.setOnClickListener(new View.OnClickListener() {
@@ -40,7 +47,10 @@ public class AddClass extends ActionBarActivity {
             public void onClick(View v) {
                 String var;
                 var = String.valueOf(classSpinner.getSelectedItem());
-                onAddButtonClick(Arrays.toString(classType), String.valueOf(note), String.valueOf(className), String.valueOf(date));
+                onAddButtonClick(Arrays.toString(classType),
+                        String.valueOf(note),
+                        String.valueOf(className),
+                        String.valueOf(date));
             }
         });
 
@@ -76,7 +86,10 @@ public class AddClass extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    protected void onAddButtonClick(String classType, String note, String className, String date) {
+    protected void onAddButtonClick(String classType,
+                                    String note,
+                                    String className,
+                                    String date) {
         Intent Home = new Intent(this, Home.class);
         startActivity(Home);
     }
