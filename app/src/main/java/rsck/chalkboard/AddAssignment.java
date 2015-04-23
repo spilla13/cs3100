@@ -92,7 +92,8 @@ public class AddAssignment extends ActionBarActivity {
                                     String totalPoints,
                                     String notes){
         Intent ClassOverView = new Intent(this, ClassOverView.class);
-        startActivity(ClassOverView);
+        setResult(1, ClassOverView);
+        finish();
     }
 
 }

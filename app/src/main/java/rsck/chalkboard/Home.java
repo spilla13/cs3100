@@ -70,8 +70,18 @@ public class Home extends Activity{
         return super.onOptionsItemSelected(item);
     }
 
+    //This should refresh the page when the user finishes the add calls
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+
+        if (requestCode == 1) {
+            onRestart(); // your "refresh" code
+        }
+    }
+
     protected void onAddButtonClick() {
         Intent AddClass = new Intent(this, AddClass.class);
-        startActivity(AddClass);
+        startActivityForResult(AddClass, 1);
     }
 }

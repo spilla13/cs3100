@@ -91,6 +91,7 @@ public class AddClass extends ActionBarActivity {
                                     String className,
                                     String date) {
         Intent Home = new Intent(this, Home.class);
-        startActivity(Home);
+        setResult(1, Home);
+        finish();
     }
 }

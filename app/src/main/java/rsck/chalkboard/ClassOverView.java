@@ -67,9 +67,19 @@ public class ClassOverView extends ActionBarActivity {
 
     }
 
+    //This should refresh the page when the user finishes the add calls
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+
+        if (requestCode == 1) {
+            onRestart(); // your "refresh" code
+        }
+    }
+
     protected void onAddAssignmentClick() {
         Intent AddAssignment = new Intent(this, AddAssignment.class);
-        startActivity(AddAssignment);
+        startActivityForResult(AddAssignment, 1);
     }
 
     protected void onHomeClick() {

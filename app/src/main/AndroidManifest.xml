@@ -30,6 +30,10 @@
             android:name=".AddClass"
             android:label="@string/title_activity_add_class" >
         </activity>
+        <activity
+            android:name=".AddAssignment"
+            android:label="@string/title_activity_add_assignment" >
+        </activity>
     </application>
 
 </manifest>
