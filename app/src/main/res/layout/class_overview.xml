@@ -85,11 +85,13 @@
                 <!--The different colored bar at the top of each card-->
                 <TextView android:id="@+id/homework_title"
                 style="@style/card_title_layout"
+                android:textColor="@color/white"
                 android:text="Homework" />
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
+                    android:textColor="@color/white"
                     android:text="Homework1\nHomework2\nHomework3\n..."
                     android:clickable="true"/>
 
@@ -111,11 +113,13 @@
                 <!--The different colored bar at the top of each card-->
                 <TextView android:id="@+id/tests_title"
                     style="@style/card_title_layout"
+                    android:textColor="@color/white"
                     android:text="Tests" />
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
+                    android:textColor="@color/white"
                     android:text="Test1\nTest2\nTest3\n..."
                     android:clickable="true"/>
 
@@ -136,12 +140,14 @@
                 android:orientation="vertical">
                 <!--The different colored bar at the top of each card-->
                 <TextView android:id="@+id/quizes_title"
+                    android:textColor="@color/white"
                     style="@style/card_title_layout"
                     android:text="Quizes" />
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
+                    android:textColor="@color/white"
                     android:text="Quiz1\nQuiz2\nQuiz3\n..."
                     android:clickable="true"/>
 
@@ -163,11 +169,13 @@
                 <!--The different colored bar at the top of each card-->
                 <TextView android:id="@+id/projects_title"
                     style="@style/card_title_layout"
+                    android:textColor="@color/white"
                     android:text="Projects" />
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
+                    android:textColor="@color/white"
                     android:text="Project1\nProject2\nProject3\n..."
                     android:clickable="true"/>
 
@@ -188,11 +196,13 @@
                 <!--The different colored bar at the top of each card-->
                 <TextView android:id="@+id/labs_title"
                     style="@style/card_title_layout"
+                    android:textColor="@color/white"
                     android:text="Labs" />
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
+                    android:textColor="@color/white"
                     android:text="Lab1\nLab2\nLab3\n..."
                     android:clickable="true"/>
 
