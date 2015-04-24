@@ -22,6 +22,11 @@ urlpatterns = patterns('',
 
     url(r'^rm/grade/', 'tracker.views.rmGrade'),
 
+    url(r'^edit/course/', 'tracker.views.editCourse'),
+    url(r'^edit/grade/', 'tracker.views.editGrade'),
+    url(r'^edit/category/', 'tracker.views.editCategory'),
+    url(r'^edit/homework/', 'tracker.views.editHomework'),
+
     url('^$', 'tracker.views.index'),
 
     url('^', include('django.contrib.auth.urls', namespace="auth")), 
