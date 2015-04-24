@@ -6,7 +6,7 @@ from tokenapi.decorators import token_required
 from tracker.models import Course, Homework, Category, Grade
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
-from tracker.utils import get, check
+from tracker.utils import get, check, rm
 
 def index(request):
     return HttpResponse("This is the API for chalkboard.")
@@ -181,4 +181,4 @@ def getHomework(request):
 
 @token_required
 def rmGrade(request):
-    return get(request, Grade)
+    return rm(request, Grade)

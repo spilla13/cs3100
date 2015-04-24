@@ -25,16 +25,34 @@ def get(request, model):
     if isError(response):
         return response
 
-        #if len(response) > 1:
-        #    return JsonError(''.join(["Delete query matched more than one ", model.__name__, " (matches ", 
-        #                             str(len(response)), ")."]))
-        #elif len(response) <= 0:
-        #    return JsonError(''.join(["Delete query did not match any ", model.__name__, "s."]))
-        # We're good, delete
-        #response.delete()
-        #response = []
-
     return JsonResponse({"data": list(response.values())})
+
+@token_required
+def rm(request, model):
+    response = [ ]
+
+    res = check(request)
+    if res is not None:
+        return res
+
+    data = json.loads(request.body.decode('utf-8'))
+
+    response = getObjects(data, model)
+    if isError(response):
+        return response
+
+    if len(response) > 1:
+        return JsonError(''.join(["Delete query matched more than one ", model.__name__, " (matches ", 
+                                 str(len(response)), ")."]))
+    elif len(response) <= 0:
+        return JsonError(''.join(["Delete query did not match any ", model.__name__, "s."]))
+
+    # We return this so they know what their query matched
+    data = list(response.values())
+
+    # We're good, delete
+    response.delete()
+    return JsonResponse({"data": data})
 
 def getObjects(data, model):
     res = dictToObjects(data)
