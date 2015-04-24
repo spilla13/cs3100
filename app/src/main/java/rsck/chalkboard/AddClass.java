@@ -20,6 +20,7 @@ public class AddClass extends ActionBarActivity {
 
     private Spinner classSpinner;
     private String[] classType;
+    private EditText schoolName;
     private EditText className;
     private EditText date;
     private EditText note;
@@ -35,6 +36,7 @@ public class AddClass extends ActionBarActivity {
         TextView title = (TextView) findViewById(R.id.Current_grade_text);
         classType = getResources().getStringArray(R.array.class_type);
         classSpinner = (Spinner) findViewById(R.id.classTypeSpinner);
+        schoolName = (EditText) findViewById(R.id.schoolNameText);
         className = (EditText) findViewById(R.id.classNameTextBox);
         date = (EditText) findViewById(R.id.dateText);
         note = (EditText) findViewById(R.id.noteBox);
@@ -50,7 +52,8 @@ public class AddClass extends ActionBarActivity {
                 onAddButtonClick(Arrays.toString(classType),
                         String.valueOf(note),
                         String.valueOf(className),
-                        String.valueOf(date));
+                        String.valueOf(date),
+                        String.valueOf(schoolName));
             }
         });
 
@@ -89,7 +92,8 @@ public class AddClass extends ActionBarActivity {
     protected void onAddButtonClick(String classType,
                                     String note,
                                     String className,
-                                    String date) {
+                                    String date,
+                                    String schoolName) {
 
         Course addedCourse = new Course();
 

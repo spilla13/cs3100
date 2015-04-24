@@ -30,12 +30,36 @@
 
     </LinearLayout>
 
+    <LinearLayout android:id="@+id/school"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:layout_below="@id/linearLayout">
+
+        <TextView
+            android:id="@+id/schoolName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="School Name:" />
+
+        <EditText
+            android:id="@+id/schoolNameText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapWords|text"
+            android:padding="5dp"/>
+
+        </LinearLayout>
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:id="@+id/linearLayoutField1"
-        android:layout_below="@id/linearLayout">
+        android:layout_below="@id/school">
 
         <TextView
             android:id="@+id/classType"
@@ -58,6 +82,7 @@
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:id="@+id/linearLayoutField2"
         android:layout_below="@id/linearLayoutField1">
 
@@ -80,6 +105,7 @@
     <LinearLayout android:id="@+id/linearLayoutDueDate"
         android:orientation="horizontal"
         android:layout_width="fill_parent"
+        android:layout_marginTop="5dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/linearLayoutField2">
 
@@ -102,6 +128,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Notes: "
         android:layout_below="@+id/linearLayoutDueDate"
+        android:layout_marginTop="5dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/textView" />
@@ -126,6 +153,7 @@
         android:layout_height="wrap_content"
         android:text="Finish"
         android:layout_below="@+id/noteBox"
+        android:layout_marginTop="5dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
