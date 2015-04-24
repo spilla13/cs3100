@@ -46,6 +46,7 @@ public class Login extends Activity {
                             //Finish the login activity and prevent users from going back
                             finish();
                         }
+                        //TODO: print Login Failure message.
                     }
                 }).start();
             }
@@ -86,11 +87,11 @@ public class Login extends Activity {
     //The login function for the login page
     public void sendToHome(User user){
         /*If the user name is valid then send to homescreen */
-        Intent sendToHome = new Intent(this, Home.class);
+        Intent nextIntent = new Intent(this, Home.class);
         //Send the username and password to the database and then next activity
-        sendToHome.putExtra("theUser", user.getUserName());
-        sendToHome.putExtra("password", user.getToken());
+        nextIntent.putExtra("user", user);
+
         //Start the activity (aka go to the next screen)
-        startActivity(sendToHome);
+        startActivity(nextIntent);
     }
 }
