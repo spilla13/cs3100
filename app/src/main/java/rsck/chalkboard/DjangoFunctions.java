@@ -78,7 +78,6 @@ public class DjangoFunctions
         {
             e.printStackTrace();
         }
-        System.out.println("\n"+returnJSON.toString()+"\n");
         return returnJSON;
     }
 
@@ -142,7 +141,6 @@ public class DjangoFunctions
         {
 
         }
-        System.out.println("\n"+returnJSON.toString()+"\n");
         return returnJSON;
     }
 
@@ -175,7 +173,6 @@ public class DjangoFunctions
         {
 
         }
-        System.out.println("\n"+returnJSON.toString()+"\n");
         return returnJSON;
     }
 }
