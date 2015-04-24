@@ -11,7 +11,7 @@ def check(request):
 
 
 @token_required
-def getWrapper(request, model, keep=[]):
+def wrapper(request, model, op="get"):
     response = [ ]
 
     res = check(request)
@@ -32,7 +32,7 @@ def getWrapper(request, model, keep=[]):
             if not obs.exists():
                 return JsonError(''.join([modelmap[key].__name__, " does not exist."]))
             elif len(obs) > 1:
-                return JsonError(''.join(["Filter for ", modelmap[key].__name__, " matches more than one element."]))
+                return JsonError(''.join(["Filter for criteria ", modelmap[key].__name__, " matches more than one element."]))
             data[key] = obs.first
 
 
@@ -40,7 +40,18 @@ def getWrapper(request, model, keep=[]):
     if res is not None:
         return res 
 
-    response = list(model.objects.filter(**data).values())
+    response = model.objects.filter(**data)
+    if op == "get":
+        response = list(response.values())
+    elif op == "rm":
+        if len(response) > 1:
+            return JsonError(''.join(["Delete query matched more than one ", model.__name__, " (matches ", 
+                                     str(len(response)), ")."]))
+        elif len(response) <= 0:
+            return JsonError(''.join(["Delete query did not match any ", model.__name__, "s."]))
+        # We're good, delete
+        response.delete()
+        response = []
 
     return JsonResponse({"data": response})
 

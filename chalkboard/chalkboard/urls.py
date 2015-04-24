@@ -20,6 +20,8 @@ urlpatterns = patterns('',
     url(r'^get/category/', 'tracker.views.getCategory'),
     url(r'^get/homework/', 'tracker.views.getHomework'),
 
+    url(r'^rm/grade/', 'tracker.views.rmGrade'),
+
     url('^$', 'tracker.views.index'),
 
     url('^', include('django.contrib.auth.urls', namespace="auth")), 
