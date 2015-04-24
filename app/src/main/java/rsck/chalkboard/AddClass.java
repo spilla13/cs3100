@@ -90,6 +90,11 @@ public class AddClass extends ActionBarActivity {
                                     String note,
                                     String className,
                                     String date) {
+
+        Course addedCourse = new Course();
+
+
+
         Intent Home = new Intent(this, Home.class);
         setResult(1, Home);
         finish();

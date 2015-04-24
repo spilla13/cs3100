@@ -20,6 +20,11 @@ public class Course implements Parcelable {
 
     public Course(){grades = new ArrayList<>();}
 
+    public Course(String courseName, String schoolName){
+        this.courseName = courseName;
+        this.schoolName = schoolName;
+    };
+
     public Course(JSONObject courseJSON, int user_ID, String token){
         try {
             ID = courseJSON.getInt("id");

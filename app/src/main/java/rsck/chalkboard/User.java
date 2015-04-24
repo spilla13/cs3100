@@ -50,9 +50,6 @@ public class User implements Parcelable{
                 ID = response.getInt("user");
                 token = response.getString("token");
                 username = user;
-
-                //TODO: getClasses, grades, etc. upon login.
-                loadCourses();
             }
                 //TODO: Handle unsuccessfull login.
         }
@@ -102,7 +99,7 @@ public class User implements Parcelable{
 
         Post: Adds courses to ArrayList courses.
      */
-    public void loadCourses(){
+    public void load(){
         DjangoFunctions django = new DjangoFunctions();
 
         /*

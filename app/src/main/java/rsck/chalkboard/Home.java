@@ -28,16 +28,10 @@ public class Home extends Activity{
         Typeface tf = Typeface.createFromAsset(getAssets(), chalkFontPath);
 
         Button sendAddButtonClick = (Button) findViewById(R.id.addButton);
-        TextView tv1 = (TextView) findViewById(R.id.textView1);
-        TextView tv2 = (TextView) findViewById(R.id.textView2);
 
         //Get the username and password that was sent via the login screen
         Bundle bundle = getIntent().getExtras();
-
         user = bundle.getParcelable("user");
-
-        //Change the text for both text views
-        tv1.setText(user.getUserName());
 
         //connect the text view
         TextView currentClasses = (TextView) findViewById(R.id.Current_grade_text);
@@ -79,6 +73,8 @@ public class Home extends Activity{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
+
+
 
         if (requestCode == 1) {
             onRestart(); // your "refresh" code

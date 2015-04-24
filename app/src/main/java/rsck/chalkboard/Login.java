@@ -42,6 +42,7 @@ public class Login extends Activity {
                 */
                         User user = new User();
                         if(user.login(userName, passWord)) {
+                            user.load();
                             sendToHome(user);
                             //Finish the login activity and prevent users from going back
                             finish();
