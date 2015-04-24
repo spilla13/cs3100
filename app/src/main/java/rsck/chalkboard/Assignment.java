@@ -1,12 +1,15 @@
 package rsck.chalkboard;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Assignment {
+public class Assignment implements Parcelable {
+    public int ID;
     public double pointsReceived;
     public double pointsPossible;
-    public int ID;
     public String name;
 
     public Assignment(JSONObject assignment, int user_ID, String token){
@@ -36,5 +39,34 @@ public class Assignment {
             e.printStackTrace();
         }
     }
-    
+
+
+    /*Needed Parcelable Declarations below here*/
+    public int describeContents(){
+        return 0;
+    }
+
+    public void writeToParcel(Parcel out, int flag){
+        out.writeInt(ID);
+        out.writeDouble(pointsReceived);
+        out.writeDouble(pointsPossible);
+        out.writeString(name);
+    }
+
+    public Assignment(Parcel in) {
+        ID = in.readInt();
+        pointsReceived = in.readDouble();
+        pointsPossible = in.readDouble();
+        name = in.readString();
+    }
+
+    public static final Parcelable.Creator<Assignment> CREATOR = new Parcelable.Creator<Assignment>() {
+        public Assignment createFromParcel(Parcel in) {
+            return new Assignment(in);
+        }
+
+        public Assignment[] newArray(int size) {
+            return new Assignment[size];
+        }
+    };
 }

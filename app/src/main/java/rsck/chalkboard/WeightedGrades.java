@@ -1,5 +1,8 @@
 package rsck.chalkboard;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,11 +13,13 @@ import java.util.ArrayList;
 /**
  * Created by Jacob.
  */
-public class WeightedGrades {
+public class WeightedGrades implements Parcelable{
     private int ID;
     private String name;
     private double weight;
     private ArrayList<Assignment> assignments;
+
+    public WeightedGrades(){assignments = new ArrayList<>();}
 
     public WeightedGrades(int cat_ID, int user_ID, String token){
         assignments = new ArrayList<Assignment>();
@@ -97,4 +102,36 @@ public class WeightedGrades {
             e.printStackTrace();
         }
     }
+
+    /*Needed Parcelable Declarations below here*/
+    public int describeContents(){
+        return 0;
+    }
+
+    public void writeToParcel(Parcel out, int flag){
+        out.writeInt(ID);
+        out.writeString(name);
+        out.writeDouble(weight);
+        out.writeTypedList(assignments);
+    }
+
+    public WeightedGrades(Parcel in) {
+        this();
+
+        ID = in.readInt();
+        name = in.readString();
+        weight = in.readDouble();
+        in.readTypedList(assignments, Assignment.CREATOR);
+    }
+
+    public static final Parcelable.Creator<WeightedGrades> CREATOR = new Parcelable.Creator<WeightedGrades>() {
+        public WeightedGrades createFromParcel(Parcel in) {
+            return new WeightedGrades(in);
+        }
+
+        public WeightedGrades[] newArray(int size) {
+            return new WeightedGrades[size];
+        }
+    };
+
 }

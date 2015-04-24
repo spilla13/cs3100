@@ -1,5 +1,8 @@
 package rsck.chalkboard;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -9,11 +12,13 @@ import java.util.ArrayList;
 /**
  * Created by Jacob.
  */
-public class Course {
+public class Course implements Parcelable {
     private int ID;
     private String courseName;
     private String schoolName;
     private ArrayList<WeightedGrades> grades;
+
+    public Course(){grades = new ArrayList<>();}
 
     public Course(JSONObject courseJSON, int user_ID, String token){
         try {
@@ -88,6 +93,7 @@ public class Course {
                     //Category is unique, add to grades.
                     if(!uniqueIDs.contains(categoryID)){
                         WeightedGrades newWeightedCat = new WeightedGrades(categoryID, user_ID, token);
+                        uniqueIDs.add(categoryID);
 
                         grades.add(newWeightedCat);
                     }
@@ -109,4 +115,37 @@ public class Course {
             
         return total;
     }
+
+    /*Needed Parcelable Declarations below here*/
+        /*Needed Parcelable Declarations below here*/
+    public int describeContents(){
+        return 0;
+    }
+
+    public void writeToParcel(Parcel out, int flag){
+        out.writeInt(ID);
+        out.writeString(courseName);
+        out.writeString(schoolName);
+        out.writeTypedList(grades);
+    }
+
+    public Course(Parcel in) {
+        this();
+
+        ID = in.readInt();
+        courseName = in.readString();
+        schoolName = in.readString();
+        in.readTypedList(grades, WeightedGrades.CREATOR);
+    }
+
+    public static final Parcelable.Creator<Course> CREATOR = new Parcelable.Creator<Course>() {
+        public Course createFromParcel(Parcel in) {
+            return new Course(in);
+        }
+
+        public Course[] newArray(int size) {
+            return new Course[size];
+        }
+    };
+
 }

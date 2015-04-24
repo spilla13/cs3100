@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
+
 public class Home extends Activity{
     //Constructor for activity
     @Override
@@ -27,12 +28,13 @@ public class Home extends Activity{
         TextView tv2 = (TextView) findViewById(R.id.textView2);
 
         //Get the username and password that was sent via the login screen
-        String username = getIntent().getStringExtra("theUser");
-        String password = getIntent().getStringExtra("password");
+        Bundle bundle = getIntent().getExtras();
+
+        User user = bundle.getParcelable("user");
 
         //Change the text for both text views
-        tv1.setText(username);
-        tv2.setText(password);
+        tv1.setText(user.getUserName());
+        tv2.setText("UGGGGGGG");
 
         //connect the text view
         TextView currentClasses = (TextView) findViewById(R.id.Current_grade_text);

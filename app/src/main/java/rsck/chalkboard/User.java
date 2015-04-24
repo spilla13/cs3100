@@ -1,5 +1,8 @@
 package rsck.chalkboard;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -8,7 +11,7 @@ import java.util.ArrayList;
 /**
  * Created by Jacob.
  */
-public class User {
+public class User implements Parcelable{
     private int ID;
     private String username;
     private String token;
@@ -48,9 +51,8 @@ public class User {
 
                 //TODO: getClasses, grades, etc. upon login.
                 loadCourses();
-            } else {
-                //TODO: Handle unsuccessfull login.
             }
+                //TODO: Handle unsuccessfull login.
         }
         catch (Exception e){
             e.printStackTrace();
@@ -120,12 +122,43 @@ public class User {
 
                     courses.add(newCourse);
                 }
-            } else {
-                //TODO: Handle Failed Course request.
             }
+                //TODO: Handle Failed Course request.
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
+
+    /*Needed Parcelable Declarations below here*/
+    public int describeContents(){
+        return 0;
+    }
+
+    public void writeToParcel(Parcel out, int flag){
+        out.writeInt(ID);
+        out.writeString(username);
+        out.writeString(token);
+        out.writeTypedList(courses);
+    }
+
+    public User(Parcel in) {
+        this();
+
+        ID = in.readInt();
+        username = in.readString();
+        token = in.readString();
+        in.readTypedList(courses, Course.CREATOR);
+    }
+
+    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 
 }
