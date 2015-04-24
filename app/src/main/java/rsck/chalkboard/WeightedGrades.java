@@ -21,6 +21,17 @@ public class WeightedGrades implements Parcelable{
 
     public WeightedGrades(){assignments = new ArrayList<>();}
 
+    public WeightedGrades(JSONObject data){
+        try {
+            ID = data.getInt("id");
+            name = data.getString("name");
+            weight = data.getDouble("weight");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        assignments = new ArrayList<>();
+    }
+
     public WeightedGrades(int cat_ID, int user_ID, String token){
         assignments = new ArrayList<Assignment>();
         ID = cat_ID;
@@ -100,6 +111,56 @@ public class WeightedGrades implements Parcelable{
             e.printStackTrace();
         }
     }
+
+    public boolean addAssignment(double pointsReceived, double pointsPossible, String name,
+                              int cat, int course){
+        DjangoFunctions django = new DjangoFunctions();
+        JSONObject homework = new JSONObject();
+        JSONObject grade = new JSONObject();
+        Boolean success = false;
+
+        //prepare and add to homework table.
+        try{
+            homework.put("name", name);
+            homework.put("pointspossible", pointsPossible);
+            homework.put("categoryid", cat);
+        }catch(JSONException e) {
+            e.printStackTrace();
+        }
+
+        JSONObject response = django.add("homework", homework);
+
+        try{
+            success = response.getBoolean("success");
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+
+
+        //prepare and add to course table
+        try {
+            if(success) {
+                JSONObject data = response.getJSONObject("data");
+                grade.put("courseid", course);
+                grade.put("homeworkid", data.getInt("id"));
+                grade.put("pointsreceived", pointsReceived);
+                response = django.add("grade", grade);
+
+                if(response.getBoolean("success")){
+                    homework.put("id", data.getInt("id"));
+                    homework.put("pointsreceived", pointsReceived);
+
+                    Assignment newAssignment = new Assignment(homework);
+                }
+            }
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+
+        return success;
+    }
+
 
     /*Needed Parcelable Declarations below here*/
     public int describeContents(){

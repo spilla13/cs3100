@@ -68,31 +68,40 @@ public class User implements Parcelable{
      * Returns: True on successful add.
      *          False on failed course add.
      */
-    /*public boolean addCourse(String courseName, String schoolName) {
-        DjangoFunctions django;
+    public boolean addCourse(String courseName, String schoolName) {
+        DjangoFunctions django = new DjangoFunctions();
 
         JSONObject course = new JSONObject();
 
-        course.put("name", courseName);
-        course.put("school", schoolName);
+        try {
+            course.put("name", courseName);
+            course.put("school", schoolName);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         /*
-        *  //TODO: Add Accessor Call (ADD)
+        *
         *  Calls: http://cs3100.brod.es:3100/add/course/?token='token'&user='ID'
-        *//*
-        JSONObject response; // = accessor.post(URL, course.toString());
+        */
+        JSONObject response = django.add("course",course);
 
-        if(response.getBoolean("success")){
-            JSONObject data = response.getJSONObject("data");
-            Course newCourse = new Course(data, ID, token);
-            courses.add(newCourse);
+        Boolean success = false;
+        try {
+            success = response.getBoolean("success");
+            if (success) {
+                JSONObject data = response.getJSONObject("data");
+                course.put("id", data.getInt("id"));
+                Course newCourse = new Course(course, ID, token);
+                courses.add(newCourse);
+            } else {
+                //TODO: Handle failed course add.
+            }
+        }   catch (JSONException e) {
+            e.printStackTrace();
         }
-        else{
-            //TODO: Handle failed course add.
-        }
-
-        return response.getBoolean("success");
-    }*/
+        return success;
+    }
 
     /*
         Loads all courses for the user from the server.

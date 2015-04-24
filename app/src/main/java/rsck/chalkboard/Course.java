@@ -123,8 +123,38 @@ public class Course implements Parcelable {
         return total;
     }
 
+    public boolean addWeightedCategory(String catName, String weight){
+        Boolean success = false;
+        DjangoFunctions django = new DjangoFunctions();
+        JSONObject cat = new JSONObject();
+
+        try {
+            cat.put("name", catName);
+            cat.put("weight", weight);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JSONObject response = django.add("category", cat);
+
+        try{
+            success = response.getBoolean("success");
+            if(success){
+                JSONObject data = response.getJSONObject("data");
+                cat.put("id", data.getInt("id"));
+                WeightedGrades newCat = new WeightedGrades(cat);
+                grades.add(newCat);
+            }
+
+        } catch(JSONException e){
+            e.printStackTrace();
+        }
+
+        return success;
+    }
+
+
     /*Needed Parcelable Declarations below here*/
-        /*Needed Parcelable Declarations below here*/
     public int describeContents(){
         return 0;
     }
