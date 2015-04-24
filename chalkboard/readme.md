@@ -499,3 +499,103 @@ This will return an id in a data array. This is the unique id of the new grade.
 ```
 
 Errors are either that the ids were missing from the input data or are not valid ids.
+
+## Edit Calls
+
+  http://cs3100.brod.es:3100/edit/
+  
+  Edit calls share syntax, both return and POST, with get calls. However, edit calls require an additional field within the JSON-encoded data, "edit". To jump right into an example, say I want to change the name of a category field with the name "testfield3" to something else:
+  http://cs3100.brod.es:3100/edit/category/user=test&token=40y-ace941d8xc830e76
+  
+  ```json
+    {
+      "name": "testfield3",
+      
+      "edit": { 
+                "name": "something else"
+              }
+    }
+  ```
+With this syntax, what was described above will happen. Note that if there are more than one matches, it will fail (cannot bulk edit). You also cannot change the id field of objects.
+
+The edit field shares the same properties of a get field: references will be recursively looked up. For example,
+if you *for some goddamn reason* find a use case for changing the homework and points of a grade and want to select it by category (which there's only one result), this works:
+
+```json
+  {
+    "homework": {
+                  "name": "hw2",
+                  "category": {
+                                "name": "Computer Science" 
+                              }
+                },
+    
+    "edit": {
+                "homework": {
+                              "category": {
+                                            "name": "Psychology"
+                                          }
+                            },
+                "points_received": 87
+            }
+  }
+```
+
+It will first get the object to modify using the homework parameters up top... This returns a single grade object which matches the constraints of:
+  * Having a homework named hw2
+  * That homework having a category named Computer Science
+That object is then modified. It reads the field at the top level and treats everything in a hash as a query. These top level items are your new values for this grade object. So here, it looks up a homework by *finding a new homework* by whatever the hell the categoryid is for the psychology field. Then this homeworkid becomes this object's.
+
+This'll return the same thing get returns... just the object you edited in an array with the changed values.
+```json
+  {
+    "success": 1,
+    "data": [
+              { "homework_id": 2,
+                "user_id": 1,
+                "id": 45,
+                "course_id": 2,
+                "points_received": 87
+              }
+            ]
+    }
+```
+
+As said above, and I'll reiterate. Limitations:
+  * You can only modify one object/model/row at a time.
+  * Like get, all lookups below the top level must have a single result. Django has no idea what to do if you give it a grade with three homeworks to point at.
+  * You can not change the id field.
+
+All the edit calls match the names and urls for get, just with edit instead of get.
+
+  http://cs3100.brod.es:3100/edit/grade/
+  http://cs3100.brod.es:3100/edit/course/
+  http://cs3100.brod.es:3100/edit/homework/
+  http://cs3100.brod.es:3100/edit/category/
+
+
+## Remove Calls
+
+http://cs3100.brod.es:3100/rm/grade/
+
+Remove calls currently only support removing a grade. Other models are not supported due to referential issues with multiple users. Remove calls take identical syntax to get calls, however they have an extra constraint: 
+
+***You can only remove a single object per call.***
+
+Remove calls will return the same thing as a get call, including the data of the element you removed. For example, if you removed a homework "final":
+
+```json
+  {
+    "success": true,
+    "data": [
+              { 
+                "name": "final",
+                "id": 4,
+                "points_possible": 200.0,
+                "category_id": 5
+              }
+            ]
+  }
+```
+
+And, obviously, this object wouldn't exist anymore.
