@@ -544,7 +544,7 @@ if you *for some goddamn reason* find a use case for changing the homework and p
 It will first get the object to modify using the homework parameters up top... This returns a single grade object which matches the constraints of:
   * Having a homework named hw2
   * That homework having a category named Computer Science
-That object is then modified. It reads the field at the top level and treats everything in a hash as a query. These top level items are your new values for this grade object. So here, it looks up a homework by *finding a new homework* by whatever the hell the categoryid is for the psychology field. Then this homeworkid becomes this object's.
+That object is then modified. It reads the fields at the top level of "edit" and treats everything in a hash as a query. These top level items are your new values for this grade object. So here, it looks up a homework by *finding a new homework* by whatever the hell the categoryid is for the psychology field. Then this homeworkid becomes this object's.
 
 This'll return the same thing get returns... just the object you edited in an array with the changed values.
 ```json
