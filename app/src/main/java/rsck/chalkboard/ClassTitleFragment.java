@@ -11,21 +11,25 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 
 public class ClassTitleFragment extends ListFragment{
 
-    public static String[] NAMES =
-            {
-                    "Class 1",
-                    "Class 2",
-                    "Class 3"
-            };
+    public ArrayList<String> NAMES;
 
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        NAMES = new ArrayList<>();
+
+        Home homeActivity = (Home) getActivity();
+        ArrayList<Course> courses = homeActivity.getUser().getCourses();
+
+        for(Course getCourse: courses)
+                NAMES.add(getCourse.getCourseName());
 
         // An ArrayAdapter connects the array to our ListView
         // getActivity() returns a Context so we have the resources needed
@@ -58,6 +62,4 @@ public class ClassTitleFragment extends ListFragment{
         intent.putExtra("index", index);
         startActivity(intent);
     }
-
-
 }
