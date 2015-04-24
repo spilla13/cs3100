@@ -78,7 +78,7 @@ public class DjangoFunctions
         {
             e.printStackTrace();
         }
-
+        System.out.println("\n"+returnJSON.toString()+"\n");
         return returnJSON;
     }
 
@@ -116,7 +116,7 @@ public class DjangoFunctions
     {
         String urlString = "http://cs3100.brod.es:3100/get/" + dataToGet + "/?user=" + userID + "&token=" + token;
 
-        JSONObject returnedJSON = null;
+        JSONObject returnJSON = null;
         try
         {
 
@@ -136,13 +136,46 @@ public class DjangoFunctions
             HttpEntity httpEntity = response.getEntity();
             String resultString = EntityUtils.toString(httpEntity);
 
-            returnedJSON = new JSONObject(resultString);
+            returnJSON = new JSONObject(resultString);
         }
         catch(Exception e)
         {
 
         }
+        System.out.println("\n"+returnJSON.toString()+"\n");
+        return returnJSON;
+    }
 
-        return returnedJSON;
+    /************* General Add Function *************/
+    public JSONObject add(final String dataToAdd, final JSONObject query)
+    {
+        String urlString = "http://cs3100.brod.es:3100/add/" + dataToAdd + "/";
+        JSONObject returnJSON = null;
+
+        try
+        {
+            //HTTP code to contact the Django server and send it the JSON to register
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost(urlString);
+
+            //passes the Django server the JSON for registration
+            StringEntity regString = new StringEntity(query.toString());
+            httppost.addHeader("content-type", "application/x-www-form-urlencoded");
+            httppost.setEntity(regString);
+
+            HttpResponse response = httpclient.execute(httppost);
+
+            //return string from Django server
+            HttpEntity httpEntity = response.getEntity();
+            String resultString = EntityUtils.toString(httpEntity);
+
+            returnJSON = new JSONObject(resultString);
+        }
+        catch(Exception e)
+        {
+
+        }
+        System.out.println("\n"+returnJSON.toString()+"\n");
+        return returnJSON;
     }
 }
