@@ -26,6 +26,8 @@ public class User implements Parcelable{
 
     public String getToken(){return token;}
 
+    public ArrayList<Course> getCourses() {return courses;}
+
     /*
         This function authenticates a user with the server.
 

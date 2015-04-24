@@ -47,8 +47,6 @@ public class WeightedGrades implements Parcelable{
         loadAssignments(user_ID, token);
     }
 
-    public void setWeight(double newWeight){weight = newWeight;}
-
     public double weightedTotal(){
         return weight * unweightedTotal();
     }

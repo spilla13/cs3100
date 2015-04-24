@@ -1,9 +1,11 @@
 package rsck.chalkboard;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +15,8 @@ import android.widget.TextView;
 
 
 public class Home extends Activity{
+    private User user;
+
     //Constructor for activity
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -30,11 +34,10 @@ public class Home extends Activity{
         //Get the username and password that was sent via the login screen
         Bundle bundle = getIntent().getExtras();
 
-        User user = bundle.getParcelable("user");
+        user = bundle.getParcelable("user");
 
         //Change the text for both text views
         tv1.setText(user.getUserName());
-        tv2.setText("UGGGGGGG");
 
         //connect the text view
         TextView currentClasses = (TextView) findViewById(R.id.Current_grade_text);
@@ -85,5 +88,9 @@ public class Home extends Activity{
     protected void onAddButtonClick() {
         Intent AddClass = new Intent(this, AddClass.class);
         startActivityForResult(AddClass, 1);
+    }
+
+    public User getUser(){
+        return user;
     }
 }

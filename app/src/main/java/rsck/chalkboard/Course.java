@@ -42,6 +42,8 @@ public class Course implements Parcelable {
 
     public String getSchoolName() {return schoolName;}
 
+    public ArrayList<WeightedGrades> getGrades() {return grades;}
+
     //Loads all grades for this Course.
     public void loadGrades(int user_ID, String token){
 
