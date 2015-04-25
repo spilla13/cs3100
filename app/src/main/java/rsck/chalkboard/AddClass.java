@@ -50,10 +50,10 @@ public class AddClass extends ActionBarActivity {
                 String var;
                 var = String.valueOf(classSpinner.getSelectedItem());
                 onAddButtonClick(Arrays.toString(classType),
-                        String.valueOf(note),
-                        String.valueOf(className),
-                        String.valueOf(date),
-                        String.valueOf(schoolName));
+                        String.valueOf(note.getText()),
+                        String.valueOf(className.getText()),
+                        String.valueOf(date.getText()),
+                        String.valueOf(schoolName.getText()));
             }
         });
 
@@ -98,10 +98,10 @@ public class AddClass extends ActionBarActivity {
         //TODO: HAndle form data.
 
 
-        Intent Home = new Intent(this, Home.class);
-        Home.putExtra("courseName", className);
-        Home.putExtra("schoolName", schoolName);
-        setResult(1, Home);
+        Intent home = new Intent();
+        home.putExtra("courseName", className);
+        home.putExtra("schoolName", schoolName);
+        setResult(RESULT_OK, home);
         finish();
     }
 }

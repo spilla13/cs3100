@@ -18,10 +18,15 @@ public class WeightedGrades implements Parcelable{
     private String name;
     private double weight;
     private ArrayList<Assignment> assignments;
+    private int user_ID;
+    private String token;
 
     public WeightedGrades(){assignments = new ArrayList<>();}
 
-    public WeightedGrades(JSONObject data){
+    public WeightedGrades(JSONObject data, int user_ID, String token){
+        this.user_ID = user_ID;
+        this.token = token;
+
         try {
             ID = data.getInt("id");
             name = data.getString("name");
@@ -33,8 +38,10 @@ public class WeightedGrades implements Parcelable{
     }
 
     public WeightedGrades(int cat_ID, int user_ID, String token){
-        assignments = new ArrayList<Assignment>();
-        ID = cat_ID;
+        this.assignments = new ArrayList<Assignment>();
+        this.ID = cat_ID;
+        this.user_ID = user_ID;
+        this.token = token;
 
         /*
         * Calls: http://cs3100.brod.es:3100/get/category/?token='token'&user='ID'
@@ -55,7 +62,7 @@ public class WeightedGrades implements Parcelable{
             e.printStackTrace();
         }
 
-        loadAssignments(user_ID, token);
+        loadAssignments();
     }
 
     public double weightedTotal(){
@@ -84,7 +91,7 @@ public class WeightedGrades implements Parcelable{
         return total;
     }
 
-    public void loadAssignments(int user_ID, String token){
+    public void loadAssignments(){
         DjangoFunctions django = new DjangoFunctions();
 
         /*
@@ -128,7 +135,7 @@ public class WeightedGrades implements Parcelable{
             e.printStackTrace();
         }
 
-        JSONObject response = django.add("homework", homework);
+        JSONObject response = django.add("homework", Integer.toString(user_ID), token, homework);
 
         try{
             success = response.getBoolean("success");
@@ -144,7 +151,7 @@ public class WeightedGrades implements Parcelable{
                 grade.put("courseid", course);
                 grade.put("homeworkid", data.getInt("id"));
                 grade.put("pointsreceived", pointsReceived);
-                response = django.add("grade", grade);
+                response = django.add("grade", Integer.toString(user_ID), token, grade);
 
                 if(response.getBoolean("success")){
                     homework.put("id", data.getInt("id"));

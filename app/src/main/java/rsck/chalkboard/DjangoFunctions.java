@@ -1,5 +1,7 @@
 package rsck.chalkboard;
 
+import android.os.AsyncTask;
+
 import org.apache.http.*;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 
 public class DjangoFunctions
 {
+
     /************* Three Account Creation Functions *************/
     public JSONObject accessReg(final JSONObject regEntries)
     {
@@ -67,6 +70,7 @@ public class DjangoFunctions
             //passes the Django server the JSON for registration
             httppost.addHeader("content-type", "application/x-www-form-urlencoded");
             httppost.setEntity(new UrlEncodedFormEntity(postParameters));
+
             HttpResponse response = httpclient.execute(httppost);
 
             //return string from Django server
@@ -145,9 +149,9 @@ public class DjangoFunctions
     }
 
     /************* General Add Function *************/
-    public JSONObject add(final String dataToAdd, final JSONObject query)
+    public JSONObject add(final String dataToAdd, final String userID, final String token, JSONObject query)
     {
-        String urlString = "http://cs3100.brod.es:3100/add/" + dataToAdd + "/";
+        String urlString = "http://cs3100.brod.es:3100/add/" + dataToAdd + "/?user=" + userID + "&token=" + token;
         JSONObject returnJSON = null;
 
         try
@@ -171,7 +175,7 @@ public class DjangoFunctions
         }
         catch(Exception e)
         {
-
+            e.printStackTrace();
         }
         return returnJSON;
     }

@@ -71,29 +71,35 @@ public class Home extends Activity{
 
     //This should refresh the page when the user finishes the add calls
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+    protected void onActivityResult(int requestCode, int resultCode, final Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-
-         //Error here. Doesn't get intent.
-
-        String courseName = getIntent().getStringExtra("courseName");
-        String schoolName = getIntent().getStringExtra("schoolName");
-
-        if(!user.addCourse(courseName, schoolName))
-        {}
-            //Todo:Give error.
-
-        ClassTitleFragment newFragment = new ClassTitleFragment();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.classOverList, newFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        final String courseName = intent.getStringExtra("courseName");
+        final String schoolName = intent.getStringExtra("schoolName");
 
 
+        if(requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                Thread t = new Thread(new Runnable() {
+                    public void run() {
 
+                        System.out.print("Helloooo");
+                        user.addCourse(courseName, schoolName);
+                    }
+                });
+                t.start();
+                try {
+                    t.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                ClassTitleFragment newFragment = new ClassTitleFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.classOverList, newFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
 
-        if (requestCode == 1) {
-            onRestart(); // your "refresh" code
+                onRestart(); // your "refresh" code
+            }
         }
     }
 

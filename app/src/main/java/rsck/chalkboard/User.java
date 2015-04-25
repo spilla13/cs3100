@@ -84,7 +84,7 @@ public class User implements Parcelable{
         *
         *  Calls: http://cs3100.brod.es:3100/add/course/?token='token'&user='ID'
         */
-        JSONObject response = django.add("course",course);
+        JSONObject response = django.add("course", Integer.toString(ID),token,course);
 
         Boolean success = false;
         try {

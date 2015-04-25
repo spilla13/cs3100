@@ -17,15 +17,22 @@ public class Course implements Parcelable {
     private String courseName;
     private String schoolName;
     private ArrayList<WeightedGrades> grades;
+    private int user_ID;
+    private String token;
 
     public Course(){grades = new ArrayList<>();}
 
-    public Course(String courseName, String schoolName){
+    public Course(String courseName, String schoolName, int user_ID, String token){
         this.courseName = courseName;
         this.schoolName = schoolName;
+        this.user_ID = user_ID;
+        this.token = token;
     };
 
     public Course(JSONObject courseJSON, int user_ID, String token){
+        this.user_ID = user_ID;
+        this.token = token;
+
         try {
             ID = courseJSON.getInt("id");
             courseName = courseJSON.getString("name");
@@ -36,7 +43,7 @@ public class Course implements Parcelable {
 
         grades = new ArrayList<>();
 
-        loadGrades(user_ID, token);
+        loadGrades();
 
     }
 
@@ -50,7 +57,7 @@ public class Course implements Parcelable {
     public ArrayList<WeightedGrades> getGrades() {return grades;}
 
     //Loads all grades for this Course.
-    public void loadGrades(int user_ID, String token){
+    public void loadGrades(){
 
         //TODO: add grades to course.
         //TODO: send JSON to query stuff.
@@ -135,14 +142,14 @@ public class Course implements Parcelable {
             e.printStackTrace();
         }
 
-        JSONObject response = django.add("category", cat);
+        JSONObject response = django.add("category", Integer.toString(user_ID), token, cat);
 
         try{
             success = response.getBoolean("success");
             if(success){
                 JSONObject data = response.getJSONObject("data");
                 cat.put("id", data.getInt("id"));
-                WeightedGrades newCat = new WeightedGrades(cat);
+                WeightedGrades newCat = new WeightedGrades(cat, user_ID, token);
                 grades.add(newCat);
             }
 
