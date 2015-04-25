@@ -1,8 +1,7 @@
 package rsck.chalkboard;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.content.Intent;
+import android.app.DialogFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,51 +9,49 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class AddCategory extends Activity{
+public class AddCategory extends DialogFragment implements View.OnClickListener{
 
     private EditText categoryName;
+    private EditText categoryWeight;
+    Communicator communicator;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_category);
-
-        categoryName = (EditText) findViewById(R.id.categoryTextBox);
-        Button sendAddCategoryClick = (Button) findViewById(R.id.addCategoryButton);
-        Button sendCancelClick = (Button) findViewById(R.id.cancel);
-
-        sendAddCategoryClick.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onAddCategoryClick(String.valueOf(categoryName.getText()));
-            }
-        });
-
-        sendCancelClick.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onCancelClick();
-            }
-        });
-
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        communicator = (Communicator) activity;
     }
 
-    protected void onAddCategoryClick(String categoryName) {
-        Intent intent = new Intent();
-        intent.putExtra("categoryName", categoryName);
-        setResult(RESULT_OK, intent);
-        finish();
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.add_category, null);
+
+        setCancelable(false);
+
+        Button cancel = (Button) v.findViewById(R.id.cancel);
+        Button addCategory = (Button) v.findViewById(R.id.addCategoryButton);
+        categoryName = (EditText) v.findViewById(R.id.categoryTextBox);
+        categoryWeight = (EditText) v.findViewById(R.id.categoryWeight);
+
+        cancel.setOnClickListener(this);
+        addCategory.setOnClickListener(this);
+
+        return v;
     }
 
-    protected void onCancelClick() {
-        Intent home = new Intent();
-        setResult(RESULT_CANCELED, home);
-        finish();
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == R.id.addCategoryButton){
+            communicator.onDialogMessage(String.valueOf(categoryName.getText()),
+                                         String.valueOf(categoryWeight.getText()));
+            dismiss();
+        }
+        else{
+
+            dismiss();
+        }
     }
 
-    public void onBackPressed(){
-        Intent home = new Intent();
-        setResult(RESULT_CANCELED, home);
-        super.onBackPressed();
+    interface Communicator{
+            public void onDialogMessage(String categoryName, String categoryWeight);
     }
 }

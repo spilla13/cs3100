@@ -3,15 +3,14 @@
     android:orientation="horizontal"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="15dp"
-    android:layout_marginRight="15dp"
+    android:layout_marginLeft="40dp"
+    android:layout_marginRight="40dp"
     android:layout_marginTop="20dp"
     android:layout_marginBottom="20dp">
 
     <TextView android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
         android:textSize="20sp"
         android:padding="5dp"
         android:text="Add New Category"/>
@@ -23,22 +22,47 @@
         android:inputType="textCapWords|text"
         android:padding="5dp"/>
 
+    <LinearLayout android:id="@+id/lay0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/categoryTextBox">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Weight: "
+            android:textSize="15sp"/>
+
+        <EditText android:id="@+id/categoryWeight"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:inputType="number"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="%"/>
+
+    </LinearLayout>
+
     <Button android:id="@+id/cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/categoryTextBox"
-        android:textColor="@color/white"
+        android:layout_alignStart="@+id/lay0"
+        android:textColor="@color/black"
         android:padding="5dp"
-        android:layout_below="@id/categoryTextBox"
+        android:layout_below="@id/lay0"
         android:text="Cancel"/>
 
     <Button android:id="@+id/addCategoryButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/categoryTextBox"
+        android:layout_alignEnd="@+id/lay0"
         android:padding="5dp"
-        android:textColor="@color/white"
-        android:layout_below="@id/categoryTextBox"
+        android:textColor="@color/black"
+        android:layout_below="@id/lay0"
         android:text="Add"/>
 
 

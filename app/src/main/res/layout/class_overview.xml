@@ -61,6 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textColor="@color/white"
+                android:onClick="showDialog"
                 style="?android:attr/borderlessButtonStyle"
                 android:text="Add Category"/>
 

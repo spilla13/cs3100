@@ -11,13 +11,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class ClassOverView extends Activity {
+public class ClassOverView extends Activity implements AddCategory.Communicator{
     private Course course;
 
     @Override
@@ -76,13 +77,6 @@ public class ClassOverView extends Activity {
             @Override
             public void onClick(View v) {
                 onAddAssignmentClick();
-            }
-        });
-
-        sendCategoryClick.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onAddCategoryClick();
             }
         });
 
@@ -159,6 +153,17 @@ public class ClassOverView extends Activity {
     protected void onAddCategoryClick() {
         Intent AddCategory = new Intent(this, AddCategory.class);
         startActivityForResult(AddCategory, 1);
+    }
+
+    public void showDialog(View v){
+        FragmentManager manager = getFragmentManager();
+        AddCategory myDialog = new AddCategory();
+        myDialog.show(manager,"meow");
+    }
+
+    public void onDialogMessage(String categroyName, String categoryWeight){
+        //set the name and weight here !!Take out the TOAST!!
+        Toast.makeText(this, "Hello Jacob", Toast.LENGTH_LONG).show();
     }
 
     public void onBackPressed(){
