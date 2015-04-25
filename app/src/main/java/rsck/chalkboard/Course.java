@@ -170,6 +170,8 @@ public class Course implements Parcelable {
         out.writeString(courseName);
         out.writeString(schoolName);
         out.writeTypedList(grades);
+        out.writeInt(user_ID);
+        out.writeString(token);
     }
 
     public Course(Parcel in) {
@@ -179,6 +181,8 @@ public class Course implements Parcelable {
         courseName = in.readString();
         schoolName = in.readString();
         in.readTypedList(grades, WeightedGrades.CREATOR);
+        user_ID = in.readInt();
+        token = in.readString();
     }
 
     public static final Parcelable.Creator<Course> CREATOR = new Parcelable.Creator<Course>() {

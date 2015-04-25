@@ -28,6 +28,21 @@ public class User implements Parcelable{
 
     public ArrayList<Course> getCourses() {return courses;}
 
+    public Course getCourse(int index){return courses.get(index);}
+
+    public boolean updateCourse(Course newInfo){
+        int i = 0;
+        boolean found = false;
+        while( i < courses.size() && !found){
+            if(courses.get(i).getID() == newInfo.getID()){
+                courses.set(i, newInfo);
+                found = true;
+            }
+            i++;
+        }
+        return found;
+    }
+
     /*
         This function authenticates a user with the server.
 
@@ -94,12 +109,11 @@ public class User implements Parcelable{
                 course.put("id", data.getInt("id"));
                 Course newCourse = new Course(course, ID, token);
                 courses.add(newCourse);
-            } else {
-                //TODO: Handle failed course add.
             }
         }   catch (JSONException e) {
             e.printStackTrace();
         }
+
         return success;
     }
 
@@ -110,20 +124,24 @@ public class User implements Parcelable{
      */
     public void load(){
         DjangoFunctions django = new DjangoFunctions();
-
         JSONObject gradeQuery = new JSONObject();
-        gradeQuery.put("user_id",ID);
-        JSONObject gradeRes = django.access("grade", Integer.toString(ID), token ,gradeQuery);
-        JSONArray gradeDat = gradeRes.getJSONArray("data");
-        ArrayList<Integer> myCourses = new ArrayList<>();
+        ArrayList<Integer> myCourses =new ArrayList<>();
 
-        for(int i = 0; i < gradeDat.length(); i++) {
-            Integer thisUser = gradeDat.getJSONObject(i).getInt("user_id");
-            if(thisUser == ID) {
-                Integer thisCourseID = gradeDat.getJSONObject(i).getInt("course_id");
-                if (!myCourses.contains(thisCourseID))
-                    myCourses.add(thisCourseID);
+        try {
+            gradeQuery.put("user_id",ID);
+            JSONObject gradeRes = django.access("grade", Integer.toString(ID), token ,gradeQuery);
+            JSONArray gradeDat = gradeRes.getJSONArray("data");
+
+            for(int i = 0; i < gradeDat.length(); i++) {
+                Integer thisUser = gradeDat.getJSONObject(i).getInt("user_id");
+                if(thisUser == ID) {
+                    Integer thisCourseID = gradeDat.getJSONObject(i).getInt("course_id");
+                    if (!myCourses.contains(thisCourseID))
+                        myCourses.add(thisCourseID);
+                }
             }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
 
         /*
