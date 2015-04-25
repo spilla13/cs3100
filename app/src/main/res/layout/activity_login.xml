@@ -36,4 +36,11 @@
         android:onClick="login"
         android:text="Sign Up"
         android:layout_below="@id/loginButton"/>
+
+    <Spinner android:id="@+id/server_select"
+        style="@style/loginBoxSize"
+        android:spinnerMode="dropdown"
+        android:padding="5dp"
+        android:layout_below="@id/signUpButton"/>
+
 </RelativeLayout>
