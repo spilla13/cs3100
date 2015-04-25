@@ -20,17 +20,16 @@ public class ClassOverView extends ActionBarActivity {
         super.onCreate(savedInstances);
         setContentView(R.layout.class_overview);
 
-<<<<<<< HEAD
         Bundle bundle = getIntent().getExtras();
         course = bundle.getParcelable("course");
-        
+
+
         AssignmentFrag frag = new AssignmentFrag();
         FragmentManager manager = getFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.add(R.id.categoryMain, frag, "DaPooPoo"); //tee hee
         transaction.commit();
 
->>>>>>> 8c4bfb391d940eefc29296f7c4d06a4d699ec6ed
 
         //Change the font of text
         //The font path
