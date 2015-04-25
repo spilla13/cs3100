@@ -13,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
@@ -100,6 +102,7 @@ public class ClassOverView extends Activity {
         final double pointsReceived;
         final double pointsPossible;
         final String assignmentName;
+        final long catId;
 
         //TODO: Handle Result
 
@@ -107,7 +110,9 @@ public class ClassOverView extends Activity {
             pointsReceived = intent.getDoubleExtra("pointsReceived", 0);
             pointsPossible = intent.getDoubleExtra("pointsPossible", 0);
             assignmentName = intent.getStringExtra("assignmentName");
+            catId = intent.getIntExtra("catID",0);
             if (requestCode == 1) {
+
 
                 onRestart(); // your "refresh" code
             }
@@ -115,6 +120,7 @@ public class ClassOverView extends Activity {
 
     protected void onAddAssignmentClick() {
         Intent AddAssignment = new Intent(this, AddAssignment.class);
+        AddAssignment.putParcelableArrayListExtra("weightedGrades", course.getGrades());
         startActivityForResult(AddAssignment, 1);
     }
 

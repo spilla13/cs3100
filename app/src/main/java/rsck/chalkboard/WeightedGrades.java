@@ -69,6 +69,8 @@ public class WeightedGrades implements Parcelable{
 
     public Double getWeight(){return weight;}
 
+    public int getID(){return ID;}
+
     public double weightedTotal(){
         return weight * unweightedTotal();
     }

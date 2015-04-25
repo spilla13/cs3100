@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class AddAssignment extends ActionBarActivity {
@@ -22,6 +23,7 @@ public class AddAssignment extends ActionBarActivity {
     private EditText pointsPossibleText;
     private EditText pointsReceivedText;
     private EditText notes;
+    private ArrayList<WeightedGrades> weightedGrades;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,13 @@ public class AddAssignment extends ActionBarActivity {
         String chalkFontPath = "fonts/chalk_font.ttf";
         Typeface tf = Typeface.createFromAsset(getAssets(), chalkFontPath);
 
+        Bundle bundle = getIntent().getExtras();
+        weightedGrades = bundle.getParcelableArrayList("weightedGrades");
+
+        ArrayList<String> catNames = new ArrayList<>();
+        for(WeightedGrades grade : weightedGrades)
+            catNames.add(grade.getName());
+
         TextView title = (TextView) findViewById(R.id.add_assignment_title);
         assignmentType = getResources().getStringArray(R.array.assignment_type);
         classSpinner = (Spinner) findViewById(R.id.assignmentTypeSpinner);
@@ -38,6 +47,8 @@ public class AddAssignment extends ActionBarActivity {
         pointsReceivedText = (EditText) findViewById(R.id.receivedPoints);
         pointsPossibleText = (EditText) findViewById(R.id.totalPoints);
         notes = (EditText) findViewById(R.id.descriptionBox);
+
+
 
         title.setTypeface(tf);
         Button sendAssButtonClick = (Button) findViewById(R.id.addAssignment);
@@ -62,7 +73,8 @@ public class AddAssignment extends ActionBarActivity {
 
                 String var;
                 var = String.valueOf(classSpinner.getSelectedItem());
-                onAddButtonClick(Arrays.toString(assignmentType),
+
+                onAddButtonClick(classSpinner.getSelectedItemPosition(),
                         String.valueOf(assignmentName.getText()),
                         pointsPossible,
                         pointsReceived,
@@ -73,7 +85,7 @@ public class AddAssignment extends ActionBarActivity {
         /*Creates a new ArrayAdapter, which binds each item in the string array to the initial
         appearance for the Spinner (which is how each item will appear in the spinner when selected)*/
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, assignmentType);
+                android.R.layout.simple_spinner_item, catNames);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         classSpinner.setAdapter(dataAdapter);
     }
@@ -100,7 +112,7 @@ public class AddAssignment extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    protected void onAddButtonClick(String assignmentType,
+    protected void onAddButtonClick(int assignmentType,
                                     String assignmentName,
                                     Double pointsPossible,
                                     Double pointsReceived,
@@ -111,6 +123,7 @@ public class AddAssignment extends ActionBarActivity {
         ClassOverView.putExtra("pointsReceived", pointsReceived);
         ClassOverView.putExtra("pointsPossible", pointsPossible);
         ClassOverView.putExtra("assignmentName", assignmentName);
+        ClassOverView.putExtra("catID", weightedGrades.get(assignmentType).getID());
         setResult(RESULT_OK, ClassOverView);
         finish();
     }
