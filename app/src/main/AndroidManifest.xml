@@ -40,6 +40,10 @@
             android:name=".Details"
             android:label="Details" >
         </activity>
+        <activity
+            android:name=".AddCategory"
+            android:label="AddCategory" >
+        </activity>
     </application>
 
 </manifest>

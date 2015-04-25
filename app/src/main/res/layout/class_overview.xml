@@ -75,11 +75,6 @@
 
         </LinearLayout>
 
-        <FrameLayout android:id="@+id/addC"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            class="rsck.chalkboard.AddCategory"/>
-
         <!--This is meant for the fragment location -->
         <LinearLayout android:id="@+id/categoryMain"
             android:orientation="horizontal"

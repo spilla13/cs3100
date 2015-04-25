@@ -125,18 +125,15 @@ public class ClassOverView extends Activity {
     }
 
     protected void onHomeClick() {
-        Intent intent = new Intent();
-        intent.putExtra("course", course);
-        setResult(RESULT_OK, intent);
-        finish();
+            Intent intent = new Intent();
+            intent.putExtra("course", course);
+            setResult(RESULT_OK, intent);
+            finish();
     }
 
     protected void onAddCategoryClick() {
-        AddCategory frag = new AddCategory();
-        FragmentManager manger = getFragmentManager();
-        FragmentTransaction transaction = manger.beginTransaction();
-        transaction.add(R.id.addC, frag, "meow");
-        transaction.commit();
+        Intent AddCategory = new Intent(this, AddCategory.class);
+        startActivityForResult(AddCategory, 1);
     }
 
     public void onBackPressed(){
