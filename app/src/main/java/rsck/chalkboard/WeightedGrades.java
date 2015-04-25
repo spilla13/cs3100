@@ -143,7 +143,6 @@ public class WeightedGrades implements Parcelable{
 
                 //TODO: Add to Assignments.
                 Assignment newAssignment = new Assignment(assignment, user_ID, token);
-
                 assignments.add(newAssignment);
             }
         } catch (JSONException e) {
@@ -190,6 +189,7 @@ public class WeightedGrades implements Parcelable{
                     homework.put("pointsreceived", pointsReceived);
 
                     Assignment newAssignment = new Assignment(homework);
+                    assignments.add(newAssignment);
                 }
             }
         }catch (JSONException e){
