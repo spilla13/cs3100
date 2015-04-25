@@ -46,12 +46,6 @@ public class ClassOverView extends Activity {
         if(courseGrades.size() > 0)
             fragContainer.addView(ll);
 
-        /*CategoryFrag frag = new CategoryFrag();
-        FragmentManager manager = getFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.add(R.id.categoryMain, frag, "saaa");
-        transaction.commit();*/
-
 
         //Change the font of text
         //The font path

@@ -38,7 +38,8 @@
 
     </LinearLayout>
 
-    <LinearLayout android:id="@+id/lay2"
+    //assignment fragment thingy
+    <LinearLayout android:id="@+id/assignmentMain"
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,18 +49,11 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp">
 
-        <TextView  android:id="@+id/assignmentList"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-
-            android:text="Homework"/>
-
-    </LinearLayout>
+     </LinearLayout>
 
     <View
         android:layout_width="wrap_content"
-        android:layout_height="1dp"
-        android:layout_below="@+id/lay2"
+        android:layout_height="2dp"
+        android:layout_below="@+id/assignmentMain"
         android:background="@color/black" />
 </RelativeLayout>

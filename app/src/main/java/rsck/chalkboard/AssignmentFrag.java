@@ -1,65 +1,51 @@
 package rsck.chalkboard;
 
 
+import android.app.Fragment;
 import android.app.ListFragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class AssignmentFrag extends ListFragment{
+public class AssignmentFrag extends Fragment{
 
+    public static AssignmentFrag newInstance(WeightedGrades grades){
+        AssignmentFrag f = new AssignmentFrag();
 
-    public static String[] NAMES =
-            {
-                    "Class 1",
-                    "Class 2",
-                    "Class 3"
-            };
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-
-        // An ArrayAdapter connects the array to our ListView
-        // getActivity() returns a Context so we have the resources needed
-        // We pass a default list item text view to put the data in and the
-        // array
-        ArrayAdapter<String> connectArrayToListView = new ArrayAdapter<String>(
-                getActivity(),android.R.layout.simple_list_item_activated_1,NAMES){
-            //This lets you customize the why the list is displayed like font, color, etc.
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/chalk_font.ttf");
-                TextView v = (TextView)super.getView(position, convertView, parent);
-                v.setTextColor(Color.WHITE);
-                v.setTextSize(20);
-                v.setTypeface(font);
-                return v;
-            }
-        };
-        setListAdapter(connectArrayToListView);
+        Bundle b = new Bundle();
+        b.putParcelable("grades", grades);
+        f.setArguments(b);
+        return f;
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        showDetails(position);
-    }
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.assignment_frag, container, false);
 
-    void showDetails(int index){
-        Intent intent = new Intent();
-        intent.setClass(getActivity(), ClassOverView.class);
-        intent.putExtra("index", index);
-        startActivity(intent);
-    }
+        TextView assignmentTitle = (TextView) view.findViewById(R.id.assignmentTitle);
+        TextView assignmentGrade = (TextView) view.findViewById(R.id.assignmentGrade);
+        //Button
 
+        Bundle bundle = getArguments();
+        WeightedGrades grades = bundle.getParcelable("grades");
+
+        String title = grades.getName() + "(" + grades.getWeight() +")";
+        Double percentGrade = grades.weightedTotal()*100;
+
+        //change the text here!
+        assignmentTitle.setText(title);
+        assignmentGrade.setText("A");
+
+
+        return view;
+    }
 }
-
 
 
