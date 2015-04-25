@@ -179,4 +179,68 @@ public class DjangoFunctions
         }
         return returnJSON;
     }
+
+    /************* General Edit Function *************/
+    public JSONObject edit(final String dataToEdit, final String userID, final String token, JSONObject query)
+    {
+        String urlString = "http://cs3100.brod.es:3100/edit/" + dataToEdit + "/?user=" + userID + "&token=" + token;
+        JSONObject returnJSON = null;
+
+        try
+        {
+            //HTTP code to contact the Django server and send it the JSON to register
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost(urlString);
+
+            //passes the Django server the JSON for registration
+            StringEntity regString = new StringEntity(query.toString());
+            httppost.addHeader("content-type", "application/x-www-form-urlencoded");
+            httppost.setEntity(regString);
+
+            HttpResponse response = httpclient.execute(httppost);
+
+            //return string from Django server
+            HttpEntity httpEntity = response.getEntity();
+            String resultString = EntityUtils.toString(httpEntity);
+
+            returnJSON = new JSONObject(resultString);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return returnJSON;
+    }
+
+    /************* General Remove Function *************/
+    public JSONObject remove(final String dataToRemove, final String userID, final String token, JSONObject query)
+    {
+        String urlString = "http://cs3100.brod.es:3100/rm/" + dataToRemove + "/?user=" + userID + "&token=" + token;
+        JSONObject returnJSON = null;
+
+        try
+        {
+            //HTTP code to contact the Django server and send it the JSON to register
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost(urlString);
+
+            //passes the Django server the JSON for registration
+            StringEntity regString = new StringEntity(query.toString());
+            httppost.addHeader("content-type", "application/x-www-form-urlencoded");
+            httppost.setEntity(regString);
+
+            HttpResponse response = httpclient.execute(httppost);
+
+            //return string from Django server
+            HttpEntity httpEntity = response.getEntity();
+            String resultString = EntityUtils.toString(httpEntity);
+
+            returnJSON = new JSONObject(resultString);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return returnJSON;
+    }
 }
