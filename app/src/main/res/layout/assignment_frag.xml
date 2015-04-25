@@ -2,15 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="15dp"
-    android:layout_marginRight="15dp"
-    android:layout_marginTop="20dp"
-    android:layout_marginBottom="20dp">
+    android:layout_height="wrap_content">
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/white" />
 
     <LinearLayout android:id="@+id/lay9"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <TextView  android:id="@+id/assignmentTitle"
             android:layout_width="0dp"
@@ -23,21 +25,18 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
+            android:textColor="@color/white"
             android:layout_weight="1"
             android:text="A"/>
 
         <Button android:id="@+id/assignmentDetails"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_weight="1"
             android:text="Details"/>
 
     </LinearLayout>
 
-    <View
-        android:layout_width="wrap_content"
-        android:layout_height="1dp"
-        android:layout_below="@+id/lay9"
-        android:background="@color/white" />
 
 </RelativeLayout>

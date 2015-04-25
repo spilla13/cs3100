@@ -71,7 +71,7 @@
             android:text="Points Received: "/>
 
         <EditText android:id="@+id/receivedPoints"
-            android:layout_width="200dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:inputType="number"/>
 
@@ -91,7 +91,7 @@
             android:text="Total Points: "/>
 
         <EditText android:id="@+id/totalPoints"
-            android:layout_width="125dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:inputType="number"/>
 
