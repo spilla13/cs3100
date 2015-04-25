@@ -37,7 +37,7 @@ public class Login extends Activity {
                 final AtomicBoolean success = new AtomicBoolean(false);
 
                 //Tells users they are logging in
-                Toast.makeText(getApplicationContext(), "Logging In",
+                Toast.makeText(getApplicationContext(), "Authenticating",
                         Toast.LENGTH_SHORT).show();
 
                 Thread t = new Thread(new Runnable() {

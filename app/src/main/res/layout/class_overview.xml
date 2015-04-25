@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-
     android:background="@drawable/default_background"
     android:id="@+id/scrollClassOverView"
     style="@style/ClassOverview">
@@ -68,147 +67,16 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
 
+
             </RelativeLayout>
 
-        <!--The cards-->
-        <FrameLayout
+        <!--This is meant for the fragment location -->
+        <RelativeLayout android:id="@+id/categoryMain"
+            android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="150dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp" >
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:orientation="vertical">
-                <!--The different colored bar at the top of each card-->
-                <TextView android:id="@+id/homework_title"
-                style="@style/card_title_layout"
-                android:textColor="@color/white"
-                android:text="Homework" />
+            android:layout_height="wrap_content">
 
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:textColor="@color/white"
-                    android:text="Homework1\nHomework2\nHomework3\n..."
-                    android:clickable="true"/>
-
-            </LinearLayout>
-
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="fill_parent"
-            android:layout_height="150dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp" >
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:orientation="vertical">
-                <!--The different colored bar at the top of each card-->
-                <TextView android:id="@+id/tests_title"
-                    style="@style/card_title_layout"
-                    android:textColor="@color/white"
-                    android:text="Tests" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:textColor="@color/white"
-                    android:text="Test1\nTest2\nTest3\n..."
-                    android:clickable="true"/>
-
-            </LinearLayout>
-
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="fill_parent"
-            android:layout_height="150dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp" >
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:orientation="vertical">
-                <!--The different colored bar at the top of each card-->
-                <TextView android:id="@+id/quizes_title"
-                    android:textColor="@color/white"
-                    style="@style/card_title_layout"
-                    android:text="Quizes" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:textColor="@color/white"
-                    android:text="Quiz1\nQuiz2\nQuiz3\n..."
-                    android:clickable="true"/>
-
-            </LinearLayout>
-
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="fill_parent"
-            android:layout_height="150dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp" >
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:orientation="vertical">
-                <!--The different colored bar at the top of each card-->
-                <TextView android:id="@+id/projects_title"
-                    style="@style/card_title_layout"
-                    android:textColor="@color/white"
-                    android:text="Projects" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:textColor="@color/white"
-                    android:text="Project1\nProject2\nProject3\n..."
-                    android:clickable="true"/>
-
-            </LinearLayout>
-
-        </FrameLayout>
-        <FrameLayout
-            android:layout_width="fill_parent"
-            android:layout_height="150dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp" >
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:orientation="vertical">
-                <!--The different colored bar at the top of each card-->
-                <TextView android:id="@+id/labs_title"
-                    style="@style/card_title_layout"
-                    android:textColor="@color/white"
-                    android:text="Labs" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:textColor="@color/white"
-                    android:text="Lab1\nLab2\nLab3\n..."
-                    android:clickable="true"/>
-
-            </LinearLayout>
-
-        </FrameLayout>
+        </RelativeLayout>
 
     </LinearLayout>
 

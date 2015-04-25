@@ -1,5 +1,7 @@
 package rsck.chalkboard;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -16,6 +18,12 @@ public class ClassOverView extends ActionBarActivity {
         super.onCreate(savedInstances);
         setContentView(R.layout.class_overview);
 
+        AssignmentFrag frag = new AssignmentFrag();
+        FragmentManager manager = getFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.add(R.id.categoryMain, frag, "DaPooPoo"); //tee hee
+        transaction.commit();
+
 
         //Change the font of text
         //The font path
@@ -29,11 +37,6 @@ public class ClassOverView extends ActionBarActivity {
         //TextView cardTitles = (TextView) findViewById(R.id.card_title_id);
         TextView currentGradeText = (TextView) findViewById(R.id.Current_grade_text);
         TextView currentGrade = (TextView) findViewById(R.id.current_grade);
-        TextView homework = (TextView) findViewById(R.id.homework_title);
-        TextView tests = (TextView) findViewById(R.id.tests_title);
-        TextView quizes = (TextView) findViewById(R.id.quizes_title);
-        TextView projects = (TextView) findViewById(R.id.projects_title);
-        TextView labs = (TextView) findViewById(R.id.labs_title);
 
         //Make the new typeface (font)
         Typeface tf = Typeface.createFromAsset(getAssets(), chalkFontPath);
@@ -42,11 +45,7 @@ public class ClassOverView extends ActionBarActivity {
         //Set the new typeface (font)
         currentGradeText.setTypeface(tf);
         currentGrade.setTypeface(tf);
-        homework.setTypeface(tf);
-        tests.setTypeface(tf);
-        quizes.setTypeface(tf);
-        projects.setTypeface(tf);
-        labs.setTypeface(tf);
+
         sendAddAssignmentClick.setTypeface(tf);
         sendHomeClick.setTypeface(tf);
         //cardTitles.setTypeface(rl);
