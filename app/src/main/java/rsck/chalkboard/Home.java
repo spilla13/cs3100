@@ -33,6 +33,19 @@ public class Home extends Activity{
         Bundle bundle = getIntent().getExtras();
         user = bundle.getParcelable("user");
 
+        Thread t = new Thread(new Runnable() {
+            public void run() {
+                user.load();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        updateTitleFragment();
+                    }
+                });
+            }
+        });
+        t.start();
+
         //connect the text view
         TextView currentClasses = (TextView) findViewById(R.id.Current_grade_text);
 

@@ -34,44 +34,38 @@ public class Login extends Activity {
         loginButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
 
-                final AtomicBoolean success = new AtomicBoolean(false);
+            //Tells users they are logging in
+            Toast.makeText(getApplicationContext(), "Authenticating",
+                    Toast.LENGTH_SHORT).show();
 
-                //Tells users they are logging in
-                Toast.makeText(getApplicationContext(), "Authenticating",
-                        Toast.LENGTH_SHORT).show();
+            Thread t = new Thread(new Runnable() {
+                public void run() {
+                    //Call the login function and let it do the rest
 
-                Thread t = new Thread(new Runnable() {
-                    public void run() {
-                        //Call the login function and let it do the rest
-
-                        String userName = String.valueOf(username.getText());
-                        String passWord = String.valueOf(password.getText());
-                /*
-                Check if passwords match, if not, clear textboxes and ask user to input again
-                If they do, show chalk check mark and allow submission
-                */
-                        User user = new User();
-                        if(user.login(userName, passWord)) {
-                            user.load();
-                            success.set(true);
-                            sendToHome(user);
-                            //Finish the login activity and prevent users from going back
-                            finish();
-                        }
-                        //TODO: print Login Failure message, make it so a boolean can be pass back from the thread... it only accepts final mode, cannot do volatile Atomic boolean.
+                    String userName = String.valueOf(username.getText());
+                    String passWord = String.valueOf(password.getText());
+                    /*
+                    Check if passwords match, if not, clear textboxes and ask user to input again
+                    If they do, show chalk check mark and allow submission
+                    */
+                    User user = new User();
+                    if(user.login(userName, passWord)) {
+                        sendToHome(user);
+                        //Finish the login activity and prevent users from going back
+                        finish();
                     }
-                });
-                t.start();
-                try {
-                    t.join();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    else
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(), "Error on Login",
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        });
                 }
+            });
+            t.start();
 
-                if(!success.get()) { //this is the error message
-                    Toast.makeText(getApplicationContext(), "Error on Login",
-                            Toast.LENGTH_LONG).show();
-                }
             }
         });
 
