@@ -48,10 +48,11 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp">
 
-        <TextView   android:id="@+id/assignmentList"
+        <fragment   android:id="@+id/assignmentList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
+            class="rsck.chalkboard.AssignmentFrag"
             android:text="Homework"/>
 
     </LinearLayout>
