@@ -1,6 +1,7 @@
 package rsck.chalkboard;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
@@ -126,7 +127,19 @@ public class ClassOverView extends Activity {
                     e.printStackTrace();
                 }
 
-                onRestart(); // your "refresh" code
+/*                ArrayList<WeightedGrades> grades = course.getGrades();
+                WeightedGrades cat = null;
+                for(WeightedGrades cats : grades)
+                    if(cats.getID() == catID)
+                        cat = cats;
+
+                if(cat != null) {
+                    Fragment frag = new CategoryFrag().newInstance(cat);
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.replace(R.id.categoryMain, frag, Integer.toString(catID));
+                    ft.addToBackStack(null);
+                    ft.commit();
+                }*/
             }
     }
 

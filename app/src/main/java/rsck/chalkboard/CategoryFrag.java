@@ -15,6 +15,8 @@ import java.util.ArrayList;
 
 public class CategoryFrag extends android.app.Fragment {
 
+    private WeightedGrades weightedGrades;
+
     public static CategoryFrag newInstance(WeightedGrades grades){
         CategoryFrag f = new CategoryFrag();
 
@@ -33,15 +35,15 @@ public class CategoryFrag extends android.app.Fragment {
         TextView categoryPercent = (TextView) view.findViewById(R.id.categoryPercent);
 
         Bundle bundle = getArguments();
-        WeightedGrades grades = bundle.getParcelable("grades");
+        weightedGrades = bundle.getParcelable("grades");
 
-        String title = grades.getName() + "(" + grades.getWeight() +")";
-        double percentGrade = grades.weightedTotal()*100;
+        String title = weightedGrades.getName() + "(" + weightedGrades.getWeight() +")";
+        double percentGrade = weightedGrades.weightedTotal()*100;
         String sPercentGrade = new BigDecimal(percentGrade).round(new MathContext(4, RoundingMode.HALF_UP)).toString();
 
         //change the text here!
         categoryTitle.setText(title);
-        categoryGrade.setText(grades.getLetterGrade());
+        categoryGrade.setText(weightedGrades.getLetterGrade());
         categoryPercent.setText( sPercentGrade + "%");
 
         //This calls the assignment fragment
@@ -51,13 +53,12 @@ public class CategoryFrag extends android.app.Fragment {
 
         cf.setId(65401);
 
-        for(Assignment assignment : grades.getAssignments())
+        for(Assignment assignment : weightedGrades.getAssignments())
             getFragmentManager().beginTransaction().add(cf.getId(),
                     AssignmentFrag.newInstance(assignment),
                     Integer.toString(assignment.ID)).commit();
 
         fragContainer.addView(cf);
-
 
         return view;
     }
