@@ -99,16 +99,16 @@ public class ClassOverView extends Activity {
 
         //TODO: Handle Result
 
-        if(resultCode == RESULT_OK)
+        if(resultCode == RESULT_OK) {
             if (requestCode == 1) {
                 pointsReceived = intent.getDoubleExtra("pointsReceived", 0);
                 pointsPossible = intent.getDoubleExtra("pointsPossible", 0);
                 assignmentName = intent.getStringExtra("assignmentName");
-                catID = intent.getIntExtra("catID",0);
+                catID = intent.getIntExtra("catID", 0);
 
                 Thread t = new Thread(new Runnable() {
                     public void run() {
-                    course.addHomeworkToCategory(pointsReceived, pointsPossible, assignmentName, catID);
+                        course.addHomeworkToCategory(pointsReceived, pointsPossible, assignmentName, catID);
                     }
                 });
                 t.start();
@@ -118,14 +118,14 @@ public class ClassOverView extends Activity {
                     e.printStackTrace();
                 }
 
-                Fragment frag = getFragmentManager().findFragmentByTag(Integer.toString(catID));
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.detach(frag);
-                ft.attach(frag);
-                ft.commit();
+                Intent newIntent = getIntent();
+                newIntent.putExtra("course", course);
+                finish();
+                startActivity(newIntent);
 
                 onRestart(); // your "refresh" code
             }
+        }
     }
 
     protected void onAddAssignmentClick() {

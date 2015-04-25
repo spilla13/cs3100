@@ -23,11 +23,14 @@ public class WeightedGrades implements Parcelable{
 
     public WeightedGrades(){assignments = new ArrayList<>();}
 
+
+
     public WeightedGrades(JSONObject data, int user_ID, String token){
         this.user_ID = user_ID;
         this.token = token;
 
         try {
+
             ID = data.getInt("id");
             name = data.getString("name");
             weight = data.getDouble("weight");
@@ -65,9 +68,12 @@ public class WeightedGrades implements Parcelable{
         loadAssignments();
     }
 
+    //getters.
     public String getName(){return name;}
 
     public Double getWeight(){return weight;}
+
+    public ArrayList<Assignment> getAssignments() {return assignments;}
 
     public int getID(){return ID;}
 

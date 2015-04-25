@@ -47,8 +47,9 @@ public class CategoryFrag extends android.app.Fragment {
 
         cf.setId(65401);
 
-        getFragmentManager().beginTransaction().add(cf.getId(), AssignmentFrag.newInstance("Assignment 1"), "someTag1").commit();
-        getFragmentManager().beginTransaction().add(cf.getId(), AssignmentFrag.newInstance("Assignment 2"), "someTag2").commit();
+
+        for(Assignment assignment : grades.getAssignments())
+            getFragmentManager().beginTransaction().add(cf.getId(), AssignmentFrag.newInstance(assignment.name), Integer.toString(assignment.ID)).commit();
 
         fragContainer.addView(cf);
 
