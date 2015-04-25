@@ -77,9 +77,18 @@ public class ClassOverView extends ActionBarActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
 
-        if (requestCode == 1) {
-            onRestart(); // your "refresh" code
-        }
+        final double pointsReceived;
+        final String assignmentName;
+
+        //TODO: Handle Result
+
+        if(requestCode == 1)
+            //pointsReceived = intent.getDoubleExtra("pointsReceived", 0);
+            assignmentName = intent.getStringExtra("assignmentName");
+            if (resultCode == RESULT_OK) {
+
+                onRestart(); // your "refresh" code
+            }
     }
 
     protected void onAddAssignmentClick() {
@@ -88,6 +97,9 @@ public class ClassOverView extends ActionBarActivity {
     }
 
     protected void onHomeClick() {
+        Intent intent = new Intent();
+        intent.putExtra("course", course);
+        setResult(RESULT_OK, intent);
         finish();
     }
 

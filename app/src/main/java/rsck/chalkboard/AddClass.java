@@ -94,7 +94,6 @@ public class AddClass extends ActionBarActivity {
                                     String className,
                                     String date,
                                     String schoolName) {
-
         //TODO: HAndle form data.
 
 

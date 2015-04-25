@@ -73,11 +73,11 @@ public class Home extends Activity{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, final Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        final String courseName = intent.getStringExtra("courseName");
-        final String schoolName = intent.getStringExtra("schoolName");
-
-
+        final String courseName;
+        final String schoolName;
         if(requestCode == 1) {
+             courseName = intent.getStringExtra("courseName");
+             schoolName = intent.getStringExtra("schoolName");
             if (resultCode == RESULT_OK) {
                 Thread t = new Thread(new Runnable() {
                     public void run() {

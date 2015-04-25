@@ -16,7 +16,6 @@ import android.widget.TextView;
 import java.util.Arrays;
 
 public class AddAssignment extends ActionBarActivity {
-
     private EditText assignmentName;
     private Spinner classSpinner;
     private String[] assignmentType;
@@ -49,10 +48,10 @@ public class AddAssignment extends ActionBarActivity {
                 String var;
                 var = String.valueOf(classSpinner.getSelectedItem());
                 onAddButtonClick(Arrays.toString(assignmentType),
-                        String.valueOf(assignmentName),
-                        String.valueOf(dueDate),
-                        String.valueOf(totalPoints),
-                        String.valueOf(notes));
+                        String.valueOf(assignmentName.getText()),
+                        String.valueOf(dueDate.getText()),
+                        String.valueOf(totalPoints.getText()),
+                        String.valueOf(notes.getText()));
             }
         });
 
@@ -89,10 +88,14 @@ public class AddAssignment extends ActionBarActivity {
     protected void onAddButtonClick(String assignmentType,
                                     String assignmentName,
                                     String dueDate,
-                                    String totalPoints,
+                                    String pointsReceived,
                                     String notes){
-        Intent ClassOverView = new Intent(this, ClassOverView.class);
-        setResult(1, ClassOverView);
+        Intent ClassOverView = new Intent();
+
+        //TODO:Handle other parts of the assignment
+        ClassOverView.putExtra("pointsReceived", pointsReceived);
+        ClassOverView.putExtra("assignmentName", assignmentName);
+        setResult(RESULT_OK, ClassOverView);
         finish();
     }
 
