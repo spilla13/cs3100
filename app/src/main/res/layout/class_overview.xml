@@ -39,36 +39,46 @@
                 android:layout_height="match_parent"
                 android:layout_weight="4"
                 android:textColor="@color/white"
-                android:text=" A"
-                android:textSize="35sp" />
+                android:textSize="35sp"
+                android:text=" A"/>
 
         </LinearLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <Button android:id="@+id/returnHomeButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="start"
+                android:layout_weight="1"
                 android:textColor="@color/white"
                 style="?android:attr/borderlessButtonStyle"
-                android:text="Return Home"/>
+                android:text="Home"/>
+
+            <Button android:id="@+id/addCategoryButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                style="?android:attr/borderlessButtonStyle"
+                android:text="Add Category"/>
 
             <Button android:id="@+id/addAssignmentButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="end"
+                android:layout_weight="1"
                 android:textColor="@color/white"
                 style="?android:attr/borderlessButtonStyle"
-                android:text="Add Assignment"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                android:text="Add Assignment" />
 
 
-            </RelativeLayout>
+        </LinearLayout>
+
+        <FrameLayout android:id="@+id/addC"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            class="rsck.chalkboard.AddCategory"/>
 
         <!--This is meant for the fragment location -->
         <LinearLayout android:id="@+id/categoryMain"

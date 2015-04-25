@@ -1,6 +1,8 @@
 package rsck.chalkboard;
 
 import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -49,6 +51,7 @@ public class ClassOverView extends Activity {
         String robotoFontPath = "fonts/roboto_light.ttf";
 
         Button sendAddAssignmentClick = (Button) findViewById(R.id.addAssignmentButton);
+        Button sendCategoryClick = (Button) findViewById(R.id.addCategoryButton);
         Button sendHomeClick = (Button) findViewById(R.id.returnHomeButton);
 
         //Connect the text view
@@ -66,12 +69,20 @@ public class ClassOverView extends Activity {
 
         sendAddAssignmentClick.setTypeface(tf);
         sendHomeClick.setTypeface(tf);
+        sendCategoryClick.setTypeface(tf);
         //cardTitles.setTypeface(rl);
 
         sendAddAssignmentClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onAddAssignmentClick();
+            }
+        });
+
+        sendCategoryClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onAddCategoryClick();
             }
         });
 
@@ -119,6 +130,14 @@ public class ClassOverView extends Activity {
         intent.putExtra("course", course);
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    protected void onAddCategoryClick() {
+        AddCategory frag = new AddCategory();
+        FragmentManager manger = getFragmentManager();
+        FragmentTransaction transaction = manger.beginTransaction();
+        transaction.add(R.id.addC, frag, "meow");
+        transaction.commit();
     }
 
     public void onBackPressed(){
