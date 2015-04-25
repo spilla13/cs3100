@@ -65,6 +65,10 @@ public class WeightedGrades implements Parcelable{
         loadAssignments();
     }
 
+    public String getName(){return name;}
+
+    public Double getWeight(){return weight;}
+
     public double weightedTotal(){
         return weight * unweightedTotal();
     }

@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 public class ClassOverView extends Activity {
     private Course course;
@@ -27,17 +28,21 @@ public class ClassOverView extends Activity {
         course = bundle.getParcelable("course");
 
 
+
         LinearLayout fragContainer = (LinearLayout) findViewById(R.id.categoryMain);
         LinearLayout ll = new LinearLayout(this);
-        ll.setOrientation(LinearLayout.HORIZONTAL);
+        ll.setOrientation(LinearLayout.VERTICAL);
 
         ll.setId(12345);
 
+        ArrayList<WeightedGrades> courseGrades = course.getGrades();
 
-        getFragmentManager().beginTransaction().add(ll.getId(), CategoryFrag.newInstance("Test"), "someTag1").commit();
-        getFragmentManager().beginTransaction().add(ll.getId(), CategoryFrag.newInstance("Homework"), "someTag2").commit();
+        for(WeightedGrades grades : courseGrades) {
+            getFragmentManager().beginTransaction().add(ll.getId(), CategoryFrag.newInstance(grades)).commit();
+        }
 
-        fragContainer.addView(ll);
+        if(courseGrades.size() > 0)
+            fragContainer.addView(ll);
 
         /*CategoryFrag frag = new CategoryFrag();
         FragmentManager manager = getFragmentManager();

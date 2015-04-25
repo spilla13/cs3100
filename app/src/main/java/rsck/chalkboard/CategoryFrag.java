@@ -10,11 +10,11 @@ import android.widget.TextView;
 
 public class CategoryFrag extends android.app.Fragment {
 
-    public static CategoryFrag newInstance(String text){
+    public static CategoryFrag newInstance(WeightedGrades grades){
         CategoryFrag f = new CategoryFrag();
 
         Bundle b = new Bundle();
-        b.putString("text", text);
+        b.putParcelable("grades", grades);
         f.setArguments(b);
         return f;
     }
@@ -27,10 +27,16 @@ public class CategoryFrag extends android.app.Fragment {
         TextView categoryGrade = (TextView) view.findViewById(R.id.categoryGrade);
         TextView categoryPercent = (TextView) view.findViewById(R.id.categoryPercent);
 
+        Bundle bundle = getArguments();
+        WeightedGrades grades = bundle.getParcelable("grades");
+
+        String title = grades.getName() + "(" + grades.getWeight() +")";
+        Double percentGrade = grades.weightedTotal()*100;
+
         //change the text here!
-        categoryTitle.setText(getArguments().getString("text"));
+        categoryTitle.setText(title);
         categoryGrade.setText("A");
-        categoryPercent.setText("100%");
+        categoryPercent.setText( percentGrade.toString() + "%");
 
 
         return view;
