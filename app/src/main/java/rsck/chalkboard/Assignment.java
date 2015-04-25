@@ -6,6 +6,8 @@ import android.os.Parcelable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class Assignment implements Parcelable {
     public int ID;
     public double pointsReceived;
@@ -40,6 +42,17 @@ public class Assignment implements Parcelable {
         }
     }
 
+    public Assignment(JSONObject assignment){
+
+        try {
+            ID = assignment.getInt("id");
+            name = assignment.getString("name");
+            pointsPossible = assignment.getDouble("pointspossible");
+            pointsReceived = assignment.getDouble("pointsreceived");
+        } catch (JSONException e){
+            e.printStackTrace();
+        }
+    }
 
     /*Needed Parcelable Declarations below here*/
     public int describeContents(){
