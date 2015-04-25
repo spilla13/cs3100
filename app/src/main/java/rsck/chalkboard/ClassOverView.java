@@ -38,8 +38,7 @@ public class ClassOverView extends Activity {
         ArrayList<WeightedGrades> courseGrades = course.getGrades();
 
         for(WeightedGrades grades : courseGrades) {
-            getFragmentManager().beginTransaction().add(ll.getId(), CategoryFrag.newInstance(grades)).commit();
-        }
+            getFragmentManager().beginTransaction().add(ll.getId(), CategoryFrag.newInstance(grades), Integer.toString(grades.getID())).commit();        }
 
         if(courseGrades.size() > 0)
             fragContainer.addView(ll);
