@@ -71,12 +71,12 @@
             </RelativeLayout>
 
         <!--This is meant for the fragment location -->
-        <RelativeLayout android:id="@+id/categoryMain"
+        <LinearLayout android:id="@+id/categoryMain"
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
 
-        </RelativeLayout>
+        </LinearLayout>
 
     </LinearLayout>
 

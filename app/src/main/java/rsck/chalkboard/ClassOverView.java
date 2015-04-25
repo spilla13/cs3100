@@ -1,5 +1,6 @@
 package rsck.chalkboard;
 
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
@@ -8,11 +9,13 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.lang.reflect.Type;
 
-public class ClassOverView extends ActionBarActivity {
+public class ClassOverView extends Activity {
     private Course course;
 
     @Override
@@ -24,11 +27,23 @@ public class ClassOverView extends ActionBarActivity {
         course = bundle.getParcelable("course");
 
 
-        CategoryFrag frag = new CategoryFrag();
+        LinearLayout fragContainer = (LinearLayout) findViewById(R.id.categoryMain);
+        LinearLayout ll = new LinearLayout(this);
+        ll.setOrientation(LinearLayout.HORIZONTAL);
+
+        ll.setId(12345);
+
+
+        getFragmentManager().beginTransaction().add(ll.getId(), CategoryFrag.newInstance("Test"), "someTag1").commit();
+        getFragmentManager().beginTransaction().add(ll.getId(), CategoryFrag.newInstance("Homework"), "someTag2").commit();
+
+        fragContainer.addView(ll);
+
+        /*CategoryFrag frag = new CategoryFrag();
         FragmentManager manager = getFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.add(R.id.categoryMain, frag, "saaa");
-        transaction.commit();
+        transaction.commit();*/
 
 
         //Change the font of text
