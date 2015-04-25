@@ -164,6 +164,7 @@ public class WeightedGrades implements Parcelable{
                     homework.put("pointsreceived", pointsReceived);
 
                     Assignment newAssignment = new Assignment(homework);
+                    assignments.add(newAssignment);
                 }
             }
         }catch (JSONException e){

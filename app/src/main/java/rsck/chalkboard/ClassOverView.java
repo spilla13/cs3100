@@ -1,6 +1,7 @@
 package rsck.chalkboard;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
@@ -40,7 +41,7 @@ public class ClassOverView extends Activity {
         ArrayList<WeightedGrades> courseGrades = course.getGrades();
 
         for(WeightedGrades grades : courseGrades) {
-            getFragmentManager().beginTransaction().add(ll.getId(), CategoryFrag.newInstance(grades)).commit();
+            getFragmentManager().beginTransaction().add(ll.getId(), CategoryFrag.newInstance(grades), Integer.toString(grades.getID())).commit();
         }
 
         if(courseGrades.size() > 0)
@@ -96,17 +97,34 @@ public class ClassOverView extends Activity {
         final double pointsReceived;
         final double pointsPossible;
         final String assignmentName;
-        final long catId;
+        final int catID;
 
         //TODO: Handle Result
 
         if(resultCode == RESULT_OK)
-            pointsReceived = intent.getDoubleExtra("pointsReceived", 0);
-            pointsPossible = intent.getDoubleExtra("pointsPossible", 0);
-            assignmentName = intent.getStringExtra("assignmentName");
-            catId = intent.getIntExtra("catID",0);
             if (requestCode == 1) {
+                pointsReceived = intent.getDoubleExtra("pointsReceived", 0);
+                pointsPossible = intent.getDoubleExtra("pointsPossible", 0);
+                assignmentName = intent.getStringExtra("assignmentName");
+                catID = intent.getIntExtra("catID",0);
 
+                Thread t = new Thread(new Runnable() {
+                    public void run() {
+                    course.addHomeworkToCategory(pointsReceived, pointsPossible, assignmentName, catID);
+                    }
+                });
+                t.start();
+                try {
+                    t.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                Fragment frag = getFragmentManager().findFragmentByTag(Integer.toString(catID));
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.detach(frag);
+                ft.attach(frag);
+                ft.commit();
 
                 onRestart(); // your "refresh" code
             }
