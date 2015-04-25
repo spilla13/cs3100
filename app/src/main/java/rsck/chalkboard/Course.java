@@ -129,19 +129,6 @@ public class Course implements Parcelable {
         return total;
     }
 
-    public boolean addHomeworkToCategory(double pointsReceived, double pointsPossible,
-                                         String name, int catID){
-
-        for(WeightedGrades cat : grades){
-            if(cat.getID() == catID){
-                return cat.addAssignment(pointsReceived, pointsPossible, name, catID, ID);
-            }
-        }
-
-        return false;
-    }
-
-
     public boolean addWeightedCategory(String catName, String weight){
         Boolean success = false;
         DjangoFunctions django = new DjangoFunctions();

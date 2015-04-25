@@ -34,7 +34,6 @@ public class DjangoFunctions
             httppost.addHeader("content-type", "application/x-www-form-urlencoded");
             httppost.setEntity(regString);
 
-
             HttpResponse response = httpclient.execute(httppost);
 
             //return string from Django server

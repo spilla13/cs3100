@@ -19,6 +19,7 @@ import java.util.Arrays;
 public class AddAssignment extends ActionBarActivity {
     private EditText assignmentName;
     private Spinner classSpinner;
+    private String[] assignmentType;
     private EditText pointsPossibleText;
     private EditText pointsReceivedText;
     private EditText notes;
@@ -40,6 +41,7 @@ public class AddAssignment extends ActionBarActivity {
             catNames.add(grade.getName());
 
         TextView title = (TextView) findViewById(R.id.add_assignment_title);
+        assignmentType = getResources().getStringArray(R.array.assignment_type);
         classSpinner = (Spinner) findViewById(R.id.assignmentTypeSpinner);
         assignmentName = (EditText) findViewById(R.id.assignmentTextBox);
         pointsReceivedText = (EditText) findViewById(R.id.receivedPoints);

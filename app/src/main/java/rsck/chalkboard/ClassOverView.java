@@ -1,7 +1,6 @@
 package rsck.chalkboard;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
@@ -39,8 +38,7 @@ public class ClassOverView extends Activity {
         ArrayList<WeightedGrades> courseGrades = course.getGrades();
 
         for(WeightedGrades grades : courseGrades) {
-            getFragmentManager().beginTransaction().add(ll.getId(), CategoryFrag.newInstance(grades), Integer.toString(grades.getID())).commit();
-        }
+            getFragmentManager().beginTransaction().add(ll.getId(), CategoryFrag.newInstance(grades), Integer.toString(grades.getID())).commit();        }
 
         if(courseGrades.size() > 0)
             fragContainer.addView(ll);
@@ -52,6 +50,7 @@ public class ClassOverView extends Activity {
         String robotoFontPath = "fonts/roboto_light.ttf";
 
         Button sendAddAssignmentClick = (Button) findViewById(R.id.addAssignmentButton);
+        Button sendCategoryClick = (Button) findViewById(R.id.addCategoryButton);
         Button sendHomeClick = (Button) findViewById(R.id.returnHomeButton);
 
         //Connect the text view
@@ -69,12 +68,20 @@ public class ClassOverView extends Activity {
 
         sendAddAssignmentClick.setTypeface(tf);
         sendHomeClick.setTypeface(tf);
+        sendCategoryClick.setTypeface(tf);
         //cardTitles.setTypeface(rl);
 
         sendAddAssignmentClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onAddAssignmentClick();
+            }
+        });
+
+        sendCategoryClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onAddCategoryClick();
             }
         });
 
@@ -95,37 +102,20 @@ public class ClassOverView extends Activity {
         final double pointsReceived;
         final double pointsPossible;
         final String assignmentName;
-        final int catID;
+        final long catId;
 
         //TODO: Handle Result
 
-        if(resultCode == RESULT_OK) {
+        if(resultCode == RESULT_OK)
+            pointsReceived = intent.getDoubleExtra("pointsReceived", 0);
+            pointsPossible = intent.getDoubleExtra("pointsPossible", 0);
+            assignmentName = intent.getStringExtra("assignmentName");
+            catId = intent.getIntExtra("catID",0);
             if (requestCode == 1) {
-                pointsReceived = intent.getDoubleExtra("pointsReceived", 0);
-                pointsPossible = intent.getDoubleExtra("pointsPossible", 0);
-                assignmentName = intent.getStringExtra("assignmentName");
-                catID = intent.getIntExtra("catID", 0);
 
-                Thread t = new Thread(new Runnable() {
-                    public void run() {
-                        course.addHomeworkToCategory(pointsReceived, pointsPossible, assignmentName, catID);
-                    }
-                });
-                t.start();
-                try {
-                    t.join();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                Intent newIntent = getIntent();
-                newIntent.putExtra("course", course);
-                finish();
-                startActivity(newIntent);
 
                 onRestart(); // your "refresh" code
             }
-        }
     }
 
     protected void onAddAssignmentClick() {
@@ -139,6 +129,14 @@ public class ClassOverView extends Activity {
         intent.putExtra("course", course);
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    protected void onAddCategoryClick() {
+        AddCategory frag = new AddCategory();
+        FragmentManager manger = getFragmentManager();
+        FragmentTransaction transaction = manger.beginTransaction();
+        transaction.add(R.id.addC, frag, "meow");
+        transaction.commit();
     }
 
     public void onBackPressed(){

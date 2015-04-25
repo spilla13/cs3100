@@ -7,10 +7,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,9 +16,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public class Login extends Activity {
-
-    private String[] serverType;
-
     //Basically a constructor for when activity is created
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,25 +27,12 @@ public class Login extends Activity {
         final EditText password = (EditText) findViewById(R.id.password);
         Button loginButton = (Button) findViewById(R.id.loginButton);
         Button signUpButton = (Button) findViewById(R.id.signUpButton);
-        serverType = getResources().getStringArray(R.array.server_choice);
-        final Spinner serverSpinner = (Spinner) findViewById(R.id.server_select);
-
-        //Here is the code that sets up the spinner
-        ArrayAdapter<String> serverAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, serverType);
-        serverAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        serverSpinner.setAdapter(serverAdapter);
+        //final TextView rando = (TextView) findViewById(R.id.randomText);
 
 
         //Method to call the login function on the button press
         loginButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-
-                //Get the spinner value
-                final String serverToast = String.valueOf(serverSpinner.getSelectedItem());
-                //Make the toast
-                Toast.makeText(getApplicationContext(), serverToast, Toast.LENGTH_SHORT).show();
-
 
                 final AtomicBoolean success = new AtomicBoolean(false);
 
@@ -127,8 +109,6 @@ public class Login extends Activity {
 
     //The login function for the login page
     public void sendToHome(User user){
-        //Makes the toast, then waits a second so it can be read
-
         /*If the user name is valid then send to homescreen */
         Intent nextIntent = new Intent(this, Home.class);
         //Send the username and password to the database and then next activity

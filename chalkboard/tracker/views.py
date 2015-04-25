@@ -100,7 +100,7 @@ def addHomework(request):
        
        optional:
          weight:    <weight>
-         pointspossible: <# points possible>
+         points_possible: <# points possible>
     """
     if check(request) is not None:
         return check(request)
@@ -120,8 +120,8 @@ def addHomework(request):
 
     if 'weight' in data:
         homework.weight = data['weight']
-    if 'pointspossible' in data:
-        homework.pointspossible = data['pointspossible']
+    if 'points_possible' in data:
+        homework.points_possible = data['points_possible']
 
     homework.save()
 
@@ -134,7 +134,7 @@ def addGrade(request):
         homeworkid: <homeworkid>
         
         optional:
-         pointsreceived: <# points>
+         points_received: <# points>
 
     """
 
@@ -156,8 +156,8 @@ def addGrade(request):
     grade = Grade(course=Course.objects.get(id=data['courseid']), homework=Homework.objects.get(id=data['homeworkid']), 
             user=request.user)
 
-    if 'pointsreceived' in data:
-        grade.points_received = data['pointsreceived']
+    if 'points_received' in data:
+        grade.points_received = data['points_received']
 
     grade.save()
 

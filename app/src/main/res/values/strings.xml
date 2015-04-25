@@ -37,11 +37,6 @@
         <item>Other</item>
     </string-array>
 
-    <string-array name="server_choice">
-        <item>Personal Server</item>
-        <item>School Server</item>
-    </string-array>
-
     <!--Colors-->
     <color name="white">#F3F2F2</color>
     <color name="black">#000000</color>

@@ -51,7 +51,6 @@ public class CategoryFrag extends android.app.Fragment {
 
         cf.setId(65401);
 
-
         for(Assignment assignment : grades.getAssignments())
             getFragmentManager().beginTransaction().add(cf.getId(),
                     AssignmentFrag.newInstance(assignment),
