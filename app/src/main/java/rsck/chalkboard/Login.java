@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +18,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public class Login extends Activity {
+
+    private String[] serverType;
+
     //Basically a constructor for when activity is created
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +34,23 @@ public class Login extends Activity {
         Button signUpButton = (Button) findViewById(R.id.signUpButton);
         //final TextView rando = (TextView) findViewById(R.id.randomText);
 
+        serverType = getResources().getStringArray(R.array.server_choice);
+        final Spinner serverSpinner = (Spinner) findViewById(R.id.server_select);
+
+        //Here is the code that sets up the spinner
+        ArrayAdapter<String> serverAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, serverType);
+        serverAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        serverSpinner.setAdapter(serverAdapter);
 
         //Method to call the login function on the button press
         loginButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
+
+            //Get the spinner value
+            final String serverToast = String.valueOf(serverSpinner.getSelectedItem());
+            //Make the toast
+            Toast.makeText(getApplicationContext(), serverToast, Toast.LENGTH_SHORT).show();
 
             //Tells users they are logging in
             Toast.makeText(getApplicationContext(), "Authenticating",

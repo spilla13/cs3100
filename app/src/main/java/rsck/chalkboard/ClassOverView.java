@@ -96,17 +96,29 @@ public class ClassOverView extends Activity implements AddCategory.Communicator{
         final double pointsReceived;
         final double pointsPossible;
         final String assignmentName;
-        final long catId;
+        final int catID;
 
         //TODO: Handle Result
 
         if(resultCode == RESULT_OK)
-            pointsReceived = intent.getDoubleExtra("pointsReceived", 0);
-            pointsPossible = intent.getDoubleExtra("pointsPossible", 0);
-            assignmentName = intent.getStringExtra("assignmentName");
-            catId = intent.getIntExtra("catID",0);
-            if (requestCode == 1) {
 
+            if (requestCode == 1) {
+                pointsReceived = intent.getDoubleExtra("pointsReceived", 0);
+                pointsPossible = intent.getDoubleExtra("pointsPossible", 0);
+                assignmentName = intent.getStringExtra("assignmentName");
+                catID = intent.getIntExtra("catID", 0);
+
+                Thread t = new Thread(new Runnable() {
+                    public void run() {
+                        course.addHomeworkToCategory(pointsReceived, pointsPossible, assignmentName, catID);
+                    }
+                });
+                t.start();
+                try {
+                    t.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
                 onRestart(); // your "refresh" code
             }
