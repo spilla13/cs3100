@@ -58,9 +58,27 @@ public class ClassTitleFragment extends ListFragment{
     }
 
     void showDetails(int index){
-        Intent intent = new Intent();
-        intent.setClass(getActivity(), ClassOverView.class);
+        Intent intent = new Intent(getActivity(), ClassOverView.class);
+
+        Home homeActivity = (Home) getActivity();
+        Course course = homeActivity.getUser().getCourse(index);
+
         intent.putExtra("index", index);
-        startActivity(intent);
+        intent.putExtra("course", course);
+        startActivityForResult(intent, 2);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent){
+        super.onActivityResult(requestCode, resultCode, intent);
+
+        Bundle bundle = intent.getExtras();
+        Course course = bundle.getParcelable("course");
+
+        Home homeActivity = (Home) getActivity();
+        boolean found = homeActivity.getUser().updateCourse(course);
+
+        if(found)
+            homeActivity.updateTitleFragment();
     }
 }

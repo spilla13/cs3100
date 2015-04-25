@@ -36,7 +36,10 @@ public class Assignment implements Parcelable {
             JSONObject gradeResponse = django.access("grade", Integer.toString(user_ID), token, query);
             JSONObject grade = gradeResponse.getJSONArray("data").getJSONObject(0);
 
-            pointsReceived = grade.getDouble("points_received");
+            if(grade.has("points_received"))
+                pointsReceived = grade.getDouble("points_received");
+            else
+                pointsReceived = 0;
         } catch (JSONException e) {
             e.printStackTrace();
         }

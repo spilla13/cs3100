@@ -179,6 +179,8 @@ public class WeightedGrades implements Parcelable{
         out.writeString(name);
         out.writeDouble(weight);
         out.writeTypedList(assignments);
+        out.writeInt(user_ID);
+        out.writeString(token);
     }
 
     public WeightedGrades(Parcel in) {
@@ -188,6 +190,8 @@ public class WeightedGrades implements Parcelable{
         name = in.readString();
         weight = in.readDouble();
         in.readTypedList(assignments, Assignment.CREATOR);
+        user_ID = in.readInt();
+        token = in.readString();
     }
 
     public static final Parcelable.Creator<WeightedGrades> CREATOR = new Parcelable.Creator<WeightedGrades>() {

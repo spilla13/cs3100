@@ -11,11 +11,15 @@ import android.widget.TextView;
 import java.lang.reflect.Type;
 
 public class ClassOverView extends ActionBarActivity {
+    private Course course;
+
     @Override
     protected void onCreate(Bundle savedInstances){
         super.onCreate(savedInstances);
         setContentView(R.layout.class_overview);
 
+        Bundle bundle = getIntent().getExtras();
+        course = bundle.getParcelable("course");
 
         //Change the font of text
         //The font path
@@ -84,5 +88,14 @@ public class ClassOverView extends ActionBarActivity {
 
     protected void onHomeClick() {
         finish();
+    }
+
+    public void onBackPressed(){
+
+        Intent intent = new Intent();
+        intent.putExtra("course", course);
+        setResult(RESULT_OK, intent);
+
+        super.onBackPressed();
     }
 }

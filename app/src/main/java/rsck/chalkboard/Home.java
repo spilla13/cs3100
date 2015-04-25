@@ -90,11 +90,7 @@ public class Home extends Activity{
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                ClassTitleFragment newFragment = new ClassTitleFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.classOverList, newFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                updateTitleFragment();
 
                 onRestart(); // your "refresh" code
             }
@@ -102,11 +98,19 @@ public class Home extends Activity{
     }
 
     protected void onAddButtonClick() {
-        Intent AddClass = new Intent(this, AddClass.class);
-        startActivityForResult(AddClass, 1);
+        Intent addClassIntent = new Intent(this, AddClass.class);
+        startActivityForResult(addClassIntent, 1);
     }
 
     public User getUser(){
         return user;
+    }
+
+    public void updateTitleFragment(){
+        ClassTitleFragment newFragment = new ClassTitleFragment();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.classOverList, newFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }
