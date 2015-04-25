@@ -10,6 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public class Login extends Activity {
@@ -30,6 +33,12 @@ public class Login extends Activity {
         //Method to call the login function on the button press
         loginButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
+
+                final AtomicBoolean pass = new AtomicBoolean(false);
+                //Tells users they are logging in
+                Toast.makeText(getApplicationContext(), "Logging In",
+                        Toast.LENGTH_SHORT).show();
+
                 new Thread(new Runnable() {
                     public void run() {
                         //Call the login function and let it do the rest
@@ -44,12 +53,17 @@ public class Login extends Activity {
                         if(user.login(userName, passWord)) {
                             user.load();
                             sendToHome(user);
+                            pass.set(true);
                             //Finish the login activity and prevent users from going back
                             finish();
                         }
-                        //TODO: print Login Failure message.
+                        //TODO: print Login Failure message, make it so a boolean can be pass back from the thread... it only accepts final mode, cannot do volatile Atomic boolean.
                     }
                 }).start();
+                /*if(!pass.get()) { //this is the error message
+                    Toast.makeText(getApplicationContext(), "Error on Login",
+                            Toast.LENGTH_LONG).show();
+                }*/
             }
         });
 
