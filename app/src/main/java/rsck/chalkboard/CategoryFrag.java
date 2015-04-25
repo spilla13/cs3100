@@ -2,7 +2,6 @@ package rsck.chalkboard;
 
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +41,16 @@ public class CategoryFrag extends android.app.Fragment {
         categoryPercent.setText( percentGrade.toString() + "%");
 
         //This calls the assignment fragment
+        LinearLayout fragContainer = (LinearLayout) view.findViewById(R.id.assignmentMain);
+        LinearLayout cf = new LinearLayout(getActivity());
+        cf.setOrientation(LinearLayout.VERTICAL);
+
+        cf.setId(65401);
+
+        getFragmentManager().beginTransaction().add(cf.getId(), AssignmentFrag.newInstance("Assignment 1"), "someTag1").commit();
+        getFragmentManager().beginTransaction().add(cf.getId(), AssignmentFrag.newInstance("Assignment 2"), "someTag2").commit();
+
+        fragContainer.addView(cf);
 
 
         return view;

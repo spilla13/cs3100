@@ -16,11 +16,11 @@ import android.widget.TextView;
 
 public class AssignmentFrag extends Fragment{
 
-    public static AssignmentFrag newInstance(WeightedGrades grades){
+    public static AssignmentFrag newInstance(String text){
         AssignmentFrag f = new AssignmentFrag();
 
         Bundle b = new Bundle();
-        b.putParcelable("grades", grades);
+        b.putString("text", text);
         f.setArguments(b);
         return f;
     }
@@ -33,16 +33,10 @@ public class AssignmentFrag extends Fragment{
         TextView assignmentGrade = (TextView) view.findViewById(R.id.assignmentGrade);
         //Button
 
-        Bundle bundle = getArguments();
-        WeightedGrades grades = bundle.getParcelable("grades");
-
-        String title = grades.getName() + "(" + grades.getWeight() +")";
-        Double percentGrade = grades.weightedTotal()*100;
 
         //change the text here!
-        assignmentTitle.setText(title);
+        assignmentTitle.setText(getArguments().getString("text"));
         assignmentGrade.setText("A");
-
 
         return view;
     }
