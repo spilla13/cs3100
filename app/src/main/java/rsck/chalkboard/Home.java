@@ -75,10 +75,10 @@ public class Home extends Activity{
         super.onActivityResult(requestCode, resultCode, intent);
         final String courseName;
         final String schoolName;
-        if(requestCode == 1) {
+        if(resultCode == RESULT_OK) {
              courseName = intent.getStringExtra("courseName");
              schoolName = intent.getStringExtra("schoolName");
-            if (resultCode == RESULT_OK) {
+            if (requestCode == 1) {
                 Thread t = new Thread(new Runnable() {
                     public void run() {
                         user.addCourse(courseName, schoolName);

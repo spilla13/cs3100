@@ -68,12 +68,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Due Date: "/>
+            android:text="Points Received: "/>
 
-        <EditText android:id="@+id/dateText"
+        <EditText android:id="@+id/receivedPoints"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:inputType="date"/>
+            android:inputType="number"/>
 
     </LinearLayout>
 
@@ -90,7 +90,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Total Points: "/>
 
-        <EditText android:id="@+id/tPoints"
+        <EditText android:id="@+id/totalPoints"
             android:layout_width="125dp"
             android:layout_height="wrap_content"
             android:inputType="number"/>

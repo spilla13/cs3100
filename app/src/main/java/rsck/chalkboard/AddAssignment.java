@@ -19,8 +19,8 @@ public class AddAssignment extends ActionBarActivity {
     private EditText assignmentName;
     private Spinner classSpinner;
     private String[] assignmentType;
-    private EditText dueDate;
-    private EditText totalPoints;
+    private EditText pointsPossibleText;
+    private EditText pointsReceivedText;
     private EditText notes;
 
     @Override
@@ -35,8 +35,8 @@ public class AddAssignment extends ActionBarActivity {
         assignmentType = getResources().getStringArray(R.array.assignment_type);
         classSpinner = (Spinner) findViewById(R.id.assignmentTypeSpinner);
         assignmentName = (EditText) findViewById(R.id.assignmentTextBox);
-        dueDate = (EditText) findViewById(R.id.dateText);
-        totalPoints = (EditText) findViewById(R.id.tPoints);
+        pointsReceivedText = (EditText) findViewById(R.id.receivedPoints);
+        pointsPossibleText = (EditText) findViewById(R.id.totalPoints);
         notes = (EditText) findViewById(R.id.descriptionBox);
 
         title.setTypeface(tf);
@@ -45,12 +45,27 @@ public class AddAssignment extends ActionBarActivity {
         sendAssButtonClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Double pointsReceived;
+                Double pointsPossible;
+
+                if(pointsReceivedText.getText().length() > 0)
+                    pointsReceived = Double.parseDouble(pointsReceivedText.getText().toString());
+                else
+                    pointsReceived = 0.0;
+
+                if(pointsPossibleText.getText().length() > 0)
+                    pointsPossible = Double.parseDouble(pointsPossibleText.getText().toString());
+                else
+                    pointsPossible = 0.0;
+
+
                 String var;
                 var = String.valueOf(classSpinner.getSelectedItem());
                 onAddButtonClick(Arrays.toString(assignmentType),
                         String.valueOf(assignmentName.getText()),
-                        String.valueOf(dueDate.getText()),
-                        String.valueOf(totalPoints.getText()),
+                        pointsPossible,
+                        pointsReceived,
                         String.valueOf(notes.getText()));
             }
         });
@@ -87,16 +102,23 @@ public class AddAssignment extends ActionBarActivity {
 
     protected void onAddButtonClick(String assignmentType,
                                     String assignmentName,
-                                    String dueDate,
-                                    String pointsReceived,
+                                    Double pointsPossible,
+                                    Double pointsReceived,
                                     String notes){
         Intent ClassOverView = new Intent();
 
         //TODO:Handle other parts of the assignment
         ClassOverView.putExtra("pointsReceived", pointsReceived);
+        ClassOverView.putExtra("pointsPossible", pointsPossible);
         ClassOverView.putExtra("assignmentName", assignmentName);
         setResult(RESULT_OK, ClassOverView);
         finish();
     }
 
+    public void onBackPressed(){
+        Intent home = new Intent();
+        setResult(RESULT_CANCELED, home);
+
+        super.onBackPressed();
+    }
 }
