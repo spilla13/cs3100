@@ -90,7 +90,6 @@ public class Course implements Parcelable {
 
                     JSONObject grade = data.getJSONObject(i);
 
-                    //TODO: SEND JSON to query Data
                     /*
                     * Calls: http://cs3100.brod.es:3100/get/homework/?token='token'&user='ID'
                     * Where: {"id": 'grade.getInt("homework_id")'}

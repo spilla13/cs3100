@@ -111,28 +111,43 @@ public class User implements Parcelable{
     public void load(){
         DjangoFunctions django = new DjangoFunctions();
 
+        JSONObject gradeQuery = new JSONObject();
+        gradeQuery.put("user_id",ID);
+        JSONObject gradeRes = django.access("grade", Integer.toString(ID), token ,gradeQuery);
+        JSONArray gradeDat = gradeRes.getJSONArray("data");
+        ArrayList<Integer> myCourses = new ArrayList<>();
+
+        for(int i = 0; i < gradeDat.length(); i++) {
+            Integer thisUser = gradeDat.getJSONObject(i).getInt("user_id");
+            if(thisUser == ID) {
+                Integer thisCourseID = gradeDat.getJSONObject(i).getInt("course_id");
+                if (!myCourses.contains(thisCourseID))
+                    myCourses.add(thisCourseID);
+            }
+        }
+
         /*
         * Calls:
         * URL = http://cs3100.brod.es:3100/get/course/?token='token'&user='ID'
         * "{}"
         */
         JSONObject JSONQuery = new JSONObject();
-        JSONObject response = django.access("course", Integer.toString(ID), token, JSONQuery);
-
+        JSONObject courseRes = django.access("course", Integer.toString(ID), token, JSONQuery);
         try {
-            if(response.getBoolean("success")){
-                JSONArray data = response.getJSONArray("data");
+            if(courseRes.getBoolean("success")){
+                JSONArray courseData = courseRes.getJSONArray("data");
 
-                for(int i = 0; i < data.length(); i++){
-                    JSONObject courseJSON = data.getJSONObject(i);
+                for(int i = 0; i < courseData.length(); i++){
+                    int courseID = courseData.getJSONObject(i).getInt("id");
+                    if(myCourses.contains(courseID)) {
+                        JSONObject courseJSON = courseData.getJSONObject(i);
 
-                    Course newCourse = new Course(courseJSON, ID, token);
+                        Course newCourse = new Course(courseJSON, ID, token);
 
-                    courses.add(newCourse);
+                        courses.add(newCourse);
+                    }
                 }
             }
-                //TODO: Handle Failed Course request.
-
         } catch (JSONException e) {
             e.printStackTrace();
         }

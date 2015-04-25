@@ -81,8 +81,6 @@ public class Home extends Activity{
             if (resultCode == RESULT_OK) {
                 Thread t = new Thread(new Runnable() {
                     public void run() {
-
-                        System.out.print("Helloooo");
                         user.addCourse(courseName, schoolName);
                     }
                 });
