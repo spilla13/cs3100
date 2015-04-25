@@ -125,5 +125,5 @@ public class Home extends Activity{
         transaction.replace(R.id.classOverList, newFragment);
         transaction.addToBackStack(null);
         transaction.commit();
-    }
+    }//jacob's request
 }

@@ -23,14 +23,16 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="10dp">
 
-        <EditText
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingRight="5dp"
             android:text="Current Grade:"/>
 
-        <EditText android:id="@+id/cGrade"
+        <TextView android:id="@+id/cGrade"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="N/A"/>
@@ -39,14 +41,16 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="10dp">
 
-        <EditText
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingRight="5dp"
             android:text="Grade Worth:"/>
 
-        <EditText android:id="@+id/maxGrade"
+        <TextView android:id="@+id/maxGrade"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="N/A"/>
@@ -55,14 +59,16 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="10dp">
 
-        <EditText
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingRight="5dp"
             android:text="Percentage:"/>
 
-        <EditText android:id="@+id/cPercent"
+        <TextView android:id="@+id/cPercent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="N/A"/>
@@ -71,14 +77,16 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="10dp">
 
-        <EditText
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingRight="5dp"
             android:text="Category:"/>
 
-        <EditText android:id="@+id/cCategory"
+        <TextView android:id="@+id/cCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="N/A"/>
@@ -87,14 +95,16 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="10dp">
 
-        <EditText
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingRight="5dp"
             android:text="School Name:"/>
 
-        <EditText android:id="@+id/cSchool"
+        <TextView android:id="@+id/cSchool"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="N/A"/>
@@ -103,14 +113,16 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="10dp">
 
-        <EditText
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingRight="5dp"
             android:text="Class Belongs To:"/>
 
-        <EditText android:id="@+id/cClass"
+        <TextView android:id="@+id/cClass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="N/A"/>
@@ -129,7 +141,7 @@
             style="?android:attr/borderlessButtonStyle"
             android:text="Delete"/>
 
-        <Button android:id="@+id/Modify"
+        <Button android:id="@+id/modify"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
