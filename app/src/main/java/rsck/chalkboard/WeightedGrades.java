@@ -8,6 +8,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Array;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
 /**
@@ -77,11 +80,29 @@ public class WeightedGrades implements Parcelable{
 
     public int getID(){return ID;}
 
+    public String getLetterGrade(){
+        double total = weightedTotal();
+        String letterGrade;
+
+        if(total > .9)
+            letterGrade = "A";
+        else if(total > .8)
+            letterGrade = "B";
+        else if(total > .7)
+            letterGrade = "C";
+        else if(total > .6)
+            letterGrade = "D";
+        else
+            letterGrade = "F";
+
+        return letterGrade;
+    }
+
     public double weightedTotal(){
         return weight * unweightedTotal();
     }
 
-    public float unweightedTotal(){
+    public double unweightedTotal(){
         return pointsReceived() / pointsPossible();
     }
 
@@ -90,6 +111,9 @@ public class WeightedGrades implements Parcelable{
 
         for(Assignment assignment : assignments)
             total += assignment.pointsPossible;
+
+        if(total == 0)
+            total = 1;
 
         return total;
     }
@@ -141,7 +165,7 @@ public class WeightedGrades implements Parcelable{
         //prepare and add to homework table.
         try{
             homework.put("name", name);
-            homework.put("pointspossible", pointsPossible);
+            homework.put("points_possible", pointsPossible);
             homework.put("categoryid", cat);
         }catch(JSONException e) {
             e.printStackTrace();

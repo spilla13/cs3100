@@ -16,11 +16,11 @@ import android.widget.TextView;
 
 public class AssignmentFrag extends Fragment{
 
-    public static AssignmentFrag newInstance(String text){
+    public static AssignmentFrag newInstance(Assignment assignment){
         AssignmentFrag f = new AssignmentFrag();
 
         Bundle b = new Bundle();
-        b.putString("text", text);
+        b.putParcelable("assignment", assignment);
         f.setArguments(b);
         return f;
     }
@@ -33,10 +33,12 @@ public class AssignmentFrag extends Fragment{
         TextView assignmentGrade = (TextView) view.findViewById(R.id.assignmentGrade);
         //Button
 
+        Bundle bundle = getArguments();
+        Assignment assignment = bundle.getParcelable("assignment");
 
         //change the text here!
-        assignmentTitle.setText(getArguments().getString("text"));
-        assignmentGrade.setText("A");
+        assignmentTitle.setText(assignment.name);
+        assignmentGrade.setText(assignment.getLetterGrade());
 
         return view;
     }
