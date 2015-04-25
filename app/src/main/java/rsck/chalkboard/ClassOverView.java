@@ -78,14 +78,16 @@ public class ClassOverView extends ActionBarActivity {
         super.onActivityResult(requestCode, resultCode, intent);
 
         final double pointsReceived;
+        final double pointsPossible;
         final String assignmentName;
 
         //TODO: Handle Result
 
-        if(requestCode == 1)
-            //pointsReceived = intent.getDoubleExtra("pointsReceived", 0);
+        if(resultCode == RESULT_OK)
+            pointsReceived = intent.getDoubleExtra("pointsReceived", 0);
+            pointsPossible = intent.getDoubleExtra("pointsPossible", 0);
             assignmentName = intent.getStringExtra("assignmentName");
-            if (resultCode == RESULT_OK) {
+            if (requestCode == 1) {
 
                 onRestart(); // your "refresh" code
             }

@@ -103,4 +103,11 @@ public class AddClass extends ActionBarActivity {
         setResult(RESULT_OK, home);
         finish();
     }
+
+    public void onBackPressed(){
+        Intent home = new Intent();
+        setResult(RESULT_CANCELED, home);
+
+        super.onBackPressed();
+    }
 }
