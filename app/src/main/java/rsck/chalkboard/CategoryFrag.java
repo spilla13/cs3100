@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
 public class CategoryFrag extends android.app.Fragment {
@@ -33,12 +36,13 @@ public class CategoryFrag extends android.app.Fragment {
         WeightedGrades grades = bundle.getParcelable("grades");
 
         String title = grades.getName() + "(" + grades.getWeight() +")";
-        Double percentGrade = grades.weightedTotal()*100;
+        double percentGrade = grades.weightedTotal()*100;
+        String sPercentGrade = new BigDecimal(percentGrade).round(new MathContext(4, RoundingMode.HALF_UP)).toString();
 
         //change the text here!
         categoryTitle.setText(title);
-        categoryGrade.setText("A");
-        categoryPercent.setText( percentGrade.toString() + "%");
+        categoryGrade.setText(grades.getLetterGrade());
+        categoryPercent.setText( sPercentGrade + "%");
 
         //This calls the assignment fragment
         LinearLayout fragContainer = (LinearLayout) view.findViewById(R.id.assignmentMain);
@@ -49,11 +53,15 @@ public class CategoryFrag extends android.app.Fragment {
 
 
         for(Assignment assignment : grades.getAssignments())
-            getFragmentManager().beginTransaction().add(cf.getId(), AssignmentFrag.newInstance(assignment.name), Integer.toString(assignment.ID)).commit();
+            getFragmentManager().beginTransaction().add(cf.getId(),
+                    AssignmentFrag.newInstance(assignment),
+                    Integer.toString(assignment.ID)).commit();
 
         fragContainer.addView(cf);
 
 
         return view;
     }
+
+
 }
