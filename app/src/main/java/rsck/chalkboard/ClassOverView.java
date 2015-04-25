@@ -24,10 +24,10 @@ public class ClassOverView extends ActionBarActivity {
         course = bundle.getParcelable("course");
 
 
-        AssignmentFrag frag = new AssignmentFrag();
+        CategoryFrag frag = new CategoryFrag();
         FragmentManager manager = getFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.add(R.id.categoryMain, frag, "DaPooPoo"); //tee hee
+        transaction.add(R.id.categoryMain, frag, "saaa");
         transaction.commit();
 
 
