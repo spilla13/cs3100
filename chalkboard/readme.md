@@ -444,7 +444,7 @@ Errors can be returned for the lack of names in JSON or ids being too short.
 
 Adds an assignment to the tracker. Anyone can use this assignment.
 
-pointspossible is an optional fields. They, respectively, default to
+points_possible is an optional field. They, respectively, default to
 1 and 0.
 
 ```json
@@ -476,14 +476,14 @@ Errors can be returned for the lack of fields in the JSON-encoded data, ids not 
 
 Adds a grade to the tracker. Only the owner can see their grades (right..?).
 
-pointsreceived is an optional field, it defaults to 0.
+points_received is an optional field, it defaults to 0.
 
 ```json
   {
     "courseid": 3,
     "homewordid": 1,
 
-    "pointsreceived": 100
+    "points_received": 100
   }
 ``` 
 
