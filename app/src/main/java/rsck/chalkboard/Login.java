@@ -34,12 +34,13 @@ public class Login extends Activity {
         loginButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
 
-                final AtomicBoolean pass = new AtomicBoolean(false);
+                final AtomicBoolean success = new AtomicBoolean(false);
+
                 //Tells users they are logging in
                 Toast.makeText(getApplicationContext(), "Logging In",
                         Toast.LENGTH_SHORT).show();
 
-                new Thread(new Runnable() {
+                Thread t = new Thread(new Runnable() {
                     public void run() {
                         //Call the login function and let it do the rest
 
@@ -52,18 +53,25 @@ public class Login extends Activity {
                         User user = new User();
                         if(user.login(userName, passWord)) {
                             user.load();
+                            success.set(true);
                             sendToHome(user);
-                            pass.set(true);
                             //Finish the login activity and prevent users from going back
                             finish();
                         }
                         //TODO: print Login Failure message, make it so a boolean can be pass back from the thread... it only accepts final mode, cannot do volatile Atomic boolean.
                     }
-                }).start();
-                /*if(!pass.get()) { //this is the error message
+                });
+                t.start();
+                try {
+                    t.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                if(!success.get()) { //this is the error message
                     Toast.makeText(getApplicationContext(), "Error on Login",
                             Toast.LENGTH_LONG).show();
-                }*/
+                }
             }
         });
 

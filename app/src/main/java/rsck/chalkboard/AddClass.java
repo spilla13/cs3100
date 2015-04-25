@@ -95,11 +95,12 @@ public class AddClass extends ActionBarActivity {
                                     String date,
                                     String schoolName) {
 
-        Course addedCourse = new Course();
-
+        //TODO: HAndle form data.
 
 
         Intent Home = new Intent(this, Home.class);
+        Home.putExtra("courseName", className);
+        Home.putExtra("schoolName", schoolName);
         setResult(1, Home);
         finish();
     }

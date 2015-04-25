@@ -74,6 +74,22 @@ public class Home extends Activity{
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
 
+         //Error here. Doesn't get intent.
+
+        String courseName = getIntent().getStringExtra("courseName");
+        String schoolName = getIntent().getStringExtra("schoolName");
+
+        if(!user.addCourse(courseName, schoolName))
+        {}
+            //Todo:Give error.
+
+        ClassTitleFragment newFragment = new ClassTitleFragment();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.classOverList, newFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+
+
 
 
         if (requestCode == 1) {
