@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 public class CategoryFrag extends android.app.Fragment {
 
+    public static final int HW_FRAG_ID = 2;
     private WeightedGrades weightedGrades;
 
     public static CategoryFrag newInstance(WeightedGrades grades){
@@ -51,10 +52,10 @@ public class CategoryFrag extends android.app.Fragment {
         LinearLayout cf = new LinearLayout(getActivity());
         cf.setOrientation(LinearLayout.VERTICAL);
 
-        cf.setId(65401);
+        cf.setId(HW_FRAG_ID);
 
         for(Assignment assignment : weightedGrades.getAssignments())
-            getFragmentManager().beginTransaction().add(cf.getId(),
+            getChildFragmentManager().beginTransaction().add(cf.getId(),
                     AssignmentFrag.newInstance(assignment),
                     Integer.toString(assignment.ID)).commit();
 

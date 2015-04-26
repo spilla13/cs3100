@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/default_background" >
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
 
     <LinearLayout
         android:orientation="horizontal"
@@ -15,9 +14,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/white"
             android:text="Assignments"
-            android:textSize="30sp"/>
+            android:textSize="25sp"/>
 
     </LinearLayout>
 
@@ -29,13 +27,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="15sp"
             android:paddingRight="5dp"
             android:text="Current Grade:"/>
 
         <TextView android:id="@+id/cGrade"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="N/A"/>
+            android:textSize="15sp"/>
 
     </LinearLayout>
 
@@ -47,13 +46,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="15sp"
             android:paddingRight="5dp"
             android:text="Grade Worth:"/>
 
         <TextView android:id="@+id/maxGrade"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="N/A"/>
+            android:textSize="15sp"/>
 
     </LinearLayout>
 
@@ -65,13 +65,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="15sp"
             android:paddingRight="5dp"
             android:text="Percentage:"/>
 
         <TextView android:id="@+id/cPercent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="N/A"/>
+            android:textSize="15sp"/>
 
     </LinearLayout>
 
@@ -83,13 +84,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="15sp"
             android:paddingRight="5dp"
             android:text="Category:"/>
 
         <TextView android:id="@+id/cCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="N/A"/>
+            android:textSize="15sp"/>
 
     </LinearLayout>
 
@@ -101,13 +103,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="15sp"
             android:paddingRight="5dp"
             android:text="School Name:"/>
 
         <TextView android:id="@+id/cSchool"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="N/A"/>
+            android:textSize="15sp"/>
 
     </LinearLayout>
 
@@ -119,13 +122,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="15sp"
             android:paddingRight="5dp"
             android:text="Class Belongs To:"/>
 
         <TextView android:id="@+id/cClass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="N/A"/>
+            android:textSize="15sp"/>
 
     </LinearLayout>
 
@@ -137,7 +141,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/white"
             style="?android:attr/borderlessButtonStyle"
             android:text="Delete"/>
 
@@ -145,7 +148,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/white"
             style="?android:attr/borderlessButtonStyle"
             android:text="Modify"/>
 
@@ -153,7 +155,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/white"
             style="?android:attr/borderlessButtonStyle"
             android:text="Return" />
 
