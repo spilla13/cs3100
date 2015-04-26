@@ -27,7 +27,6 @@ public class AssignmentFrag extends Fragment{
 
         TextView assignmentTitle = (TextView) view.findViewById(R.id.assignmentTitle);
         TextView assignmentGrade = (TextView) view.findViewById(R.id.assignmentGrade);
-        Button sendDetailsClick = (Button) view.findViewById(R.id.assignmentDetails);
 
         Bundle bundle = getArguments();
         Assignment assignment = bundle.getParcelable("assignment");
@@ -36,21 +35,10 @@ public class AssignmentFrag extends Fragment{
         assignmentTitle.setText(assignment.name);
         assignmentGrade.setText(assignment.getLetterGrade());
 
-        sendDetailsClick.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onDetailsClick();
-            }
-        });
-
 
         return view;
     }
 
-    protected void onDetailsClick() {
-        Intent Details = new Intent(getActivity(), Details.class);
-        startActivityForResult(Details, 1);
-    }
 }
 
 

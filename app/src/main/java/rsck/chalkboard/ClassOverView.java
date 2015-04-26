@@ -2,7 +2,6 @@ package rsck.chalkboard;
 
 import android.app.Activity;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -17,7 +16,7 @@ import org.json.JSONObject;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class ClassOverView extends Activity implements AddCategory.Communicator{
+public class ClassOverView extends Activity implements AddCategory.Communicator, Details.Communicator {
     private Course course;
 
     @Override
@@ -137,21 +136,28 @@ public class ClassOverView extends Activity implements AddCategory.Communicator{
             finish();
     }
 
-    protected void onAddCategoryClick() {
-        Intent AddCategory = new Intent(this, AddCategory.class);
-        startActivityForResult(AddCategory, 1);
-    }
-
-    public void showDialog(View v){
+    public void showCategory(View v){
         FragmentManager manager = getFragmentManager();
         AddCategory myDialog = new AddCategory();
         myDialog.show(manager,"meow");
     }
 
-    public void onDialogMessage(String categroyName, String categoryWeight){
+    public void onCategoryMessage(String categroyName, String categoryWeight){
         //set the name and weight here !!Take out the TOAST!!
         Toast.makeText(this, "Hello Jacob", Toast.LENGTH_LONG).show();
     }
+
+    public void showDetails(View v){
+        FragmentManager manager = getFragmentManager();
+        Details myDialog = new Details();
+        myDialog.show(manager,"meow");
+    }
+
+    public void onDetailsMessage(String assignmentTitle, String method){
+        //set the name and weight here !!Take out the TOAST!!
+        Toast.makeText(this, "Hello Jacob", Toast.LENGTH_LONG).show();
+    }
+
 
     public void onBackPressed(){
 

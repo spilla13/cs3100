@@ -41,8 +41,8 @@ public class AddCategory extends DialogFragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.addCategoryButton){
-            communicator.onDialogMessage(String.valueOf(categoryName.getText()),
-                                         String.valueOf(categoryWeight.getText()));
+            communicator.onCategoryMessage(String.valueOf(categoryName.getText()),
+                                           String.valueOf(categoryWeight.getText()));
             dismiss();
         }
         else{
@@ -52,6 +52,6 @@ public class AddCategory extends DialogFragment implements View.OnClickListener{
     }
 
     interface Communicator{
-            public void onDialogMessage(String categoryName, String categoryWeight);
+            public void onCategoryMessage(String categoryName, String categoryWeight);
     }
 }
