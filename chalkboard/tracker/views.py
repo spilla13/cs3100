@@ -52,6 +52,9 @@ def register(request):
 def addCategory(request):
     """
     name: category name
+
+    Optional:
+        weight:    <weight>
     """
     if check(request) is not None:
         return check(request)
@@ -63,6 +66,10 @@ def addCategory(request):
         return JsonError("The name provided for the category is too short.")
 
     cat = Category(name=data['name'])
+
+    if 'weight' in data:
+        cat.weight = float(data['weight'])
+
     cat.save()
     
     return JsonResponse({"data": {"id": cat.id}, "success": True})
@@ -99,7 +106,6 @@ def addHomework(request):
 
        
        optional:
-         weight:    <weight>
          points_possible: <# points possible>
     """
     if check(request) is not None:
@@ -118,8 +124,6 @@ def addHomework(request):
     
     homework = Homework(name=data['name'], category=Category.objects.get(id=data['categoryid'])) 
 
-    if 'weight' in data:
-        homework.weight = data['weight']
     if 'points_possible' in data:
         homework.points_possible = data['points_possible']
 
