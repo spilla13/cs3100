@@ -74,10 +74,7 @@ public class ClassTitleFragment extends ListFragment{
         Course course = bundle.getParcelable("course");
 
         Home homeActivity = (Home) getActivity();
-        boolean found = homeActivity.getUser().updateCourse(course);
-
-        if(found)
-            homeActivity.updateTitleFragment();
+        homeActivity.updateUserCourse(course);
     }
 
     public void addElement(String courseName){

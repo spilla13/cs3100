@@ -51,7 +51,7 @@ public class Assignment implements Parcelable {
             ID = assignment.getInt("id");
             name = assignment.getString("name");
             pointsPossible = assignment.getDouble("points_possible");
-            pointsReceived = assignment.getDouble("pointsreceived");
+            pointsReceived = assignment.getDouble("points_received");
         } catch (JSONException e){
             e.printStackTrace();
         }

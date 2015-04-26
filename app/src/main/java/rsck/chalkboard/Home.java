@@ -12,7 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
+import android.widget.Toast;
 
 
 public class Home extends Activity{
@@ -40,7 +40,10 @@ public class Home extends Activity{
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        updateTitleFragment();
+                        ClassTitleFragment frag = (ClassTitleFragment) getFragmentManager().findFragmentById(R.id.classOverList);
+                        for(Course course: user.getCourses()){
+                            frag.addElement(course.getCourseName());
+                        }
                     }
                 });
             }
@@ -95,6 +98,7 @@ public class Home extends Activity{
             if (requestCode == 1) {
                 Thread t = new Thread(new Runnable() {
                     public void run() {
+                        Toast.makeText(getApplicationContext(), "Loading...", Toast.LENGTH_LONG);
                         user.addCourse(courseName, schoolName);
                         runOnUiThread(new Runnable() {
                             @Override
@@ -120,15 +124,7 @@ public class Home extends Activity{
         return user;
     }
 
-    public void updateTitleFragment(){
-        ClassTitleFragment newFragment = new ClassTitleFragment();
-        Bundle args = new Bundle();
-        args.putParcelableArrayList("courses",user.getCourses());
-        newFragment.setArguments(args);
-
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.classOverList, newFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+    public void updateUserCourse(Course course){
+        user.updateCourse(course);
     }
 }

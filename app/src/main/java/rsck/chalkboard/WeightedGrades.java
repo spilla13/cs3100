@@ -181,12 +181,12 @@ public class WeightedGrades implements Parcelable{
                 JSONObject data = response.getJSONObject("data");
                 grade.put("courseid", course);
                 grade.put("homeworkid", data.getInt("id"));
-                grade.put("pointsreceived", pointsReceived);
+                grade.put("points_received", pointsReceived);
                 response = django.add("grade", Integer.toString(user_ID), token, grade);
 
                 if(response.getBoolean("success")){
                     homework.put("id", data.getInt("id"));
-                    homework.put("pointsreceived", pointsReceived);
+                    homework.put("points_received", pointsReceived);
 
                     Assignment newAssignment = new Assignment(homework);
                     assignments.add(newAssignment);

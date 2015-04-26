@@ -20,6 +20,9 @@ import java.util.ArrayList;
 
 public class ClassOverView extends Activity implements AddCategory.Communicator{
     private Course course;
+    public static final int ADD_CAT_CODE = 2;
+    public static final int ADD_HW_CODE = 1;
+    public static final int CAT_FRAG_ID =  1;
 
     @Override
     protected void onCreate(Bundle savedInstances){
@@ -35,7 +38,7 @@ public class ClassOverView extends Activity implements AddCategory.Communicator{
         LinearLayout ll = new LinearLayout(this);
         ll.setOrientation(LinearLayout.VERTICAL);
 
-        ll.setId(12345);
+        ll.setId(CAT_FRAG_ID);
 
         ArrayList<WeightedGrades> courseGrades = course.getGrades();
 
@@ -101,9 +104,8 @@ public class ClassOverView extends Activity implements AddCategory.Communicator{
 
         //TODO: Handle Result
 
-        if(resultCode == RESULT_OK)
-
-            if (requestCode == 1) {
+        if(resultCode == RESULT_OK) {
+            if (requestCode == ADD_HW_CODE) {
                 pointsReceived = intent.getDoubleExtra("pointsReceived", 0);
                 pointsPossible = intent.getDoubleExtra("pointsPossible", 0);
                 assignmentName = intent.getStringExtra("assignmentName");
@@ -121,12 +123,16 @@ public class ClassOverView extends Activity implements AddCategory.Communicator{
                     e.printStackTrace();
                 }
 
-/*                ArrayList<WeightedGrades> grades = course.getGrades();
+
+              ArrayList<WeightedGrades> grades = course.getGrades();
                 WeightedGrades cat = null;
                 for(WeightedGrades cats : grades)
                     if(cats.getID() == catID)
                         cat = cats;
 
+                getFragmentManager().beginTransaction().add(CAT_FRAG_ID, CategoryFrag.newInstance(cat), Integer.toString(cat.getID())).commit();
+
+                /*
                 if(cat != null) {
                     Fragment frag = new CategoryFrag().newInstance(cat);
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -134,13 +140,21 @@ public class ClassOverView extends Activity implements AddCategory.Communicator{
                     ft.addToBackStack(null);
                     ft.commit();
                 }*/
+            } else if(requestCode == ADD_CAT_CODE){
+
             }
+        }
     }
 
     protected void onAddAssignmentClick() {
         Intent AddAssignment = new Intent(this, AddAssignment.class);
         AddAssignment.putParcelableArrayListExtra("weightedGrades", course.getGrades());
-        startActivityForResult(AddAssignment, 1);
+        startActivityForResult(AddAssignment, ADD_HW_CODE);
+    }
+
+    protected void onAddCategoryClick() {
+        Intent AddCategory = new Intent(this, AddCategory.class);
+        startActivityForResult(AddCategory, ADD_CAT_CODE);
     }
 
     protected void onHomeClick() {
@@ -150,15 +164,10 @@ public class ClassOverView extends Activity implements AddCategory.Communicator{
             finish();
     }
 
-    protected void onAddCategoryClick() {
-        Intent AddCategory = new Intent(this, AddCategory.class);
-        startActivityForResult(AddCategory, 1);
-    }
-
     public void showDialog(View v){
         FragmentManager manager = getFragmentManager();
         AddCategory myDialog = new AddCategory();
-        myDialog.show(manager,"meow");
+        myDialog.show(manager, "meow");
     }
 
     public void onDialogMessage(String categroyName, String categoryWeight){
