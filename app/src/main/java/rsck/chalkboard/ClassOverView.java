@@ -3,6 +3,7 @@ package rsck.chalkboard;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -129,16 +130,11 @@ public class ClassOverView extends Activity implements AddCategory.Communicator,
                     if(cats.getID() == catID)
                         cat = cats;
 
-                getFragmentManager().beginTransaction().add(CAT_FRAG_ID, CategoryFrag.newInstance(cat), Integer.toString(cat.getID())).commit();
+                CategoryFrag oldFrag = (CategoryFrag) getFragmentManager().findFragmentByTag(Integer.toString(catID));
+                getFragmentManager().beginTransaction().remove(oldFrag).commit();
+                CategoryFrag newFrag = CategoryFrag.newInstance(cat);
+                getFragmentManager().beginTransaction().add(CAT_FRAG_ID, newFrag, Integer.toString(catID)).commit();
 
-                /*
-                if(cat != null) {
-                    Fragment frag = new CategoryFrag().newInstance(cat);
-                    FragmentTransaction ft = getFragmentManager().beginTransaction();
-                    ft.replace(R.id.categoryMain, frag, Integer.toString(catID));
-                    ft.addToBackStack(null);
-                    ft.commit();
-                }*/
             } else if(requestCode == ADD_CAT_CODE){
 
             }
@@ -169,7 +165,7 @@ public class ClassOverView extends Activity implements AddCategory.Communicator,
         AddCategory myDialog = new AddCategory();
         myDialog.show(manager, "meow");
     }
-    
+
     public void showCategory(View v){
         FragmentManager manager = getFragmentManager();
         AddCategory myDialog = new AddCategory();

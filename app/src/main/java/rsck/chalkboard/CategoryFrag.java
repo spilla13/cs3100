@@ -17,6 +17,8 @@ public class CategoryFrag extends android.app.Fragment {
 
     public static final int HW_FRAG_ID = 2;
     private WeightedGrades weightedGrades;
+    LinearLayout fragContainer;
+    LinearLayout cf;
 
     public static CategoryFrag newInstance(WeightedGrades grades){
         CategoryFrag f = new CategoryFrag();
@@ -36,7 +38,8 @@ public class CategoryFrag extends android.app.Fragment {
         TextView categoryPercent = (TextView) view.findViewById(R.id.categoryPercent);
 
         Bundle bundle = getArguments();
-        weightedGrades = bundle.getParcelable("grades");
+        if(weightedGrades == null)
+            weightedGrades = bundle.getParcelable("grades");
 
         String title = weightedGrades.getName() + "(" + weightedGrades.getWeight() +")";
         double percentGrade = weightedGrades.weightedTotal()*100;
@@ -48,8 +51,11 @@ public class CategoryFrag extends android.app.Fragment {
         categoryPercent.setText( sPercentGrade + "%");
 
         //This calls the assignment fragment
-        LinearLayout fragContainer = (LinearLayout) view.findViewById(R.id.assignmentMain);
-        LinearLayout cf = new LinearLayout(getActivity());
+        fragContainer = (LinearLayout) view.findViewById(R.id.assignmentMain);
+
+        if(fragContainer.getChildCount() > 0)
+            fragContainer.removeAllViews();
+        cf = new LinearLayout(getActivity());
         cf.setOrientation(LinearLayout.VERTICAL);
 
         cf.setId(HW_FRAG_ID);
@@ -63,6 +69,5 @@ public class CategoryFrag extends android.app.Fragment {
 
         return view;
     }
-
 
 }
