@@ -10,6 +10,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
+
 
 public class Details extends DialogFragment implements View.OnClickListener{
 
@@ -22,6 +26,16 @@ public class Details extends DialogFragment implements View.OnClickListener{
     public TextView cClass;
     Communicator communicator;
 
+    public static Details newInstance(Assignment assignment, String catName){
+        Details deets = new Details();
+        Bundle args = new Bundle();
+        args.putParcelable("assignment", assignment);
+        args.putString("catName",catName);
+        deets.setArguments(args);
+
+        return deets;
+    }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -32,6 +46,11 @@ public class Details extends DialogFragment implements View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.details, null);
+
+        Bundle args = getArguments();
+
+        Assignment assignment = args.getParcelable("assignment");
+        String catName = args.getString("catName");
 
         Button deleteB = (Button) v.findViewById(R.id.delete);
         Button modifyB = (Button) v.findViewById(R.id.modify);
@@ -44,17 +63,20 @@ public class Details extends DialogFragment implements View.OnClickListener{
         cSchool = (TextView) v.findViewById(R.id.cSchool);
         cClass = (TextView) v.findViewById(R.id.cClass);
 
+        double percentGrade = assignment.pointsReceived/assignment.pointsPossible * 100;
+        String sPercentGrade = new BigDecimal(percentGrade).round(new MathContext(4, RoundingMode.HALF_UP)).toString();
 
 
+        Course course = ((ClassOverView) getActivity()).getCourse();
 
         //TODO:Get Details from Calling Activity.
-        assignmentTitle.setText("");
-        cGrade.setText("95");
-        maxGrade.setText("101");
-        cPercent.setText("94%");
-        cCategory.setText("Homework");
-        cSchool.setText("Star Fleet Enterprise");
-        cClass.setText("Software Design for Spaceships");
+        assignmentTitle.setText(assignment.name);
+        cGrade.setText(String.valueOf(assignment.pointsReceived));
+        maxGrade.setText(String.valueOf(assignment.pointsPossible));
+        cPercent.setText(sPercentGrade + "%");
+        cCategory.setText(catName);
+        cSchool.setText(course.getSchoolName());
+        cClass.setText(course.getCourseName());
 
         modifyB.setOnClickListener(this);
         deleteB.setOnClickListener(this);

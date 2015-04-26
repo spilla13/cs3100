@@ -47,8 +47,7 @@ public class AddClass extends ActionBarActivity {
         sendAddButtonClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String var;
-                var = String.valueOf(classSpinner.getSelectedItem());
+                String.valueOf(classSpinner.getSelectedItem());
                 onAddButtonClick(Arrays.toString(classType),
                         String.valueOf(note.getText()),
                         String.valueOf(className.getText()),

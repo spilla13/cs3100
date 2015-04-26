@@ -62,7 +62,7 @@ public class CategoryFrag extends android.app.Fragment {
 
         for(Assignment assignment : weightedGrades.getAssignments())
             getChildFragmentManager().beginTransaction().add(cf.getId(),
-                    AssignmentFrag.newInstance(assignment),
+                    AssignmentFrag.newInstance(assignment, weightedGrades.getName()),
                     Integer.toString(assignment.ID)).commit();
 
         fragContainer.addView(cf);

@@ -2,6 +2,7 @@ package rsck.chalkboard;
 
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,10 +13,14 @@ import android.widget.TextView;
 
 public class AssignmentFrag extends Fragment{
 
-    public static AssignmentFrag newInstance(final Assignment assignment){
+    Assignment assignment;
+    String catName;
+
+    public static AssignmentFrag newInstance(final Assignment assignment, String catName){
         AssignmentFrag f = new AssignmentFrag();
         Bundle b = new Bundle();
         b.putParcelable("assignment", assignment);
+        b.putString("catName", catName);
         f.setArguments(b);
 
         return f;
@@ -27,9 +32,18 @@ public class AssignmentFrag extends Fragment{
 
         TextView assignmentTitle = (TextView) view.findViewById(R.id.assignmentTitle);
         TextView assignmentGrade = (TextView) view.findViewById(R.id.assignmentGrade);
+        Button detailsButton = (Button) view.findViewById(R.id.assignmentDetails);
+
+        detailsButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                onClickShowDetails(v);
+            }
+        });
 
         Bundle bundle = getArguments();
-        Assignment assignment = bundle.getParcelable("assignment");
+        assignment = bundle.getParcelable("assignment");
+        catName = bundle.getString("catName");
 
         //change the text here!
         assignmentTitle.setText(assignment.name);
@@ -37,6 +51,12 @@ public class AssignmentFrag extends Fragment{
 
 
         return view;
+    }
+
+    public void onClickShowDetails(View v){
+        FragmentManager manager = getFragmentManager();
+        Details myDialog = Details.newInstance(assignment, catName);
+        myDialog.show(manager,"meow");
     }
 
 }

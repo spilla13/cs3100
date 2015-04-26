@@ -69,6 +69,16 @@ public class Course implements Parcelable {
         return null;
     }
 
+    public double getWeightTotal(){
+        double total = 0;
+
+        for(WeightedGrades weightedGrades : grades){
+            total += weightedGrades.getWeight();
+        }
+
+        return total;
+    }
+
     //Loads all grades for this Course.
     public void loadGrades(){
 

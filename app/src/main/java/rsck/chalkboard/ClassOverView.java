@@ -198,11 +198,7 @@ public class ClassOverView extends Activity implements AddCategory.Communicator,
         t.start();
     }
 
-    public void showDetails(View v){
-        FragmentManager manager = getFragmentManager();
-        Details myDialog = new Details();
-        myDialog.show(manager,"meow");
-    }
+
 
     public void onDetailsMessage(String assignmentTitle, String method){
         //set the name and weight here !!Take out the TOAST!!
@@ -222,9 +218,11 @@ public class ClassOverView extends Activity implements AddCategory.Communicator,
     private void updateGrade(){
         TextView currentGrade = (TextView) findViewById(R.id.current_grade);
 
-        double percentGrade = course.getCourseGrade()*100;
+        double percentGrade = course.getCourseGrade()*100/course.getWeightTotal();
         String sPercentGrade = new BigDecimal(percentGrade).round(new MathContext(4, RoundingMode.HALF_UP)).toString();
 
         currentGrade.setText(sPercentGrade + "%");
     }
+
+    public Course getCourse(){return course;}
 }

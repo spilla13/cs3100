@@ -34,8 +34,7 @@
             android:layout_height="wrap_content"
             style="?android:attr/borderlessButtonStyle"
             android:textColor="@color/white"
-            android:onClick="showDetails"
-            class="rsck.chalkboard.ClassOverView"
+            class="rsck.chalkboard.AssignmentFrag"
             android:layout_weight="1"
             android:text="Details"/>
 
