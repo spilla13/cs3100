@@ -12,12 +12,12 @@ import android.widget.TextView;
 
 public class AssignmentFrag extends Fragment{
 
-    public static AssignmentFrag newInstance(String text){
+    public static AssignmentFrag newInstance(final Assignment assignment){
         AssignmentFrag f = new AssignmentFrag();
-
         Bundle b = new Bundle();
-        b.putString("text", text);
+        b.putParcelable("assignment", assignment);
         f.setArguments(b);
+
         return f;
     }
 
@@ -27,28 +27,18 @@ public class AssignmentFrag extends Fragment{
 
         TextView assignmentTitle = (TextView) view.findViewById(R.id.assignmentTitle);
         TextView assignmentGrade = (TextView) view.findViewById(R.id.assignmentGrade);
-        Button sendDetailsClick = (Button) view.findViewById(R.id.assignmentDetails);
 
+        Bundle bundle = getArguments();
+        Assignment assignment = bundle.getParcelable("assignment");
 
         //change the text here!
-        assignmentTitle.setText(getArguments().getString("text"));
-        assignmentGrade.setText("A");
-
-        sendDetailsClick.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onDetailsClick();
-            }
-        });
+        assignmentTitle.setText(assignment.name);
+        assignmentGrade.setText(assignment.getLetterGrade());
 
 
         return view;
     }
 
-    protected void onDetailsClick() {
-        Intent Details = new Intent(getActivity(), Details.class);
-        startActivityForResult(Details, 1);
-    }
 }
 
 

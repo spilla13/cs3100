@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Spinner;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -117,15 +118,19 @@ public class AddAssignment extends ActionBarActivity {
                                     Double pointsPossible,
                                     Double pointsReceived,
                                     String notes){
-        Intent ClassOverView = new Intent();
+        if(assignmentName.length() >= 4 && assignmentName.length() <= 100) {
+            Intent ClassOverView = new Intent();
+            //TODO:Handle other parts of the assignment
+            ClassOverView.putExtra("pointsReceived", pointsReceived);
+            ClassOverView.putExtra("pointsPossible", pointsPossible);
+            ClassOverView.putExtra("assignmentName", assignmentName);
+            ClassOverView.putExtra("catID", weightedGrades.get(assignmentType).getID());
+            setResult(RESULT_OK, ClassOverView);
+            finish();
+        }
+        else
+            Toast.makeText(getApplicationContext(), "Name Too Short", Toast.LENGTH_SHORT).show();
 
-        //TODO:Handle other parts of the assignment
-        ClassOverView.putExtra("pointsReceived", pointsReceived);
-        ClassOverView.putExtra("pointsPossible", pointsPossible);
-        ClassOverView.putExtra("assignmentName", assignmentName);
-        ClassOverView.putExtra("catID", weightedGrades.get(assignmentType).getID());
-        setResult(RESULT_OK, ClassOverView);
-        finish();
     }
 
     public void onBackPressed(){

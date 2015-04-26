@@ -20,3 +20,4 @@ build/
 app/app.iml
 .idea/gradle.xml
 .idea/libraries/cardview_v7_21_0_3.xml
+local.properties

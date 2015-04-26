@@ -10,14 +10,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import org.json.JSONObject;
-
-import java.lang.reflect.Type;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
-public class ClassOverView extends Activity {
+public class ClassOverView extends Activity implements AddCategory.Communicator, Details.Communicator {
     private Course course;
+    public static final int ADD_CAT_CODE = 2;
+    public static final int ADD_HW_CODE = 1;
+    public static final int CAT_FRAG_ID =  1;
 
     @Override
     protected void onCreate(Bundle savedInstances){
@@ -33,16 +37,17 @@ public class ClassOverView extends Activity {
         LinearLayout ll = new LinearLayout(this);
         ll.setOrientation(LinearLayout.VERTICAL);
 
-        ll.setId(12345);
+        ll.setId(CAT_FRAG_ID);
 
         ArrayList<WeightedGrades> courseGrades = course.getGrades();
 
-        for(WeightedGrades grades : courseGrades) {
-            getFragmentManager().beginTransaction().add(ll.getId(), CategoryFrag.newInstance(grades), Integer.toString(grades.getID())).commit();        }
+        for(final WeightedGrades grades : courseGrades)
+            getFragmentManager().beginTransaction()
+                    .add(ll.getId(), CategoryFrag.newInstance(grades),
+                            Integer.toString(grades.getID())).commit();
 
-        if(courseGrades.size() > 0)
+        //if(courseGrades.size() > 0)
             fragContainer.addView(ll);
-
 
         //Change the font of text
         //The font path
@@ -57,15 +62,23 @@ public class ClassOverView extends Activity {
         //TextView cardTitles = (TextView) findViewById(R.id.card_title_id);
         TextView currentGradeText = (TextView) findViewById(R.id.Current_grade_text);
         TextView currentGrade = (TextView) findViewById(R.id.current_grade);
+        TextView courseTitle = (TextView)  findViewById(R.id.courseTitle);
+
 
         //Make the new typeface (font)
         Typeface tf = Typeface.createFromAsset(getAssets(), chalkFontPath);
         //Typeface rl = Typeface.createFromAsset(getAssets(), robotoFontPath);
 
+
+
+
+        courseTitle.setText(course.getCourseName()); //set the name of the course
+        updateGrade();
+
         //Set the new typeface (font)
         currentGradeText.setTypeface(tf);
         currentGrade.setTypeface(tf);
-
+        courseTitle.setTypeface(tf);
         sendAddAssignmentClick.setTypeface(tf);
         sendHomeClick.setTypeface(tf);
         sendCategoryClick.setTypeface(tf);
@@ -75,13 +88,6 @@ public class ClassOverView extends Activity {
             @Override
             public void onClick(View v) {
                 onAddAssignmentClick();
-            }
-        });
-
-        sendCategoryClick.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onAddCategoryClick();
             }
         });
 
@@ -102,42 +108,107 @@ public class ClassOverView extends Activity {
         final double pointsReceived;
         final double pointsPossible;
         final String assignmentName;
-        final long catId;
+        final int catID;
 
         //TODO: Handle Result
 
-        if(resultCode == RESULT_OK)
-            pointsReceived = intent.getDoubleExtra("pointsReceived", 0);
-            pointsPossible = intent.getDoubleExtra("pointsPossible", 0);
-            assignmentName = intent.getStringExtra("assignmentName");
-            catId = intent.getIntExtra("catID",0);
-            if (requestCode == 1) {
+        if(resultCode == RESULT_OK) {
+            if (requestCode == ADD_HW_CODE) {
+                pointsReceived = intent.getDoubleExtra("pointsReceived", 0);
+                pointsPossible = intent.getDoubleExtra("pointsPossible", 0);
+                assignmentName = intent.getStringExtra("assignmentName");
+                catID = intent.getIntExtra("catID", 0);
 
+                Thread t = new Thread(new Runnable() {
+                    public void run() {
+                        course.addHomeworkToCategory(pointsReceived, pointsPossible, assignmentName, catID);
 
-                onRestart(); // your "refresh" code
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ArrayList<WeightedGrades> grades = course.getGrades();
+                                WeightedGrades cat = null;
+                                for(WeightedGrades cats : grades)
+                                    if(cats.getID() == catID)
+                                        cat = cats;
+
+                                CategoryFrag oldFrag = (CategoryFrag) getFragmentManager().findFragmentByTag(Integer.toString(catID));
+                                getFragmentManager().beginTransaction().remove(oldFrag).commit();
+                                CategoryFrag newFrag = CategoryFrag.newInstance(cat);
+                                getFragmentManager().beginTransaction().add(CAT_FRAG_ID, newFrag, Integer.toString(catID)).commit();
+
+                                updateGrade();
+                            }
+                        });
+                    }
+                });
+                t.start();
             }
+        }
     }
 
     protected void onAddAssignmentClick() {
         Intent AddAssignment = new Intent(this, AddAssignment.class);
         AddAssignment.putParcelableArrayListExtra("weightedGrades", course.getGrades());
-        startActivityForResult(AddAssignment, 1);
-    }
-
-    protected void onHomeClick() {
-        Intent intent = new Intent();
-        intent.putExtra("course", course);
-        setResult(RESULT_OK, intent);
-        finish();
+        startActivityForResult(AddAssignment, ADD_HW_CODE);
     }
 
     protected void onAddCategoryClick() {
-        AddCategory frag = new AddCategory();
-        FragmentManager manger = getFragmentManager();
-        FragmentTransaction transaction = manger.beginTransaction();
-        transaction.add(R.id.addC, frag, "meow");
-        transaction.commit();
+        Intent AddCategory = new Intent(this, AddCategory.class);
+        startActivityForResult(AddCategory, ADD_CAT_CODE);
     }
+
+    protected void onHomeClick() {
+            Intent intent = new Intent();
+            intent.putExtra("course", course);
+            setResult(RESULT_OK, intent);
+            finish();
+    }
+
+    public void showDialog(View v) {
+        FragmentManager manager = getFragmentManager();
+        AddCategory myDialog = new AddCategory();
+        myDialog.show(manager, "meow");
+    }
+
+    public void showCategory(View v){
+        FragmentManager manager = getFragmentManager();
+        AddCategory myDialog = new AddCategory();
+        myDialog.show(manager,"meow");
+    }
+
+    public void onCategoryMessage(final String categoryName, final String categoryWeight){
+        //set the name and weight here !!Take out the TOAST!!
+        Thread t = new Thread(new Runnable() {
+            public void run() {
+                double weight = Double.valueOf(categoryWeight)/100;
+                final int newCatID = course.addWeightedCategory(categoryName, weight);
+                final WeightedGrades newGrades = course.getCatWithID(newCatID);
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        getFragmentManager().beginTransaction()
+                                .add(CAT_FRAG_ID, CategoryFrag.newInstance(newGrades), Integer.toString(newCatID)).commit();
+                        updateGrade();
+                    }
+                });
+            }
+        });
+        t.start();
+    }
+
+    public void showDetails(View v){
+        FragmentManager manager = getFragmentManager();
+        Details myDialog = new Details();
+        myDialog.show(manager,"meow");
+    }
+
+    public void onDetailsMessage(String assignmentTitle, String method){
+        //set the name and weight here !!Take out the TOAST!!
+        Toast.makeText(this, "Hello Jacob", Toast.LENGTH_LONG).show();
+    }
+
 
     public void onBackPressed(){
 
@@ -146,5 +217,14 @@ public class ClassOverView extends Activity {
         setResult(RESULT_OK, intent);
 
         super.onBackPressed();
+    }
+
+    private void updateGrade(){
+        TextView currentGrade = (TextView) findViewById(R.id.current_grade);
+
+        double percentGrade = course.getCourseGrade()*100;
+        String sPercentGrade = new BigDecimal(percentGrade).round(new MathContext(4, RoundingMode.HALF_UP)).toString();
+
+        currentGrade.setText(sPercentGrade + "%");
     }
 }

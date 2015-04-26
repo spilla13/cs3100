@@ -8,9 +8,17 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
 public class CategoryFrag extends android.app.Fragment {
+
+    public static final int HW_FRAG_ID = 2;
+    private WeightedGrades weightedGrades;
+    LinearLayout fragContainer;
+    LinearLayout cf;
 
     public static CategoryFrag newInstance(WeightedGrades grades){
         CategoryFrag f = new CategoryFrag();
@@ -30,29 +38,36 @@ public class CategoryFrag extends android.app.Fragment {
         TextView categoryPercent = (TextView) view.findViewById(R.id.categoryPercent);
 
         Bundle bundle = getArguments();
-        WeightedGrades grades = bundle.getParcelable("grades");
+        if(weightedGrades == null)
+            weightedGrades = bundle.getParcelable("grades");
 
-        String title = grades.getName() + "(" + grades.getWeight() +")";
-        Double percentGrade = grades.weightedTotal()*100;
+        String title = weightedGrades.getName() + "(" + weightedGrades.getWeight() +")";
+        double percentGrade = weightedGrades.unweightedAverage()*100;
+        String sPercentGrade = new BigDecimal(percentGrade).round(new MathContext(4, RoundingMode.HALF_UP)).toString();
 
         //change the text here!
         categoryTitle.setText(title);
-        categoryGrade.setText("A");
-        categoryPercent.setText( percentGrade.toString() + "%");
+        categoryGrade.setText(weightedGrades.getLetterGrade());
+        categoryPercent.setText( sPercentGrade + "%");
 
         //This calls the assignment fragment
-        LinearLayout fragContainer = (LinearLayout) view.findViewById(R.id.assignmentMain);
-        LinearLayout cf = new LinearLayout(getActivity());
+        fragContainer = (LinearLayout) view.findViewById(R.id.assignmentMain);
+
+        if(fragContainer.getChildCount() > 0)
+            fragContainer.removeAllViews();
+        cf = new LinearLayout(getActivity());
         cf.setOrientation(LinearLayout.VERTICAL);
 
-        cf.setId(65401);
+        cf.setId(HW_FRAG_ID);
 
-        getFragmentManager().beginTransaction().add(cf.getId(), AssignmentFrag.newInstance("Assignment 1"), "someTag1").commit();
-        getFragmentManager().beginTransaction().add(cf.getId(), AssignmentFrag.newInstance("Assignment 2"), "someTag2").commit();
+        for(Assignment assignment : weightedGrades.getAssignments())
+            getChildFragmentManager().beginTransaction().add(cf.getId(),
+                    AssignmentFrag.newInstance(assignment),
+                    Integer.toString(assignment.ID)).commit();
 
         fragContainer.addView(cf);
 
-
         return view;
     }
+
 }

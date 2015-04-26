@@ -8,6 +8,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Array;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
 /**
@@ -24,6 +27,7 @@ public class WeightedGrades implements Parcelable{
     public WeightedGrades(){assignments = new ArrayList<>();}
 
     public WeightedGrades(JSONObject data, int user_ID, String token){
+        assignments = new ArrayList<>();
         this.user_ID = user_ID;
         this.token = token;
 
@@ -38,8 +42,8 @@ public class WeightedGrades implements Parcelable{
     }
 
     public WeightedGrades(int cat_ID, int user_ID, String token){
-        this.assignments = new ArrayList<Assignment>();
-        this.ID = cat_ID;
+        assignments = new ArrayList<Assignment>();
+        ID = cat_ID;
         this.user_ID = user_ID;
         this.token = token;
 
@@ -65,18 +69,41 @@ public class WeightedGrades implements Parcelable{
         loadAssignments();
     }
 
+    public ArrayList<Assignment> getAssignments(){return assignments;}
+
     public String getName(){return name;}
 
     public Double getWeight(){return weight;}
 
     public int getID(){return ID;}
 
-    public double weightedTotal(){
-        return weight * unweightedTotal();
+    public String getLetterGrade(){
+        double total = unweightedAverage();
+        String letterGrade;
+
+        if(total > .9)
+            letterGrade = "A";
+        else if(total > .8)
+            letterGrade = "B";
+        else if(total > .7)
+            letterGrade = "C";
+        else if(total > .6)
+            letterGrade = "D";
+        else
+            letterGrade = "F";
+
+        return letterGrade;
     }
 
-    public float unweightedTotal(){
-        return pointsReceived() / pointsPossible();
+    public double weightedAverage(){
+        return weight * unweightedAverage();
+    }
+
+    public double unweightedAverage(){
+       if(assignments.size()>0)
+            return pointsReceived() / pointsPossible();
+       else
+           return 1;
     }
 
     public float pointsPossible(){
@@ -84,6 +111,9 @@ public class WeightedGrades implements Parcelable{
 
         for(Assignment assignment : assignments)
             total += assignment.pointsPossible;
+
+        if(total == 0)
+            total = 1;
 
         return total;
     }
@@ -135,7 +165,7 @@ public class WeightedGrades implements Parcelable{
         //prepare and add to homework table.
         try{
             homework.put("name", name);
-            homework.put("pointspossible", pointsPossible);
+            homework.put("points_possible", pointsPossible);
             homework.put("categoryid", cat);
         }catch(JSONException e) {
             e.printStackTrace();
@@ -156,14 +186,16 @@ public class WeightedGrades implements Parcelable{
                 JSONObject data = response.getJSONObject("data");
                 grade.put("courseid", course);
                 grade.put("homeworkid", data.getInt("id"));
-                grade.put("pointsreceived", pointsReceived);
+                grade.put("points_received", pointsReceived);
                 response = django.add("grade", Integer.toString(user_ID), token, grade);
 
                 if(response.getBoolean("success")){
                     homework.put("id", data.getInt("id"));
-                    homework.put("pointsreceived", pointsReceived);
+                    homework.put("points_received", pointsReceived);
 
                     Assignment newAssignment = new Assignment(homework);
+
+                    assignments.add(newAssignment);
                 }
             }
         }catch (JSONException e){

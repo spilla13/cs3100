@@ -50,11 +50,29 @@ public class Assignment implements Parcelable {
         try {
             ID = assignment.getInt("id");
             name = assignment.getString("name");
-            pointsPossible = assignment.getDouble("pointspossible");
-            pointsReceived = assignment.getDouble("pointsreceived");
+            pointsPossible = assignment.getDouble("points_possible");
+            pointsReceived = assignment.getDouble("points_received");
         } catch (JSONException e){
             e.printStackTrace();
         }
+    }
+
+    public String getLetterGrade(){
+        double total = pointsReceived / pointsPossible;
+        String letterGrade;
+
+        if(total > .9)
+            letterGrade = "A";
+        else if(total > .8)
+            letterGrade = "B";
+        else if(total > .7)
+            letterGrade = "C";
+        else if(total > .6)
+            letterGrade = "D";
+        else
+            letterGrade = "F";
+
+        return letterGrade;
     }
 
     /*Needed Parcelable Declarations below here*/

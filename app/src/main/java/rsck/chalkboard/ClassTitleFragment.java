@@ -19,22 +19,20 @@ public class ClassTitleFragment extends ListFragment{
     private ArrayAdapter<String> courseNames;
     private ArrayList<String> courseNamesList;
 
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         courseNamesList = new ArrayList<>();
-        // An ArrayAdapter connects the array to our ListView
-        // getActivity() returns a Context so we have the resources needed
-        // We pass a default list item text view to put the data in and the
-        // array
 
-        Home homeActivity = (Home) getActivity();
-        ArrayList<Course> courses = homeActivity.getUser().getCourses();
+        Bundle args = getArguments();
+        if (args != null){
+            ArrayList<Course> courses = args.getParcelableArrayList("courses");
 
-        for(Course getCourse: courses)
-            courseNamesList.add(getCourse.getCourseName());
+            courseNamesList = new ArrayList<>();
 
+            for (Course getCourse : courses)
+                courseNamesList.add(getCourse.getCourseName());
+        }
 
         courseNames = new ArrayAdapter<String>(
                 getActivity(),android.R.layout.simple_list_item_activated_1, courseNamesList){
@@ -44,7 +42,7 @@ public class ClassTitleFragment extends ListFragment{
                 Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/chalk_font.ttf");
                 TextView v = (TextView)super.getView(position, convertView, parent);
                 v.setTextColor(Color.WHITE);
-                v.setTextSize(20);
+                v.setTextSize(30);
                 v.setTypeface(font);
                 return v;
             }
@@ -76,9 +74,11 @@ public class ClassTitleFragment extends ListFragment{
         Course course = bundle.getParcelable("course");
 
         Home homeActivity = (Home) getActivity();
-        boolean found = homeActivity.getUser().updateCourse(course);
+        homeActivity.updateUserCourse(course);
+    }
 
-        if(found)
-            homeActivity.updateTitleFragment();
+    public void addElement(String courseName){
+        courseNames.add(courseName);
+        courseNames.notifyDataSetChanged();
     }
 }

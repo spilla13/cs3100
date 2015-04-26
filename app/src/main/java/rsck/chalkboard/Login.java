@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +18,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public class Login extends Activity {
+
+    private String[] serverType;
+
     //Basically a constructor for when activity is created
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,49 +34,56 @@ public class Login extends Activity {
         Button signUpButton = (Button) findViewById(R.id.signUpButton);
         //final TextView rando = (TextView) findViewById(R.id.randomText);
 
+        serverType = getResources().getStringArray(R.array.server_choice);
+        final Spinner serverSpinner = (Spinner) findViewById(R.id.server_select);
+
+        //Here is the code that sets up the spinner
+        ArrayAdapter<String> serverAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, serverType);
+        serverAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        serverSpinner.setAdapter(serverAdapter);
 
         //Method to call the login function on the button press
         loginButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
 
-                final AtomicBoolean success = new AtomicBoolean(false);
+            //Get the spinner value
+            final String serverToast = String.valueOf(serverSpinner.getSelectedItem());
+            //Make the toast
+            Toast.makeText(getApplicationContext(), serverToast, Toast.LENGTH_SHORT).show();
 
-                //Tells users they are logging in
-                Toast.makeText(getApplicationContext(), "Authenticating",
-                        Toast.LENGTH_SHORT).show();
+            //Tells users they are logging in
+            Toast.makeText(getApplicationContext(), "Authenticating",
+                    Toast.LENGTH_SHORT).show();
 
-                Thread t = new Thread(new Runnable() {
-                    public void run() {
-                        //Call the login function and let it do the rest
+            Thread t = new Thread(new Runnable() {
+                public void run() {
+                    //Call the login function and let it do the rest
 
-                        String userName = String.valueOf(username.getText());
-                        String passWord = String.valueOf(password.getText());
-                /*
-                Check if passwords match, if not, clear textboxes and ask user to input again
-                If they do, show chalk check mark and allow submission
-                */
-                        User user = new User();
-                        if(user.login(userName, passWord)) {
-                            user.load();
-                            success.set(true);
-                            sendToHome(user);
-                            //Finish the login activity and prevent users from going back
-                            finish();
-                        }
-                        //TODO: print Login Failure message, make it so a boolean can be pass back from the thread... it only accepts final mode, cannot do volatile Atomic boolean.
+                    String userName = String.valueOf(username.getText());
+                    String passWord = String.valueOf(password.getText());
+                    /*
+                    Check if passwords match, if not, clear textboxes and ask user to input again
+                    If they do, show chalk check mark and allow submission
+                    */
+                    User user = new User();
+                    if(user.login(userName, passWord)) {
+                        sendToHome(user);
+                        //Finish the login activity and prevent users from going back
+                        finish();
                     }
-                });
-                t.start();
-                try {
-                    t.join();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    else
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(), "Error on Login",
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        });
                 }
+            });
+            t.start();
 
-                if(!success.get()) { //this is the error message
-                    Toast.makeText(getApplicationContext(), "Error on Login",
-                            Toast.LENGTH_LONG).show();
-                }
             }
         });
 

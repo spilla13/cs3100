@@ -18,7 +18,7 @@ public class User implements Parcelable{
     private ArrayList<Course> courses;
 
     public User(){
-        courses = new ArrayList<Course>();
+        courses = new ArrayList<>();
     }
 
     //Getters
@@ -66,7 +66,6 @@ public class User implements Parcelable{
                 token = response.getString("token");
                 username = user;
             }
-                //TODO: Handle unsuccessfull login.
         }
         catch (Exception e){
             e.printStackTrace();
@@ -108,6 +107,7 @@ public class User implements Parcelable{
                 JSONObject data = response.getJSONObject("data");
                 course.put("id", data.getInt("id"));
                 Course newCourse = new Course(course, ID, token);
+
                 courses.add(newCourse);
             }
         }   catch (JSONException e) {
