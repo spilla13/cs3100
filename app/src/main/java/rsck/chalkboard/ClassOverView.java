@@ -11,6 +11,10 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
 public class ClassOverView extends Activity implements AddCategory.Communicator, Details.Communicator {
@@ -37,10 +41,12 @@ public class ClassOverView extends Activity implements AddCategory.Communicator,
 
         ArrayList<WeightedGrades> courseGrades = course.getGrades();
 
-        for(WeightedGrades grades : courseGrades) {
-            getFragmentManager().beginTransaction().add(ll.getId(), CategoryFrag.newInstance(grades), Integer.toString(grades.getID())).commit();        }
+        for(final WeightedGrades grades : courseGrades)
+            getFragmentManager().beginTransaction()
+                    .add(ll.getId(), CategoryFrag.newInstance(grades),
+                            Integer.toString(grades.getID())).commit();
 
-        if(courseGrades.size() > 0)
+        //if(courseGrades.size() > 0)
             fragContainer.addView(ll);
 
         //Change the font of text
@@ -58,12 +64,16 @@ public class ClassOverView extends Activity implements AddCategory.Communicator,
         TextView currentGrade = (TextView) findViewById(R.id.current_grade);
         TextView courseTitle = (TextView)  findViewById(R.id.courseTitle);
 
+
         //Make the new typeface (font)
         Typeface tf = Typeface.createFromAsset(getAssets(), chalkFontPath);
         //Typeface rl = Typeface.createFromAsset(getAssets(), robotoFontPath);
 
+
+
+
         courseTitle.setText(course.getCourseName()); //set the name of the course
-        currentGrade.setText(String.valueOf(course.getCourseGrade()));
+        updateGrade();
 
         //Set the new typeface (font)
         currentGradeText.setTypeface(tf);
@@ -112,29 +122,27 @@ public class ClassOverView extends Activity implements AddCategory.Communicator,
                 Thread t = new Thread(new Runnable() {
                     public void run() {
                         course.addHomeworkToCategory(pointsReceived, pointsPossible, assignmentName, catID);
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ArrayList<WeightedGrades> grades = course.getGrades();
+                                WeightedGrades cat = null;
+                                for(WeightedGrades cats : grades)
+                                    if(cats.getID() == catID)
+                                        cat = cats;
+
+                                CategoryFrag oldFrag = (CategoryFrag) getFragmentManager().findFragmentByTag(Integer.toString(catID));
+                                getFragmentManager().beginTransaction().remove(oldFrag).commit();
+                                CategoryFrag newFrag = CategoryFrag.newInstance(cat);
+                                getFragmentManager().beginTransaction().add(CAT_FRAG_ID, newFrag, Integer.toString(catID)).commit();
+
+                                updateGrade();
+                            }
+                        });
                     }
                 });
                 t.start();
-                try {
-                    t.join();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-
-              ArrayList<WeightedGrades> grades = course.getGrades();
-                WeightedGrades cat = null;
-                for(WeightedGrades cats : grades)
-                    if(cats.getID() == catID)
-                        cat = cats;
-
-                CategoryFrag oldFrag = (CategoryFrag) getFragmentManager().findFragmentByTag(Integer.toString(catID));
-                getFragmentManager().beginTransaction().remove(oldFrag).commit();
-                CategoryFrag newFrag = CategoryFrag.newInstance(cat);
-                getFragmentManager().beginTransaction().add(CAT_FRAG_ID, newFrag, Integer.toString(catID)).commit();
-
-            } else if(requestCode == ADD_CAT_CODE){
-
             }
         }
     }
@@ -169,9 +177,25 @@ public class ClassOverView extends Activity implements AddCategory.Communicator,
         myDialog.show(manager,"meow");
     }
 
-    public void onCategoryMessage(String categroyName, String categoryWeight){
+    public void onCategoryMessage(final String categoryName, final String categoryWeight){
         //set the name and weight here !!Take out the TOAST!!
-        Toast.makeText(this, "Hello Jacob", Toast.LENGTH_LONG).show();
+        Thread t = new Thread(new Runnable() {
+            public void run() {
+                double weight = Double.valueOf(categoryWeight)/100;
+                final int newCatID = course.addWeightedCategory(categoryName, weight);
+                final WeightedGrades newGrades = course.getCatWithID(newCatID);
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        getFragmentManager().beginTransaction()
+                                .add(CAT_FRAG_ID, CategoryFrag.newInstance(newGrades), Integer.toString(newCatID)).commit();
+                        updateGrade();
+                    }
+                });
+            }
+        });
+        t.start();
     }
 
     public void showDetails(View v){
@@ -193,5 +217,14 @@ public class ClassOverView extends Activity implements AddCategory.Communicator,
         setResult(RESULT_OK, intent);
 
         super.onBackPressed();
+    }
+
+    private void updateGrade(){
+        TextView currentGrade = (TextView) findViewById(R.id.current_grade);
+
+        double percentGrade = course.getCourseGrade()*100;
+        String sPercentGrade = new BigDecimal(percentGrade).round(new MathContext(4, RoundingMode.HALF_UP)).toString();
+
+        currentGrade.setText(sPercentGrade + "%");
     }
 }

@@ -1,6 +1,7 @@
 package rsck.chalkboard;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -27,6 +28,7 @@ public class Details extends DialogFragment implements View.OnClickListener{
         communicator = (Communicator) activity;
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.details, null);
@@ -42,7 +44,11 @@ public class Details extends DialogFragment implements View.OnClickListener{
         cSchool = (TextView) v.findViewById(R.id.cSchool);
         cClass = (TextView) v.findViewById(R.id.cClass);
 
-        assignmentTitle.setText("Build Quantum Navigator");
+
+
+
+        //TODO:Get Details from Calling Activity.
+        assignmentTitle.setText("");
         cGrade.setText("95");
         maxGrade.setText("101");
         cPercent.setText("94%");

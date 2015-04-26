@@ -42,7 +42,7 @@ public class ClassTitleFragment extends ListFragment{
                 Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/chalk_font.ttf");
                 TextView v = (TextView)super.getView(position, convertView, parent);
                 v.setTextColor(Color.WHITE);
-                v.setTextSize(25);
+                v.setTextSize(30);
                 v.setTypeface(font);
                 return v;
             }

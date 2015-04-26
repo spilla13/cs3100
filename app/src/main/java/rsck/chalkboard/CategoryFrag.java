@@ -42,7 +42,7 @@ public class CategoryFrag extends android.app.Fragment {
             weightedGrades = bundle.getParcelable("grades");
 
         String title = weightedGrades.getName() + "(" + weightedGrades.getWeight() +")";
-        double percentGrade = weightedGrades.weightedTotal()*100;
+        double percentGrade = weightedGrades.unweightedAverage()*100;
         String sPercentGrade = new BigDecimal(percentGrade).round(new MathContext(4, RoundingMode.HALF_UP)).toString();
 
         //change the text here!

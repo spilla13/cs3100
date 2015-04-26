@@ -27,6 +27,7 @@ public class WeightedGrades implements Parcelable{
     public WeightedGrades(){assignments = new ArrayList<>();}
 
     public WeightedGrades(JSONObject data, int user_ID, String token){
+        assignments = new ArrayList<>();
         this.user_ID = user_ID;
         this.token = token;
 
@@ -41,8 +42,8 @@ public class WeightedGrades implements Parcelable{
     }
 
     public WeightedGrades(int cat_ID, int user_ID, String token){
-        this.assignments = new ArrayList<Assignment>();
-        this.ID = cat_ID;
+        assignments = new ArrayList<Assignment>();
+        ID = cat_ID;
         this.user_ID = user_ID;
         this.token = token;
 
@@ -77,7 +78,7 @@ public class WeightedGrades implements Parcelable{
     public int getID(){return ID;}
 
     public String getLetterGrade(){
-        double total = weightedTotal();
+        double total = unweightedAverage();
         String letterGrade;
 
         if(total > .9)
@@ -94,12 +95,15 @@ public class WeightedGrades implements Parcelable{
         return letterGrade;
     }
 
-    public double weightedTotal(){
-        return weight * unweightedTotal();
+    public double weightedAverage(){
+        return weight * unweightedAverage();
     }
 
-    public double unweightedTotal(){
-        return pointsReceived() / pointsPossible();
+    public double unweightedAverage(){
+       if(assignments.size()>0)
+            return pointsReceived() / pointsPossible();
+       else
+           return 1;
     }
 
     public float pointsPossible(){
@@ -143,6 +147,7 @@ public class WeightedGrades implements Parcelable{
 
                 //TODO: Add to Assignments.
                 Assignment newAssignment = new Assignment(assignment, user_ID, token);
+
                 assignments.add(newAssignment);
             }
         } catch (JSONException e) {
@@ -189,6 +194,7 @@ public class WeightedGrades implements Parcelable{
                     homework.put("points_received", pointsReceived);
 
                     Assignment newAssignment = new Assignment(homework);
+
                     assignments.add(newAssignment);
                 }
             }

@@ -10,7 +10,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".Login"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,28 +21,34 @@
         <activity
             android:name=".Home"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
-            android:label="Home">
+            android:label="Home"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".ClassOverView"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
-            android:label="ClassOverView">
+            android:label="ClassOverView"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".AddClass"
-            android:label="@string/title_activity_add_class" >
+            android:label="@string/title_activity_add_class"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".AddAssignment"
-            android:label="@string/title_activity_add_assignment" >
+            android:label="@string/title_activity_add_assignment"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".Details"
-            android:label="Details" >
+            android:label="Details"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".AddCategory"
-            android:label="AddCategory" >
+            android:label="AddCategory"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

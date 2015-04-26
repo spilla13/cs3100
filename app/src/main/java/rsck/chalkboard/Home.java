@@ -28,7 +28,7 @@ public class Home extends Activity{
         String chalkFontPath = "fonts/chalk_font.ttf";
         Typeface tf = Typeface.createFromAsset(getAssets(), chalkFontPath);
 
-        Button sendAddButtonClick = (Button) findViewById(R.id.addButton);
+        //Button sendAddButtonClick = (Button) findViewById(R.id.addButton);
 
         //Get the username and password that was sent via the login screen
         Bundle bundle = getIntent().getExtras();
@@ -44,6 +44,12 @@ public class Home extends Activity{
                         for(Course course: user.getCourses()){
                             frag.addElement(course.getCourseName());
                         }
+                        ((Button) findViewById(R.id.addButton)).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                onAddButtonClick();
+                            }
+                        });
                     }
                 });
             }
@@ -56,12 +62,7 @@ public class Home extends Activity{
         //Set the new typeface (font)
         currentClasses.setTypeface(tf);
 
-        sendAddButtonClick.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onAddButtonClick();
-            }
-        });
+
     }
 
     @Override
@@ -98,14 +99,14 @@ public class Home extends Activity{
             if (requestCode == 1) {
                 Thread t = new Thread(new Runnable() {
                     public void run() {
-                        user.addCourse(courseName, schoolName);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                ClassTitleFragment frag = (ClassTitleFragment) getFragmentManager().findFragmentById(R.id.classOverList);
-                                frag.addElement(courseName);
-                            }
-                        });
+                        if(user.addCourse(courseName, schoolName))
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ClassTitleFragment frag = (ClassTitleFragment) getFragmentManager().findFragmentById(R.id.classOverList);
+                                    frag.addElement(courseName);
+                                }
+                            });
                     }
                 });
                 t.start();

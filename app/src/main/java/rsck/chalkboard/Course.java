@@ -23,6 +23,8 @@ public class Course implements Parcelable {
     public Course(){grades = new ArrayList<>();}
 
     public Course(String courseName, String schoolName, int user_ID, String token){
+        grades = new ArrayList<>();
+
         this.courseName = courseName;
         this.schoolName = schoolName;
         this.user_ID = user_ID;
@@ -30,6 +32,8 @@ public class Course implements Parcelable {
     };
 
     public Course(JSONObject courseJSON, int user_ID, String token){
+        grades = new ArrayList<>();
+
         this.user_ID = user_ID;
         this.token = token;
 
@@ -55,6 +59,15 @@ public class Course implements Parcelable {
     public String getSchoolName() {return schoolName;}
 
     public ArrayList<WeightedGrades> getGrades() {return grades;}
+
+    public WeightedGrades getCatWithID(int ID){
+        for(WeightedGrades weightedGrades : grades){
+            if(weightedGrades.getID() == ID)
+                return weightedGrades;
+        }
+
+        return null;
+    }
 
     //Loads all grades for this Course.
     public void loadGrades(){
@@ -124,15 +137,34 @@ public class Course implements Parcelable {
         float total = 0;
         
         for(WeightedGrades weightedGrades : grades)
-            total += weightedGrades.weightedTotal();
+            total += weightedGrades.weightedAverage();
             
         return total;
     }
 
-    public boolean addWeightedCategory(String catName, String weight){
+    public String getLetterGrade(){
+        double total = getCourseGrade();
+        String letterGrade;
+
+        if(total > .9)
+            letterGrade = "A";
+        else if(total > .8)
+            letterGrade = "B";
+        else if(total > .7)
+            letterGrade = "C";
+        else if(total > .6)
+            letterGrade = "D";
+        else
+            letterGrade = "F";
+
+        return letterGrade;
+    }
+
+    public int addWeightedCategory(String catName, double weight){
         Boolean success = false;
         DjangoFunctions django = new DjangoFunctions();
         JSONObject cat = new JSONObject();
+        int newCatId = 0;
 
         try {
             cat.put("name", catName);
@@ -147,8 +179,10 @@ public class Course implements Parcelable {
             success = response.getBoolean("success");
             if(success){
                 JSONObject data = response.getJSONObject("data");
-                cat.put("id", data.getInt("id"));
+                newCatId = data.getInt("id");
+                cat.put("id", newCatId);
                 WeightedGrades newCat = new WeightedGrades(cat, user_ID, token);
+
                 grades.add(newCat);
             }
 
@@ -156,7 +190,7 @@ public class Course implements Parcelable {
             e.printStackTrace();
         }
 
-        return success;
+        return newCatId;
     }
 
     public boolean addHomeworkToCategory(double pointsReceived, double pointsPossible,

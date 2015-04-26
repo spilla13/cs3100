@@ -12,12 +12,12 @@ import android.widget.TextView;
 
 public class AssignmentFrag extends Fragment{
 
-    public static AssignmentFrag newInstance(Assignment assignment){
+    public static AssignmentFrag newInstance(final Assignment assignment){
         AssignmentFrag f = new AssignmentFrag();
-
         Bundle b = new Bundle();
         b.putParcelable("assignment", assignment);
         f.setArguments(b);
+
         return f;
     }
 
