@@ -1,7 +1,6 @@
 package rsck.chalkboard;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
@@ -12,10 +11,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.json.JSONObject;
-
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class ClassOverView extends Activity implements AddCategory.Communicator, Details.Communicator {
@@ -48,7 +43,6 @@ public class ClassOverView extends Activity implements AddCategory.Communicator,
         if(courseGrades.size() > 0)
             fragContainer.addView(ll);
 
-
         //Change the font of text
         //The font path
         String chalkFontPath = "fonts/chalk_font.ttf";
@@ -62,15 +56,19 @@ public class ClassOverView extends Activity implements AddCategory.Communicator,
         //TextView cardTitles = (TextView) findViewById(R.id.card_title_id);
         TextView currentGradeText = (TextView) findViewById(R.id.Current_grade_text);
         TextView currentGrade = (TextView) findViewById(R.id.current_grade);
+        TextView courseTitle = (TextView)  findViewById(R.id.courseTitle);
 
         //Make the new typeface (font)
         Typeface tf = Typeface.createFromAsset(getAssets(), chalkFontPath);
         //Typeface rl = Typeface.createFromAsset(getAssets(), robotoFontPath);
 
+        courseTitle.setText(course.getCourseName()); //set the name of the course
+        currentGrade.setText(String.valueOf(course.getCourseGrade()));
+
         //Set the new typeface (font)
         currentGradeText.setTypeface(tf);
         currentGrade.setTypeface(tf);
-
+        courseTitle.setTypeface(tf);
         sendAddAssignmentClick.setTypeface(tf);
         sendHomeClick.setTypeface(tf);
         sendCategoryClick.setTypeface(tf);
@@ -158,7 +156,6 @@ public class ClassOverView extends Activity implements AddCategory.Communicator,
             setResult(RESULT_OK, intent);
             finish();
     }
-
 
     public void showDialog(View v) {
         FragmentManager manager = getFragmentManager();

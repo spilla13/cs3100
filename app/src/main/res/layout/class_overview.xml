@@ -23,26 +23,21 @@
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp">
 
-            <TextView android:id="@+id/Current_grade_text"
+            <TextView android:id="@+id/courseTitle"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textColor="@color/white"
                 android:textAlignment="center"
-                android:text="Current Grade: "
+                android:text="Course "
                 android:textSize="35sp"/>
 
-            <!--Textview that will show the overall grade -->
-
-            <TextView android:id="@+id/current_grade"
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:textColor="@color/white"
-                android:textSize="35sp"
-                android:text=" A"/>
-
         </LinearLayout>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:background="@color/white" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -73,6 +68,43 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:text="Add Assignment" />
 
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:background="@color/white" />
+
+        <!--The layout for the Current Grade-->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:divider="@color/white"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp">
+
+            <TextView android:id="@+id/Current_grade_text"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:text="Current Grade: "
+                android:textSize="25sp"/>
+
+            <!--Textview that will show the overall grade -->
+
+            <TextView android:id="@+id/current_grade"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                android:text=" A"/>
 
         </LinearLayout>
 
