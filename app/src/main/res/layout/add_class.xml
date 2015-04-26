@@ -51,7 +51,7 @@
             android:inputType="textCapWords|text"
             android:padding="5dp"/>
 
-        </LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"

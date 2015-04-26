@@ -128,7 +128,7 @@ public class AddAssignment extends ActionBarActivity {
             setResult(RESULT_OK, ClassOverView);
             finish();
         }
-        else
+        else if(assignmentName.length() >= 4 && assignmentName.length() <= 100)
             Toast.makeText(getApplicationContext(), "Name Too Short", Toast.LENGTH_SHORT).show();
 
     }

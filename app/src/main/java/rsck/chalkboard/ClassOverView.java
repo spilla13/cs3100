@@ -1,8 +1,11 @@
 package rsck.chalkboard;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -22,6 +25,7 @@ public class ClassOverView extends Activity implements AddCategory.Communicator,
     public static final int ADD_CAT_CODE = 2;
     public static final int ADD_HW_CODE = 1;
     public static final int CAT_FRAG_ID =  1;
+    final Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstances){
@@ -148,9 +152,29 @@ public class ClassOverView extends Activity implements AddCategory.Communicator,
     }
 
     protected void onAddAssignmentClick() {
-        Intent AddAssignment = new Intent(this, AddAssignment.class);
-        AddAssignment.putParcelableArrayListExtra("weightedGrades", course.getGrades());
-        startActivityForResult(AddAssignment, ADD_HW_CODE);
+        ArrayList <WeightedGrades> weightedGrades = course.getGrades();
+        if (weightedGrades.size() > 0) {
+            Intent AddAssignment = new Intent(this, AddAssignment.class);
+            AddAssignment.putParcelableArrayListExtra("weightedGrades", weightedGrades);
+            startActivityForResult(AddAssignment, ADD_HW_CODE);
+        }
+        else{
+            AlertDialog.Builder alertNoCategory = new AlertDialog.Builder(context);
+
+            //setTitle
+            alertNoCategory.setTitle("No Category");
+            //set dialog message
+            alertNoCategory.setMessage("Please add a Category");
+            alertNoCategory.setPositiveButton("Thank You!",new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog,int id) {
+                    // if this button is clicked, close dialog
+                    dialog.cancel();
+                }
+            });
+            AlertDialog alertDialog = alertNoCategory.create();
+            alertDialog.show();
+
+        }
     }
 
     protected void onAddCategoryClick() {
@@ -202,7 +226,11 @@ public class ClassOverView extends Activity implements AddCategory.Communicator,
 
     public void onDetailsMessage(String assignmentTitle, String method){
         //set the name and weight here !!Take out the TOAST!!
-        Toast.makeText(this, "Hello Jacob", Toast.LENGTH_LONG).show();
+        if(method == "modify"){
+           Toast.makeText(this, "Jacob is a Poo", Toast.LENGTH_LONG).show();
+        }else if(method == "delete"){
+            Toast.makeText(this, "Ohhhhh NO its DELETED!!! JK", Toast.LENGTH_LONG).show();
+        }
     }
 
 
