@@ -6,7 +6,7 @@ from tokenapi.decorators import token_required
 from tracker.models import Course, Homework, Category, Grade
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
-from tracker.utils import get, check, rm, edit
+from tracker.utils import get, check, rm, edit, getObjects, isError, singularOp
 
 def index(request):
     return HttpResponse("This is the API for chalkboard.")
@@ -202,3 +202,36 @@ def editHomework(request):
 @token_required
 def rmGrade(request):
     return rm(request, Grade)
+
+@token_required
+def getCategoriesForCourse(request):
+    response = [ ]
+
+    res = check(request)
+    if res is not None:
+        return res
+
+    data = json.loads(request.body.decode('utf-8'))
+
+    course = getObjects(data, Course)
+    if isError(course):
+        return course
+
+    res = singularOp(course, Course, op="Course2cat")
+    if res is not None:
+        return res
+    
+    coursefil = course[0]
+    grades = Grade.objects.filter(course=coursefil)
+
+    for grade in grades:
+        response.append(grade.homework.category.id)
+    
+    # Flatten
+    response = list(set(response))
+    responsearr = []
+    for cid in response:
+        responsearr.append(Category.objects.filter(id=cid).values()[0])
+
+    return JsonResponse({"data": responsearr}) 
+    

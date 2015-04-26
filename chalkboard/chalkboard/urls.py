@@ -27,6 +27,8 @@ urlpatterns = patterns('',
     url(r'^edit/category/', 'tracker.views.editCategory'),
     url(r'^edit/homework/', 'tracker.views.editHomework'),
 
+    url(r'^get/course2cat/', 'tracker.views.getCategoriesForCourse'),
+
     url('^$', 'tracker.views.index'),
 
     url('^', include('django.contrib.auth.urls', namespace="auth")), 
