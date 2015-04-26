@@ -98,7 +98,6 @@ public class Home extends Activity{
             if (requestCode == 1) {
                 Thread t = new Thread(new Runnable() {
                     public void run() {
-                        Toast.makeText(getApplicationContext(), "Loading...", Toast.LENGTH_LONG);
                         user.addCourse(courseName, schoolName);
                         runOnUiThread(new Runnable() {
                             @Override
