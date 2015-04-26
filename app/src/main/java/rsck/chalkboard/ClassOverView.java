@@ -164,11 +164,12 @@ public class ClassOverView extends Activity implements AddCategory.Communicator,
     }
 
 
-    public void showDialog(View v){
+    public void showDialog(View v) {
         FragmentManager manager = getFragmentManager();
         AddCategory myDialog = new AddCategory();
         myDialog.show(manager, "meow");
-
+    }
+    
     public void showCategory(View v){
         FragmentManager manager = getFragmentManager();
         AddCategory myDialog = new AddCategory();
