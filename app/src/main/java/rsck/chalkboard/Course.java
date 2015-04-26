@@ -76,6 +76,9 @@ public class Course implements Parcelable {
             total += weightedGrades.getWeight();
         }
 
+        if(total == 0)
+            total = 1;
+
         return total;
     }
 
