@@ -1,6 +1,7 @@
 package rsck.chalkboard;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -95,23 +96,23 @@ public class Home extends Activity{
                 Thread t = new Thread(new Runnable() {
                     public void run() {
                         user.addCourse(courseName, schoolName);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ClassTitleFragment frag = (ClassTitleFragment) getFragmentManager().findFragmentById(R.id.classOverList);
+                                frag.addElement(courseName);
+                            }
+                        });
                     }
                 });
                 t.start();
-                try {
-                    t.join();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                updateTitleFragment();
-
-                onRestart(); // your "refresh" code
             }
         }
     }
 
     protected void onAddButtonClick() {
         Intent addClassIntent = new Intent(this, AddClass.class);
+        addClassIntent.putExtra("courses", user.getCourses());
         startActivityForResult(addClassIntent, 1);
     }
 
@@ -121,9 +122,13 @@ public class Home extends Activity{
 
     public void updateTitleFragment(){
         ClassTitleFragment newFragment = new ClassTitleFragment();
+        Bundle args = new Bundle();
+        args.putParcelableArrayList("courses",user.getCourses());
+        newFragment.setArguments(args);
+
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.classOverList, newFragment);
         transaction.addToBackStack(null);
         transaction.commit();
-    }//jacob's request
+    }
 }
