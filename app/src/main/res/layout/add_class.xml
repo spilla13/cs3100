@@ -102,60 +102,14 @@
 
     </LinearLayout>
 
-    <LinearLayout android:id="@+id/linearLayoutDueDate"
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_marginTop="5dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/linearLayoutField2">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Date: "/>
-
-        <EditText android:id="@+id/dateText"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:inputType="date"/>
-
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Notes: "
-        android:layout_below="@+id/linearLayoutDueDate"
-        android:layout_marginTop="5dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/textView" />
-
-    <EditText android:id="@+id/noteBox"
-        android:layout_width="fill_parent"
-        android:layout_height="200dp"
-        android:inputType="textMultiLine"
-        android:singleLine="false"
-        android:ems="10"
-        android:lines="10"
-        android:gravity="top|start"
-        android:layout_alignTop="@+id/textView"
-        android:layout_toRightOf="@+id/textView"
-        android:layout_toEndOf="@+id/textView"
-        android:textColor="@color/black"
-        android:background="@color/white"/>
-
-    <!--add a class button-->
+        <!--add a class button-->
     <Button android:id="@+id/addAClass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Finish"
-        android:layout_below="@+id/noteBox"
-        android:layout_marginTop="5dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_below="@+id/linearLayoutField2"
+        android:layout_alignEnd="@+id/linearLayoutField2" />
+
 
 
 </RelativeLayout>

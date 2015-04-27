@@ -13,6 +13,25 @@
             android:layout_height="wrap_content"
             android:textSize="17sp"
             android:paddingRight="5dp"
+            android:text="Assignment Name:"/>
+
+        <EditText android:id="@+id/mName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:paddingRight="5dp"
             android:text="Current Grade:"/>
 
         <EditText android:id="@+id/mGrade"
@@ -53,10 +72,13 @@
             android:paddingRight="5dp"
             android:text="Category:"/>
 
-        <EditText android:id="@+id/mCategory"
+        <Spinner
+            android:id="@+id/classTypeSpinner"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textSize="15sp"/>
+            android:background="@android:drawable/btn_dropdown"
+            android:spinnerMode="dropdown"
+            android:padding="5dp"/>
 
     </LinearLayout>
 

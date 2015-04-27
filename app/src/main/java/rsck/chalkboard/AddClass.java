@@ -22,8 +22,6 @@ public class AddClass extends ActionBarActivity {
     private String[] classType;
     private EditText schoolName;
     private EditText className;
-    private EditText date;
-    private EditText note;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +36,6 @@ public class AddClass extends ActionBarActivity {
         classSpinner = (Spinner) findViewById(R.id.classTypeSpinner);
         schoolName = (EditText) findViewById(R.id.schoolNameText);
         className = (EditText) findViewById(R.id.classNameTextBox);
-        date = (EditText) findViewById(R.id.dateText);
-        note = (EditText) findViewById(R.id.noteBox);
 
         title.setTypeface(tf);
         Button sendAddButtonClick = (Button) findViewById(R.id.addAClass);
@@ -49,9 +45,7 @@ public class AddClass extends ActionBarActivity {
             public void onClick(View v) {
                 String.valueOf(classSpinner.getSelectedItem());
                 onAddButtonClick(Arrays.toString(classType),
-                        String.valueOf(note.getText()),
                         String.valueOf(className.getText()),
-                        String.valueOf(date.getText()),
                         String.valueOf(schoolName.getText()));
             }
         });
@@ -89,9 +83,7 @@ public class AddClass extends ActionBarActivity {
     }
 
     protected void onAddButtonClick(String classType,
-                                    String note,
                                     String className,
-                                    String date,
                                     String schoolName) {
         //TODO: HAndle form data.
 

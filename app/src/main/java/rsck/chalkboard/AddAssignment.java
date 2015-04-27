@@ -23,7 +23,6 @@ public class AddAssignment extends ActionBarActivity {
     private String[] assignmentType;
     private EditText pointsPossibleText;
     private EditText pointsReceivedText;
-    private EditText notes;
     private ArrayList<WeightedGrades> weightedGrades;
 
     @Override
@@ -47,7 +46,6 @@ public class AddAssignment extends ActionBarActivity {
         assignmentName = (EditText) findViewById(R.id.assignmentTextBox);
         pointsReceivedText = (EditText) findViewById(R.id.receivedPoints);
         pointsPossibleText = (EditText) findViewById(R.id.totalPoints);
-        notes = (EditText) findViewById(R.id.descriptionBox);
 
 
 
@@ -78,8 +76,7 @@ public class AddAssignment extends ActionBarActivity {
                 onAddButtonClick(classSpinner.getSelectedItemPosition(),
                         String.valueOf(assignmentName.getText()),
                         pointsPossible,
-                        pointsReceived,
-                        String.valueOf(notes.getText()));
+                        pointsReceived);
             }
         });
 
@@ -116,8 +113,7 @@ public class AddAssignment extends ActionBarActivity {
     protected void onAddButtonClick(int assignmentType,
                                     String assignmentName,
                                     Double pointsPossible,
-                                    Double pointsReceived,
-                                    String notes){
+                                    Double pointsReceived){
         if(assignmentName.length() >= 4 && assignmentName.length() <= 100) {
             Intent ClassOverView = new Intent();
             //TODO:Handle other parts of the assignment

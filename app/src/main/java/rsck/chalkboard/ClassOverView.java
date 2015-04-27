@@ -73,9 +73,6 @@ public class ClassOverView extends Activity implements AddCategory.Communicator,
         Typeface tf = Typeface.createFromAsset(getAssets(), chalkFontPath);
         //Typeface rl = Typeface.createFromAsset(getAssets(), robotoFontPath);
 
-
-
-
         courseTitle.setText(course.getCourseName()); //set the name of the course
         updateGrade();
 
@@ -227,7 +224,8 @@ public class ClassOverView extends Activity implements AddCategory.Communicator,
     public void onDetailsMessage(String assignmentTitle, String method){
         //set the name and weight here !!Take out the TOAST!!
         if(method == "modify"){
-           Toast.makeText(this, "Jacob is a Poo", Toast.LENGTH_LONG).show();
+           Intent Modify = new Intent(this, AssignmentModify.class);
+           startActivityForResult(Modify, ADD_CAT_CODE);
         }else if(method == "delete"){
             Toast.makeText(this, "Ohhhhh NO its DELETED!!! JK", Toast.LENGTH_LONG).show();
         }

@@ -50,6 +50,11 @@
             android:label="AddCategory"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name=".AssignmentModify"
+            android:label="AssignmentModify"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>
