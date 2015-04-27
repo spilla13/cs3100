@@ -3,7 +3,6 @@ package rsck.chalkboard;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -124,21 +122,17 @@ public class ClassOverView extends Activity implements AddCategory.Communicator,
 
                 Thread t = new Thread(new Runnable() {
                     public void run() {
-                        course.addHomeworkToCategory(pointsReceived, pointsPossible, assignmentName, catID);
+                        final int id = course.addHomeworkToCategory(pointsReceived, pointsPossible,
+                                                        assignmentName, catID);
 
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                ArrayList<WeightedGrades> grades = course.getGrades();
-                                WeightedGrades cat = null;
-                                for(WeightedGrades cats : grades)
-                                    if(cats.getID() == catID)
-                                        cat = cats;
 
-                                CategoryFrag oldFrag = (CategoryFrag) getFragmentManager().findFragmentByTag(Integer.toString(catID));
-                                getFragmentManager().beginTransaction().remove(oldFrag).commit();
-                                CategoryFrag newFrag = CategoryFrag.newInstance(cat);
-                                getFragmentManager().beginTransaction().add(CAT_FRAG_ID, newFrag, Integer.toString(catID)).commit();
+                                CategoryFrag contFrag = (CategoryFrag) getFragmentManager()
+                                        .findFragmentByTag(Integer.toString(catID));
+
+                                contFrag.add(course.getAssignmentByID(id));
 
                                 updateGrade();
                             }
@@ -171,7 +165,7 @@ public class ClassOverView extends Activity implements AddCategory.Communicator,
                             @Override
                             public void run() {
                                 CategoryFrag contFrag = (CategoryFrag) getFragmentManager()
-                                        .findFragmentByTag(Integer.toString(catID));
+                                        .findFragmentByTag(Integer.toString(originalCatID));
 
                                 contFrag.remove(assignmentToReplace);
                                 contFrag.add(assignmentToReplace);
@@ -297,7 +291,13 @@ public class ClassOverView extends Activity implements AddCategory.Communicator,
                         CategoryFrag contFrag = (CategoryFrag) getFragmentManager()
                                 .findFragmentByTag(Integer.toString(catID));
 
-                        contFrag.remove(course.getAssignmentByID(assignmentID));
+                        AssignmentFrag oldFrag = (AssignmentFrag) contFrag.getChildFragmentManager()
+                                .findFragmentByTag(Integer.toString(assignmentID));
+
+                        if(oldFrag != null)
+                            contFrag.getChildFragmentManager().beginTransaction().remove(oldFrag).commit();
+
+                        contFrag.updateGrade();
 
                         updateGrade();
                     }

@@ -3,7 +3,6 @@ package rsck.chalkboard;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,7 +53,8 @@ public class AssignmentFrag extends Fragment{
     }
 
     public void onClickShowDetails(View v){
-        FragmentManager manager = getFragmentManager();
+        FragmentManager manager = getActivity().getFragmentManager();
+
         Details myDialog = Details.newInstance(assignment, catName);
         myDialog.show(manager,"meow");
     }
