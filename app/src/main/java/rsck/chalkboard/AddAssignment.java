@@ -1,5 +1,7 @@
 package rsck.chalkboard;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -129,8 +131,23 @@ public class AddAssignment extends ActionBarActivity {
             setResult(RESULT_OK, ClassOverView);
             finish();
         }
-        else if(assignmentName.length() >= 4 && assignmentName.length() <= 100)
-            Toast.makeText(getApplicationContext(), "Name Too Short", Toast.LENGTH_SHORT).show();
+        else if(assignmentName.length() < 4 || assignmentName.length() > 100)
+        {
+            AlertDialog.Builder alertNoCategory = new AlertDialog.Builder(this);
+
+            //setTitle
+            alertNoCategory.setTitle("Invalid Name!");
+            //set dialog message
+            alertNoCategory.setMessage("Must be (4-100) characters!");
+            alertNoCategory.setPositiveButton("Thank You!",new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog,int id) {
+                    // if this button is clicked, close dialog
+                    dialog.cancel();
+                }
+            });
+            AlertDialog alertDialog = alertNoCategory.create();
+            alertDialog.show();
+        }
 
     }
 

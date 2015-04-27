@@ -1,5 +1,7 @@
 package rsck.chalkboard;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
@@ -46,7 +48,7 @@ public class AddClass extends ActionBarActivity {
                 String.valueOf(classSpinner.getSelectedItem());
                 onAddButtonClick(Arrays.toString(classType),
                         String.valueOf(className.getText()).replaceAll("\\s+",""),
-                        String.valueOf(schoolName.getText()).replaceAll("\\s+",""));
+                        String.valueOf(schoolName.getText()).replaceAll("\\s+", ""));
             }
         });
 
@@ -87,12 +89,29 @@ public class AddClass extends ActionBarActivity {
                                     String schoolName) {
         //TODO: HAndle form data.
 
+        if(className.length() >= 4 && className.length() <=100) {
+            Intent home = new Intent();
+            home.putExtra("courseName", className);
+            home.putExtra("schoolName", schoolName);
+            setResult(RESULT_OK, home);
+            finish();
+        }
+        else {
+            AlertDialog.Builder alertNoCategory = new AlertDialog.Builder(this);
 
-        Intent home = new Intent();
-        home.putExtra("courseName", className);
-        home.putExtra("schoolName", schoolName);
-        setResult(RESULT_OK, home);
-        finish();
+            //setTitle
+            alertNoCategory.setTitle("Invalid Name!");
+            //set dialog message
+            alertNoCategory.setMessage("Must be (4-100) characters!");
+            alertNoCategory.setPositiveButton("Thank You!",new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog,int id) {
+                    // if this button is clicked, close dialog
+                    dialog.cancel();
+                }
+            });
+            AlertDialog alertDialog = alertNoCategory.create();
+            alertDialog.show();
+        }
     }
 
     public void onBackPressed(){

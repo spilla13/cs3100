@@ -111,8 +111,9 @@ public class ClassOverView extends Activity implements AddCategory.Communicator,
         final double pointsPossible;
         final String assignmentName;
         final int catID;
+        final Assignment assignmentToReplace;
+        WeightedGrades cat = new WeightedGrades();
 
-        //TODO: Handle Result
 
         if(resultCode == RESULT_OK) {
             if (requestCode == ADD_HW_CODE) {
@@ -146,6 +147,50 @@ public class ClassOverView extends Activity implements AddCategory.Communicator,
                 });
                 t.start();
             }
+            else if (requestCode == MOD_HW_CODE){ //TODO: Add modify Fucntionality
+
+                assignmentToReplace = intent.getParcelableExtra("assignment");
+                catID = intent.getIntExtra("catID", 0);
+
+                ArrayList<WeightedGrades> grades = course.getGrades();
+                for(WeightedGrades weightedGrades : grades)
+                {
+                    if(weightedGrades.getAssignmentByID(assignmentToReplace.ID) != null)
+                        cat = weightedGrades;
+                }
+
+                final int originalCatID = cat.getID();
+                final String originalCatName = cat.getName();
+
+
+
+                Thread t = new Thread(new Runnable() {
+                    public void run() {
+                        course.replaceAssignment(assignmentToReplace);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                CategoryFrag contFrag = (CategoryFrag) getFragmentManager()
+                                        .findFragmentByTag(Integer.toString(originalCatID));
+
+                                AssignmentFrag oldFrag = (AssignmentFrag) contFrag.getChildFragmentManager()
+                                        .findFragmentByTag(Integer.toString(assignmentToReplace.ID));
+
+                                if(oldFrag != null) {
+                                    getFragmentManager().beginTransaction().remove(oldFrag).commit();
+
+                                    contFrag.getChildFragmentManager().beginTransaction().add(CategoryFrag.HW_FRAG_ID,
+                                            AssignmentFrag.newInstance(assignmentToReplace, originalCatName),
+                                            Integer.toString(assignmentToReplace.ID)).commit();
+                                }
+
+                                updateGrade();
+                            }
+                        });
+                    }
+                });
+                t.start();
+            }
         }
     }
 
@@ -171,7 +216,6 @@ public class ClassOverView extends Activity implements AddCategory.Communicator,
             });
             AlertDialog alertDialog = alertNoCategory.create();
             alertDialog.show();
-
         }
     }
 
@@ -201,23 +245,43 @@ public class ClassOverView extends Activity implements AddCategory.Communicator,
 
     public void onCategoryMessage(final String categoryName, final String categoryWeight){
         //set the name and weight here !!Take out the TOAST!!
-        Thread t = new Thread(new Runnable() {
-            public void run() {
-                double weight = Double.valueOf(categoryWeight)/100;
-                final int newCatID = course.addWeightedCategory(categoryName, weight);
-                final WeightedGrades newGrades = course.getCatWithID(newCatID);
 
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        getFragmentManager().beginTransaction()
-                                .add(CAT_FRAG_ID, CategoryFrag.newInstance(newGrades), Integer.toString(newCatID)).commit();
-                        updateGrade();
-                    }
-                });
-            }
-        });
-        t.start();
+        if(categoryName.length() >=4) {
+            Thread t = new Thread(new Runnable() {
+                public void run() {
+                    double weight = Double.valueOf(categoryWeight) / 100;
+                    final int newCatID = course.addWeightedCategory(categoryName, weight);
+                    final WeightedGrades newGrades = course.getCatWithID(newCatID);
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            getFragmentManager().beginTransaction()
+                                    .add(CAT_FRAG_ID, CategoryFrag.newInstance(newGrades), Integer.toString(newCatID)).commit();
+                            updateGrade();
+                        }
+                    });
+                }
+            });
+            t.start();
+        }
+        else
+        {
+            AlertDialog.Builder alertNoCategory = new AlertDialog.Builder(context);
+
+            //setTitle
+            alertNoCategory.setTitle("Invalid Name!");
+            //set dialog message
+            alertNoCategory.setMessage("Must be (4-100) characters!");
+            alertNoCategory.setPositiveButton("Thank You!",new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog,int id) {
+                    // if this button is clicked, close dialog
+                    dialog.cancel();
+                }
+            });
+            AlertDialog alertDialog = alertNoCategory.create();
+            alertDialog.show();
+        }
     }
 
 
@@ -226,9 +290,12 @@ public class ClassOverView extends Activity implements AddCategory.Communicator,
         //set the name and weight here !!Take out the TOAST!!
         if(method == "modify"){
            Intent Modify = new Intent(this, AssignmentModify.class);
+            Modify.putExtra("assignment", course.getAssignmentByID(assignmentID));
+            Modify.putExtra("weightedGrades", course.getGrades());
            startActivityForResult(Modify, MOD_HW_CODE);
-        }else if(method == "delete"){
 
+
+        }else if(method == "delete"){
             Thread t = new Thread(new Runnable() {
                 public void run() {
                 final int catID = course.removeAssignmentID(assignmentID);
@@ -244,6 +311,8 @@ public class ClassOverView extends Activity implements AddCategory.Communicator,
 
                         if(oldFrag != null)
                             getFragmentManager().beginTransaction().remove(oldFrag).commit();
+
+                        updateGrade();
                     }
                 });
                 }

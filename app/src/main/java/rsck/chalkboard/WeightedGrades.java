@@ -259,6 +259,27 @@ public class WeightedGrades implements Parcelable{
         return success;
     }
 
+    public Assignment getAssignmentByID(int assignmentID){
+        for(int i = 0; i < assignments.size(); i++) {
+            Assignment assignment = assignments.get(i);
+            if (assignment.ID == assignmentID)
+                return assignment;
+        }
+        return null;
+    }
+
+    public boolean replace(Assignment assignmentToReplace){
+        boolean replaced = false;
+
+        for(int i = 0; i < assignments.size(); i++){
+            if (assignments.get(i).ID == assignmentToReplace.ID){
+                replaced = true;
+                assignments.set(i, assignmentToReplace);
+            }
+
+        }
+        return replaced;
+    }
 
     /*Needed Parcelable Declarations below here*/
     public int describeContents(){

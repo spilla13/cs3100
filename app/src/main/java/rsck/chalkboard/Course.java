@@ -201,6 +201,24 @@ public class Course implements Parcelable {
         return removed;
     }
 
+    public Assignment getAssignmentByID(int assignmentID){
+        for(WeightedGrades weightedGrades : grades){
+            Assignment assignment = weightedGrades.getAssignmentByID(assignmentID);
+            if(assignment != null)
+                return assignment;
+        }
+
+        return null;
+    }
+
+    public void replaceAssignment(Assignment assignmentToReplace){
+        //Only replaces if found. less operations, more ghetto.
+        for(WeightedGrades weightedGrades : grades){
+            weightedGrades.replace(assignmentToReplace);
+        }
+        //TODO: UPDATE DATABASE
+    }
+
     /*Needed Parcelable Declarations below here*/
     public int describeContents(){
         return 0;

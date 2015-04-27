@@ -89,7 +89,7 @@ public class Details extends DialogFragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.modify){
-            communicator.onDetailsMessage(assignment.ID,"modify"); //this should return the assignment name so you can delete it
+            communicator.onDetailsMessage(assignment.ID,"modify");
             dismiss();
         }
         else if(v.getId() == R.id.delete){
