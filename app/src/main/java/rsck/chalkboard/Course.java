@@ -130,13 +130,13 @@ public class Course implements Parcelable {
         double total = getCourseGrade();
         String letterGrade;
 
-        if(total >= .9)
+        if(total > .9)
             letterGrade = "A";
-        else if(total >= .8)
+        else if(total > .8)
             letterGrade = "B";
-        else if(total >= .7)
+        else if(total > .7)
             letterGrade = "C";
-        else if(total >= .6)
+        else if(total > .6)
             letterGrade = "D";
         else
             letterGrade = "F";
@@ -177,7 +177,7 @@ public class Course implements Parcelable {
         return newCatId;
     }
 
-    public int addHomeworkToCategory(double pointsReceived, double pointsPossible,
+    public boolean addHomeworkToCategory(double pointsReceived, double pointsPossible,
                                          String name, int catID){
 
         for(WeightedGrades cat : grades){
@@ -186,7 +186,7 @@ public class Course implements Parcelable {
             }
         }
 
-        return 0;
+        return false;
     }
 
     public int removeAssignmentID(int assignmentID){

@@ -1,6 +1,7 @@
 package rsck.chalkboard;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -45,7 +46,7 @@ public class Details extends DialogFragment implements View.OnClickListener{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.details, container, false);
+        View v = inflater.inflate(R.layout.details, null);
 
         Bundle args = getArguments();
 

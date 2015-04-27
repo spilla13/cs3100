@@ -8,14 +8,16 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.view.View;
 import android.widget.Spinner;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class AddAssignment extends ActionBarActivity {
     private EditText assignmentName;
@@ -115,10 +117,10 @@ public class AddAssignment extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    void onAddButtonClick(int assignmentType,
-                          String assignmentName,
-                          Double pointsPossible,
-                          Double pointsReceived){
+    protected void onAddButtonClick(int assignmentType,
+                                    String assignmentName,
+                                    Double pointsPossible,
+                                    Double pointsReceived){
         if(assignmentName.length() >= 4 && assignmentName.length() <= 100) {
             Intent ClassOverView = new Intent();
 

@@ -6,6 +6,8 @@ import android.os.Parcelable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class Assignment implements Parcelable {
     public int ID;
     public double pointsReceived;
@@ -59,13 +61,13 @@ public class Assignment implements Parcelable {
         double total = pointsReceived / pointsPossible;
         String letterGrade;
 
-        if(total >= .9)
+        if(total > .9)
             letterGrade = "A";
-        else if(total >= .8)
+        else if(total > .8)
             letterGrade = "B";
-        else if(total >= .7)
+        else if(total > .7)
             letterGrade = "C";
-        else if(total >= .6)
+        else if(total > .6)
             letterGrade = "D";
         else
             letterGrade = "F";

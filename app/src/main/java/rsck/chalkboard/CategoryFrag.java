@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 
 public class CategoryFrag extends android.app.Fragment {
 
@@ -74,7 +75,7 @@ public class CategoryFrag extends android.app.Fragment {
     }
 
     public void remove(Assignment assignment){
-        //weightedGrades.remove(assignment.ID);
+        weightedGrades.remove(assignment.ID);
         AssignmentFrag fragToRemove = (AssignmentFrag)
                 getChildFragmentManager().findFragmentByTag(Integer.toString(assignment.ID));
 
@@ -84,7 +85,7 @@ public class CategoryFrag extends android.app.Fragment {
     }
 
     public void add(Assignment assignment){
-        //weightedGrades.addAssignment(assignment);
+        weightedGrades.addAssignment(assignment);
 
         getChildFragmentManager().beginTransaction().add(cf.getId(),
                 AssignmentFrag.newInstance(assignment, weightedGrades.getName()),
