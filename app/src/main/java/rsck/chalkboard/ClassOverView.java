@@ -25,6 +25,7 @@ public class ClassOverView extends Activity implements AddCategory.Communicator,
     public static final int ADD_CAT_CODE = 2;
     public static final int ADD_HW_CODE = 1;
     public static final int CAT_FRAG_ID =  1;
+    public static final int MOD_HW_CODE = 3;
     final Context context = this;
 
     @Override
@@ -221,13 +222,33 @@ public class ClassOverView extends Activity implements AddCategory.Communicator,
 
 
 
-    public void onDetailsMessage(String assignmentTitle, String method){
+    public void onDetailsMessage(final int assignmentID, String method){
         //set the name and weight here !!Take out the TOAST!!
         if(method == "modify"){
            Intent Modify = new Intent(this, AssignmentModify.class);
-           startActivityForResult(Modify, ADD_CAT_CODE);
+           startActivityForResult(Modify, MOD_HW_CODE);
         }else if(method == "delete"){
-            Toast.makeText(this, "Ohhhhh NO its DELETED!!! JK", Toast.LENGTH_LONG).show();
+
+            Thread t = new Thread(new Runnable() {
+                public void run() {
+                final int catID = course.removeAssignmentID(assignmentID);
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        CategoryFrag contFrag = (CategoryFrag) getFragmentManager()
+                                .findFragmentByTag(Integer.toString(catID));
+
+                        AssignmentFrag oldFrag = (AssignmentFrag) contFrag.getChildFragmentManager()
+                                .findFragmentByTag(Integer.toString(assignmentID));
+
+                        if(oldFrag != null)
+                            getFragmentManager().beginTransaction().remove(oldFrag).commit();
+                    }
+                });
+                }
+            });
+            t.start();
         }
     }
 

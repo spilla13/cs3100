@@ -124,7 +124,7 @@ public class AddAssignment extends ActionBarActivity {
             //TODO:Handle other parts of the assignment
             ClassOverView.putExtra("pointsReceived", pointsReceived);
             ClassOverView.putExtra("pointsPossible", pointsPossible);
-            ClassOverView.putExtra("assignmentName", assignmentName);
+            ClassOverView.putExtra("assignmentName", assignmentName.replaceAll("\\s+",""));
             ClassOverView.putExtra("catID", weightedGrades.get(assignmentType).getID());
             setResult(RESULT_OK, ClassOverView);
             finish();

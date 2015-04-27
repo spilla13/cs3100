@@ -42,7 +42,7 @@ public class AddCategory extends DialogFragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.addCategoryButton){
-            communicator.onCategoryMessage(String.valueOf(categoryName.getText()),
+            communicator.onCategoryMessage(String.valueOf(categoryName.getText()).replaceAll("\\s+",""),
                                            String.valueOf(categoryWeight.getText()));
             dismiss();
         }

@@ -89,11 +89,11 @@ public class Details extends DialogFragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.modify){
-            communicator.onDetailsMessage(String.valueOf(assignmentTitle),"modify"); //this should return the assignment name so you can delete it
+            communicator.onDetailsMessage(assignment.ID,"modify"); //this should return the assignment name so you can delete it
             dismiss();
         }
         else if(v.getId() == R.id.delete){
-            communicator.onDetailsMessage(String.valueOf(assignmentTitle), "delete");
+            communicator.onDetailsMessage(assignment.ID, "delete");
             dismiss();
         }
         else{
@@ -103,6 +103,6 @@ public class Details extends DialogFragment implements View.OnClickListener{
     }
 
     interface Communicator{
-        public void onDetailsMessage(String assignmentTitle, String method);
+        public void onDetailsMessage(int assignmentID, String method);
     }
 }

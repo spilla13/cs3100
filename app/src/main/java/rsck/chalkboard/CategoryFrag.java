@@ -55,6 +55,7 @@ public class CategoryFrag extends android.app.Fragment {
 
         if(fragContainer.getChildCount() > 0)
             fragContainer.removeAllViews();
+
         cf = new LinearLayout(getActivity());
         cf.setOrientation(LinearLayout.VERTICAL);
 

@@ -41,8 +41,41 @@ public class WeightedGrades implements Parcelable{
         assignments = new ArrayList<>();
     }
 
+    public boolean contains(int assignmentID){
+        for(Assignment assignment : assignments)
+            if(assignment.ID == assignmentID)
+                return true;
+
+        return false;
+    }
+
+    public void remove(int assignmentID){
+        DjangoFunctions django = new DjangoFunctions();
+        JSONObject query = new JSONObject();
+
+        try {
+            query.put("id", assignmentID);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        django.remove("grade", Integer.toString(user_ID), token,query);
+
+        int assignmentToRemove = -1;
+        for(int i = 0; i < assignments.size(); i++){
+            if(assignments.get(i).ID == assignmentID){
+                assignmentToRemove = i;
+            }
+        }
+
+        if(assignmentToRemove >= 0)
+            assignments.remove(assignmentToRemove);
+    }
+
+
+
     public WeightedGrades(int cat_ID, int user_ID, String token){
-        assignments = new ArrayList<Assignment>();
+        assignments = new ArrayList<>();
         ID = cat_ID;
         this.user_ID = user_ID;
         this.token = token;
@@ -144,11 +177,31 @@ public class WeightedGrades implements Parcelable{
 
             for(int i = 0; i < homeworks.length(); i++){
                 JSONObject assignment = homeworks.getJSONObject(i);
+                JSONObject gradeQuery = new JSONObject();
+                JSONObject gradeResponse;
 
-                //TODO: Add to Assignments.
-                Assignment newAssignment = new Assignment(assignment, user_ID, token);
+                gradeQuery.put("homework_id", assignment.getInt("id"));
+                gradeQuery.put("user_id", user_ID);
+                gradeResponse = django.access("grade", Integer.toString(user_ID), token, gradeQuery);
 
-                assignments.add(newAssignment);
+                if(gradeResponse.getBoolean("success"))
+                {
+                    JSONArray data = gradeResponse.getJSONArray("data");
+
+                    if(data.length() > 0) {
+                        assignment.put("points_received", data.getJSONObject(0).getDouble("points_received"));
+
+                        Assignment newAssignment = new Assignment(assignment);
+                        assignments.add(newAssignment);
+                    }
+                    /*If we put an else statement here and give a grade regardless,
+                    * We can load the assignments for the course, that other users may have created
+                    * and force the user to enter a grade.
+                    * If we do that, we may want to give users the option to exclude an assignment
+                    * from being grade.
+                    */
+                }
+
             }
         } catch (JSONException e) {
             e.printStackTrace();

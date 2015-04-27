@@ -45,8 +45,8 @@ public class AddClass extends ActionBarActivity {
             public void onClick(View v) {
                 String.valueOf(classSpinner.getSelectedItem());
                 onAddButtonClick(Arrays.toString(classType),
-                        String.valueOf(className.getText()),
-                        String.valueOf(schoolName.getText()));
+                        String.valueOf(className.getText()).replaceAll("\\s+",""),
+                        String.valueOf(schoolName.getText()).replaceAll("\\s+",""));
             }
         });
 

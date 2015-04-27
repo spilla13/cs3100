@@ -189,6 +189,18 @@ public class Course implements Parcelable {
         return false;
     }
 
+    public int removeAssignmentID(int assignmentID){
+        int removed = -1;
+
+        for(int i = 0; i < grades.size(); i++){
+            if(grades.get(i).contains(assignmentID)){
+               grades.get(i).remove(assignmentID);
+                removed = grades.get(i).getID();
+            }
+        }
+        return removed;
+    }
+
     /*Needed Parcelable Declarations below here*/
     public int describeContents(){
         return 0;
