@@ -11,7 +11,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class AssignmentModify extends ActionBarActivity{
 
@@ -84,15 +83,13 @@ public class AssignmentModify extends ActionBarActivity{
 
             if(mName.length() > 0)
                 assignment.name = mName;
-            if (dataAdapter.getItem(catPosition) != "No Change")
+            if (!dataAdapter.getItem(catPosition).equals("No Change"))
                 ClassOverView.putExtra("catID", weightedGrades.get(catPosition).getID());
             if (pointsReceivedText.length() > 0) {
-                Double pointsReceived = Double.parseDouble(pointsReceivedText);
-                assignment.pointsReceived = pointsReceived;
+                assignment.pointsReceived = Double.parseDouble(pointsReceivedText);
             }
             if (pointsPossibleText.length() > 0) {
-                Double pointsPossible = Double.parseDouble(pointsPossibleText);
-                assignment.pointsPossible = pointsPossible;
+                assignment.pointsPossible = Double.parseDouble(pointsPossibleText);
             }
             ClassOverView.putExtra("assignment", assignment);
 

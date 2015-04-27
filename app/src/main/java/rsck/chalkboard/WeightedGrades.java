@@ -7,10 +7,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 
 /**
@@ -114,13 +110,13 @@ public class WeightedGrades implements Parcelable{
         double total = unweightedAverage();
         String letterGrade;
 
-        if(total > .9)
+        if(total >= .9)
             letterGrade = "A";
-        else if(total > .8)
+        else if(total >= .8)
             letterGrade = "B";
-        else if(total > .7)
+        else if(total >= .7)
             letterGrade = "C";
-        else if(total > .6)
+        else if(total >= .6)
             letterGrade = "D";
         else
             letterGrade = "F";
@@ -208,7 +204,7 @@ public class WeightedGrades implements Parcelable{
         }
     }
 
-    public boolean addAssignment(double pointsReceived, double pointsPossible, String name,
+    public int addAssignment(double pointsReceived, double pointsPossible, String name,
                               int cat, int course){
         DjangoFunctions django = new DjangoFunctions();
         JSONObject homework = new JSONObject();
@@ -232,7 +228,6 @@ public class WeightedGrades implements Parcelable{
             e.printStackTrace();
         }
 
-
         //prepare and add to course table
         try {
             if(success) {
@@ -249,14 +244,15 @@ public class WeightedGrades implements Parcelable{
                     Assignment newAssignment = new Assignment(homework);
 
                     assignments.add(newAssignment);
+
+                    return newAssignment.ID;
                 }
             }
         }catch (JSONException e){
             e.printStackTrace();
         }
 
-
-        return success;
+        return 0;
     }
 
     public Assignment getAssignmentByID(int assignmentID){
