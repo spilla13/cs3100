@@ -53,7 +53,7 @@ public class Login extends Activity {
             Toast.makeText(getApplicationContext(), serverToast, Toast.LENGTH_SHORT).show();
 
             //Tells users they are logging in
-            Toast.makeText(getApplicationContext(), "Authenticating",
+            Toast.makeText(getApplicationContext(), "Loading",
                     Toast.LENGTH_SHORT).show();
 
             Thread t = new Thread(new Runnable() {

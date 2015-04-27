@@ -26,6 +26,7 @@ public class AddCategory extends DialogFragment implements View.OnClickListener{
         View v = inflater.inflate(R.layout.add_category, null);
 
         setCancelable(false);
+        getDialog().setTitle("Add New Category");
 
         Button cancel = (Button) v.findViewById(R.id.cancel);
         Button addCategory = (Button) v.findViewById(R.id.addCategoryButton);

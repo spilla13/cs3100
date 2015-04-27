@@ -71,7 +71,7 @@ public class Details extends DialogFragment implements View.OnClickListener{
         Course course = ((ClassOverView) getActivity()).getCourse();
 
         //TODO:Get Details from Calling Activity.
-        assignmentTitle.setText(assignment.name);
+        getDialog().setTitle(assignment.name); //sets the title of the Dialog
         cGrade.setText(String.valueOf(assignment.pointsReceived));
         maxGrade.setText(String.valueOf(assignment.pointsPossible));
         cPercent.setText(sPercentGrade + "%");

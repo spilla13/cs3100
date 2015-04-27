@@ -8,17 +8,9 @@
     android:layout_marginTop="20dp"
     android:layout_marginBottom="20dp" >
 
-    <TextView android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:padding="5dp"
-        android:text="Add New Category"/>
-
     <EditText android:id="@+id/categoryTextBox"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/title"
         android:inputType="textCapWords|text"
         android:padding="5dp"/>
 
