@@ -87,8 +87,10 @@ public class AssignmentModify extends ActionBarActivity{
             if(mName.length() > 0)
                 assignment.name = mName;
 
+
             //if (!dataAdapter.getItem(catPosition).equals("No Change"))
             //    ClassOverView.putExtra("catID", weightedGrades.get(catPosition).getID());
+
 
             if (dataAdapter.getItem(catPosition) != "No Change")
                 ClassOverView.putExtra("catID", weightedGrades.get(catPosition).getID());
