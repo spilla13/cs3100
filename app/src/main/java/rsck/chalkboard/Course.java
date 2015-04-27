@@ -212,11 +212,43 @@ public class Course implements Parcelable {
     }
 
     public void replaceAssignment(Assignment assignmentToReplace){
+        boolean found = false;
         //Only replaces if found. less operations, more ghetto.
         for(WeightedGrades weightedGrades : grades){
-            weightedGrades.replace(assignmentToReplace);
+            if(weightedGrades.replace(assignmentToReplace))
+                found = true;
         }
         //TODO: UPDATE DATABASE
+        if(found)
+        {
+            DjangoFunctions django = new DjangoFunctions();
+            JSONObject hwQuery = new JSONObject();
+            JSONObject gradeQuery = new JSONObject();
+            JSONObject newHwData = new JSONObject();
+            JSONObject newGradeData = new JSONObject();
+
+            try {
+                newHwData.put("name", assignmentToReplace.name);
+                newHwData.put("points_possible", assignmentToReplace.pointsPossible);
+
+                hwQuery.put("id", assignmentToReplace.ID);
+                hwQuery.put("new", newHwData);
+
+                newGradeData.put("points_received", assignmentToReplace.pointsReceived);
+
+                gradeQuery.put("homework_id", assignmentToReplace.ID);
+                gradeQuery.put("user_id", user_ID);
+                gradeQuery.put("course_id", ID);
+                gradeQuery.put("new", newGradeData);
+
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+
+            django.edit("homework", Integer.toString(user_ID), token, hwQuery);
+            django.edit("grade", Integer.toString(user_ID), token, gradeQuery);
+
+        }
     }
 
     /*Needed Parcelable Declarations below here*/
