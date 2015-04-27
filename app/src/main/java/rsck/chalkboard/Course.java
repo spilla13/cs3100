@@ -84,64 +84,35 @@ public class Course implements Parcelable {
 
     //Loads all grades for this Course.
     public void loadGrades(){
-
-        //TODO: add grades to course.
-        //TODO: send JSON to query stuff.
-
+        //Adding with new Schema.
         /*
-        *  Calls: http://cs3100.brod.es:3100/get/grade/?token='token'&user='ID'
-        *  sendString = "{ \"course_id\" = ID,}"
+        *  Calls: http://cs3100.brod.es:3100/get/course2cat/?token='token'&user='ID'
+        *  sendString = "{ "id" : ID}"
         *
-        * */
+        */
+        DjangoFunctions django = new DjangoFunctions();
         JSONObject JSONQuery = new JSONObject();
-
         try {
-            JSONQuery.put("course_id", ID);
+            JSONQuery.put("id",ID);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        DjangoFunctions django = new DjangoFunctions();
-        JSONObject response = django.access("grade", Integer.toString(user_ID), token, JSONQuery);
+        JSONObject response = django.access("course2cat", Integer.toString(user_ID), token, JSONQuery);
 
-        
-        //Now grab all unique Cat_IDs for the course...
         try {
             if(response.getBoolean("success")){
                 JSONArray data = response.getJSONArray("data");
 
-                ArrayList<Integer> uniqueIDs = new ArrayList<Integer>();
-
-                for(int i = 0; i < data.length(); i++) {
-
-                    JSONObject grade = data.getJSONObject(i);
-
-                    /*
-                    * Calls: http://cs3100.brod.es:3100/get/homework/?token='token'&user='ID'
-                    * Where: {"id": 'grade.getInt("homework_id")'}
-                    */
-                    JSONObject query = new JSONObject();
-                    query.put("id", grade.getInt("homework_id"));
-
-
-                    JSONObject homework = django.access("homework", Integer.toString(user_ID), token, query);
-                    JSONObject matchedHomework = homework.getJSONArray("data").getJSONObject(0);
-
-                    int categoryID = matchedHomework.getInt("category_id");
-
-                    //Category is unique, add to grades.
-                    if(!uniqueIDs.contains(categoryID)){
-                        WeightedGrades newWeightedCat = new WeightedGrades(categoryID, user_ID, token);
-                        uniqueIDs.add(categoryID);
-
-                        grades.add(newWeightedCat);
-                    }
+                for(int i = 0; i < data.length(); i++){
+                    JSONObject cat = data.getJSONObject(i);
+                    WeightedGrades newWeightedCat = new WeightedGrades(cat.getInt("id"), user_ID, token);
+                    grades.add(newWeightedCat);
                 }
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
     }
 
     //returns grade as a decimal.
