@@ -17,7 +17,7 @@ public class AssignmentModify extends ActionBarActivity{
     private EditText mName;
     private EditText currentGrade;
     private EditText totalGrade;
-    private Spinner catSpinner;
+    //private Spinner catSpinner;
     private String[] classType;
     private ArrayAdapter<String> dataAdapter;
     private ArrayList<WeightedGrades> weightedGrades;
@@ -46,7 +46,7 @@ public class AssignmentModify extends ActionBarActivity{
         currentGrade = (EditText) findViewById(R.id.mGrade);
         totalGrade = (EditText) findViewById(R.id.maxGrade);
         classType = getResources().getStringArray(R.array.class_type);
-        catSpinner = (Spinner) findViewById(R.id.classTypeSpinner);
+        //catSpinner = (Spinner) findViewById(R.id.classTypeSpinner);
 
 
 
@@ -54,7 +54,7 @@ public class AssignmentModify extends ActionBarActivity{
             @Override
             public void onClick(View v) {
                 onUpdateClick(String.valueOf(mName.getText()),
-                        catSpinner.getSelectedItemPosition(),
+                        /*catSpinner.getSelectedItemPosition(),*/
                         String.valueOf(currentGrade.getText()),
                         String.valueOf(totalGrade.getText()));
             }
@@ -67,24 +67,26 @@ public class AssignmentModify extends ActionBarActivity{
             }
         });
 
-        //Initialize spinner
+        /*Initialize spinner
         dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, catNames);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        catSpinner.setAdapter(dataAdapter);
+        catSpinner.setAdapter(dataAdapter);*/
 
     }
 
-    protected void onUpdateClick(String mName, int catPosition,
+    protected void onUpdateClick(String mName, /*int catPosition,*/
                                  String pointsReceivedText, String pointsPossibleText) {
 
         if((mName.length() >= 4 && mName.length() <= 100) || mName.length() == 0) {
             Intent ClassOverView = new Intent();
 
+
+
             if(mName.length() > 0)
                 assignment.name = mName;
-            if (!dataAdapter.getItem(catPosition).equals("No Change"))
-                ClassOverView.putExtra("catID", weightedGrades.get(catPosition).getID());
+            //if (!dataAdapter.getItem(catPosition).equals("No Change"))
+            //    ClassOverView.putExtra("catID", weightedGrades.get(catPosition).getID());
             if (pointsReceivedText.length() > 0) {
                 assignment.pointsReceived = Double.parseDouble(pointsReceivedText);
             }

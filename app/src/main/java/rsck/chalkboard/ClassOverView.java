@@ -144,7 +144,7 @@ public class ClassOverView extends Activity implements AddCategory.Communicator,
             else if (requestCode == MOD_HW_CODE){ //TODO: Add modify Fucntionality
 
                 assignmentToReplace = intent.getParcelableExtra("assignment");
-                catID = intent.getIntExtra("catID", 0);
+                //catID = intent.getIntExtra("catID", 0);
 
                 ArrayList<WeightedGrades> grades = course.getGrades();
                 for(WeightedGrades weightedGrades : grades)

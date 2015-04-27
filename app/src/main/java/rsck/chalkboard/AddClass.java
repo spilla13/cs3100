@@ -87,7 +87,6 @@ public class AddClass extends ActionBarActivity {
     protected void onAddButtonClick(String classType,
                                     String className,
                                     String schoolName) {
-        //TODO: HAndle form data.
 
         if(className.length() >= 4 && className.length() <=100) {
             Intent home = new Intent();

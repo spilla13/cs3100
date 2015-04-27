@@ -121,7 +121,7 @@ public class AddAssignment extends ActionBarActivity {
                           Double pointsReceived){
         if(assignmentName.length() >= 4 && assignmentName.length() <= 100) {
             Intent ClassOverView = new Intent();
-            //TODO:Handle other parts of the assignment
+
             ClassOverView.putExtra("pointsReceived", pointsReceived);
             ClassOverView.putExtra("pointsPossible", pointsPossible);
             ClassOverView.putExtra("assignmentName", assignmentName.replaceAll("\\s+",""));
