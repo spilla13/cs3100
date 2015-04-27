@@ -281,6 +281,10 @@ public class WeightedGrades implements Parcelable{
         return replaced;
     }
 
+    public void addAssignment(Assignment assignment){
+        assignments.add(assignment);
+    }
+
     /*Needed Parcelable Declarations below here*/
     public int describeContents(){
         return 0;

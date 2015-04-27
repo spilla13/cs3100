@@ -20,6 +20,9 @@ public class CategoryFrag extends android.app.Fragment {
     LinearLayout fragContainer;
     LinearLayout cf;
 
+    TextView categoryGrade;
+    TextView categoryPercent;
+
     public static CategoryFrag newInstance(WeightedGrades grades){
         CategoryFrag f = new CategoryFrag();
 
@@ -34,8 +37,8 @@ public class CategoryFrag extends android.app.Fragment {
         View view = inflater.inflate(R.layout.category_frag, container, false);
 
         TextView categoryTitle = (TextView) view.findViewById(R.id.categoryTitle);
-        TextView categoryGrade = (TextView) view.findViewById(R.id.categoryGrade);
-        TextView categoryPercent = (TextView) view.findViewById(R.id.categoryPercent);
+        categoryGrade = (TextView) view.findViewById(R.id.categoryGrade);
+        categoryPercent = (TextView) view.findViewById(R.id.categoryPercent);
 
         Bundle bundle = getArguments();
         if(weightedGrades == null)
@@ -69,6 +72,34 @@ public class CategoryFrag extends android.app.Fragment {
         fragContainer.addView(cf);
 
         return view;
+    }
+
+    public void remove(Assignment assignment){
+        weightedGrades.remove(assignment.ID);
+        AssignmentFrag fragToRemove = (AssignmentFrag)
+                getChildFragmentManager().findFragmentByTag(Integer.toString(assignment.ID));
+
+        getFragmentManager().beginTransaction().remove(fragToRemove).commit();
+
+        updateGrade();
+    }
+
+    public void add(Assignment assignment){
+        weightedGrades.addAssignment(assignment);
+
+        getChildFragmentManager().beginTransaction().add(cf.getId(),
+                AssignmentFrag.newInstance(assignment, weightedGrades.getName()),
+                Integer.toString(assignment.ID)).commit();
+
+        updateGrade();
+    }
+
+    public void updateGrade(){
+        double percentGrade = weightedGrades.unweightedAverage()*100;
+        String sPercentGrade = new BigDecimal(percentGrade).round(new MathContext(4, RoundingMode.HALF_UP)).toString();
+
+        categoryGrade.setText(weightedGrades.getLetterGrade());
+        categoryPercent.setText( sPercentGrade + "%");
     }
 
 }

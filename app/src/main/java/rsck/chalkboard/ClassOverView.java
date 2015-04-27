@@ -171,19 +171,10 @@ public class ClassOverView extends Activity implements AddCategory.Communicator,
                             @Override
                             public void run() {
                                 CategoryFrag contFrag = (CategoryFrag) getFragmentManager()
-                                        .findFragmentByTag(Integer.toString(originalCatID));
+                                        .findFragmentByTag(Integer.toString(catID));
 
-                                AssignmentFrag oldFrag = (AssignmentFrag) contFrag.getChildFragmentManager()
-                                        .findFragmentByTag(Integer.toString(assignmentToReplace.ID));
-
-                                if(oldFrag != null) {
-                                    getFragmentManager().beginTransaction().remove(oldFrag).commit();
-
-                                    contFrag.getChildFragmentManager().beginTransaction().add(CategoryFrag.HW_FRAG_ID,
-                                            AssignmentFrag.newInstance(assignmentToReplace, originalCatName),
-                                            Integer.toString(assignmentToReplace.ID)).commit();
-                                }
-
+                                contFrag.remove(assignmentToReplace);
+                                contFrag.add(assignmentToReplace);
                                 updateGrade();
                             }
                         });
@@ -306,11 +297,7 @@ public class ClassOverView extends Activity implements AddCategory.Communicator,
                         CategoryFrag contFrag = (CategoryFrag) getFragmentManager()
                                 .findFragmentByTag(Integer.toString(catID));
 
-                        AssignmentFrag oldFrag = (AssignmentFrag) contFrag.getChildFragmentManager()
-                                .findFragmentByTag(Integer.toString(assignmentID));
-
-                        if(oldFrag != null)
-                            getFragmentManager().beginTransaction().remove(oldFrag).commit();
+                        contFrag.remove(course.getAssignmentByID(assignmentID));
 
                         updateGrade();
                     }
