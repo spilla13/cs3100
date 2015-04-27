@@ -25,6 +25,7 @@ public class Details extends DialogFragment implements View.OnClickListener{
     public TextView cSchool;
     public TextView cClass;
     Communicator communicator;
+    Assignment assignment;
 
     public static Details newInstance(Assignment assignment, String catName){
         Details deets = new Details();
@@ -49,7 +50,7 @@ public class Details extends DialogFragment implements View.OnClickListener{
 
         Bundle args = getArguments();
 
-        Assignment assignment = args.getParcelable("assignment");
+        assignment = args.getParcelable("assignment");
         String catName = args.getString("catName");
 
         Button deleteB = (Button) v.findViewById(R.id.delete);

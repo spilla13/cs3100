@@ -29,7 +29,7 @@ public class Course implements Parcelable {
         this.schoolName = schoolName;
         this.user_ID = user_ID;
         this.token = token;
-    };
+    }
 
     public Course(JSONObject courseJSON, int user_ID, String token){
         grades = new ArrayList<>();

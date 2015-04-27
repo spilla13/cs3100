@@ -69,6 +69,11 @@ public class AddAssignment extends ActionBarActivity {
                 else
                     pointsPossible = 0.0;
 
+                if(pointsPossible < 0 )
+                    pointsPossible = -pointsPossible;
+                if(pointsReceived < 0)
+                    pointsReceived = -pointsReceived;
+
 
                 String var;
                 var = String.valueOf(classSpinner.getSelectedItem());
