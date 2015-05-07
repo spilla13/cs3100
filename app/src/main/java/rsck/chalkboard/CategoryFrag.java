@@ -78,7 +78,7 @@ public class CategoryFrag extends android.app.Fragment {
         AssignmentFrag fragToRemove = (AssignmentFrag)
                 getChildFragmentManager().findFragmentByTag(Integer.toString(assignment.ID));
 
-        getFragmentManager().beginTransaction().remove(fragToRemove).commit();
+        getChildFragmentManager().beginTransaction().remove(fragToRemove).commit();
 
         updateGrade();
     }
