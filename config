@@ -1,0 +1,10 @@
+{
+    "configs" : {
+        "base" : {
+            "location" : "/var/www/images/se/",
+            "script" : "./update.sh",
+            "branch" : "master",
+            "remote" : "origin"
+        }
+    }
+}
