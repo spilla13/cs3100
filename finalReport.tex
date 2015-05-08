@@ -1,70 +1,470 @@
 \documentclass[a4paper]{article} %
-\usepackage{graphicx,amssymb} %
+\usepackage{amssymb} %
 \usepackage{setspace}
+\usepackage{pslatex,palatino,avant,graphicx,color}
 \usepackage{indentfirst}
+\usepackage{enumitem}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage[hidelinks,linkbordercolor=white,colorlinks=false]{hyperref}
 
-\textwidth=15cm \hoffset=-1.2cm %
-\textheight=25cm \voffset=-2cm %
+\setcounter{tocdepth}{5}
+\pagestyle{fancy}
+\fancyhf{}
+\cfoot{\thepage}
 
-\pagestyle{empty} %
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
 
-\date{} %
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,                    % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Python,                 % the language of the code
+  otherkeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{white},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,                       % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
 
-\def\keywords#1{\begin{center}{\bf Keywords}\\{#1}\end{center}} %
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,                    % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Java,                 % the language of the code
+  otherkeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{white},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,                       % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
 
-\def\titulo#1{\title{#1}} %
-\def\autores#1{\author{#1}} %
+% Type down your paper title
 
-% Please, do not change any of the above lines
+\title{ChalkBoard: The Story of Font Packs}
+% Authors
+\author{Justin Brown, Dzu Pham, Jacob Drilling, Billy Rhoades, Sam Pilla \\ %
+       Missouri University of Science and Technology %
+       }%
+
+\date{} 
+
+\linespread{2.25}
+
+\textwidth=15cm \hoffset=-1.2cm
+\textheight=25cm \voffset=-2cm 
+
+\setlist[itemize]{itemsep=-8pt, itemindent=0pt, leftmargin=*}
+
+
+
+% Type down your paper title
+\title{\vspace{30mm}ChalkBoard: The Story of Font Packs}
+
+% Authors
+\author{Justin Brown, Dzu Pham, Jacob Drilling, Billy Rhoades, Sam Pilla \\%
+       Missouri University of Science and Technology%
+       }%
 
 \begin{document}
 
-% Type down your paper title
-\titulo{ChalkBoard: The Story of Font Packs}
-
-% Authors
-\autores{Justin Brown, Dzu Pham, Jacob Drilling, Billy Rhoades, Sam Pilla \\ %
-       Missouri University of Science and Technology \\
-       }%
-\doublespace
-
 \maketitle
+
+\pagebreak
+
+\tableofcontents
+
+\pagebreak
 
 \thispagestyle{empty}
 
-
+\setlength\parindent{0pt}
 
 % The abstract
 
 \begin{abstract}
 
-This report contains the methods and models of execution for developing the Android application ChalkBoard. Using SCRUM we developed the software over the course of 3.5 weeks. We began by designing an outline for the application, one that would keep track of assignments for classes and their grades. We created a GitHub repository so that outside of SCRUM meetings we could monitor progress and be able to revert to working changes if a step in the development of the software was broken.
+This report contains the methods and models of execution for developing the Android application ChalkBoard. Using SCRUM we developed the software over the course of 5 weeks. We began by designing an outline for the application, one that would keep track of assignments for classes and their grades. We created a GitHub repository so that outside of SCRUM meetings we could monitor progress and be able to revert to working changes if a step in the development of the software was broken.
 
 (Insert other things here)
 
 \end{abstract}
 
-\section*{Introduction}
+\section{Introduction}
 
-College students are always on the move, whether it be from home to school, activity to project, or homework to sleep. They need something to keep track of their academics, so we created that tool for them.
+College students are always on the move, whether it be from home to school, activity to project, or homework to sleep. They need something to keep track of their academics, so we created that tool for them to do just that in a simple and elegant application that they can have with them when they are on the move.
 
-ChalkBoard is a tool that keeps track of your class and grade needs. It will handle the math for you, calculating your current grade with categories, each able to be weighted differently so each class is represented appropriately.
+
+Chalkboard is a mobile Android application that allows a user to keep track of their classes while also being able to calculate the individual grades of each of their classes. The application gives the user the option to store homeworks, projects, exams, labs, etc. into different categories. The user can then weight each category in accordance with the instructors weighting to show how each assignment effects their grade and provide a fully accurate measure of their overall grade. 
 
 (Probably also needs more stuff and fine tuning)
 
-\section*{Body of Report}
+\section{Implementation}
 
-Insert Body of Report here.
+\centerline{\includegraphics[scale=.5]{design.png}}
 
-\section*{Conclusion}
+\subsection{PostgreSQL}
 
-Insert Conclusion here.
+After the second sprint, PostgreSQL was selected as a database backend over SQLite due to performance constraints. The schema for PostgreSQL was autogenerated from Django-provided models, which can be found in Section \ref{Django Models}. Choosing Django to manage PostgreSQL for us allowed us to change schema on the fly without losing data. For example, in Section \label{First Sprint Third Scrum} we changed weight to be per homework to per category. Instead of having to purge the database contents and redo our schema, we simply performed a migration.
+
+\subsection{Django/API}
+
+Django was selected due to, as mentioned above, its ability to abstract database management away into objects. Easy database changes, database handling with no queries, and methods which allow API calls to simply be one method.  Django is a web framework which is used as a library in Python. Our usage of Django was as a web API.
+Queries were made to a URL. For example, a query to add a course would go to:
+
+\indent\url{http://cs3100.brod.es:3100/add/course/}
+
+All URLs have to be authenticated in order to go through. A token is obtained from the following URL by sending it your username and password in JSON via POST:
+
+\indent\url{http://cs3100.brod.es:3100/token/get.json}
+
+This then returns a token and a userid, this is passed to every call on the URL. For example, to add a category, call:
+
+\indent\url{http://cs3100.brod.es:3100/add/grade/?user=4&token=34y-10ca4d90c5d6e031e3}
+
+JSON is sent up which contains information for each individual call. Here are the calls that are supported:
+
+\begin{itemize}
+  \item /add/%
+    \begin{itemize}
+      \item grade/
+        \item category/
+        \item course/
+        \item homework/
+    \end{itemize}
+    \item /get/%
+    \begin{itemize}
+      \item grade/
+        \item category/
+        \item course/
+        \item homework/
+    \end{itemize}
+    \item /edit/%
+    \begin{itemize}
+      \item grade/
+        \item category/
+        \item course/
+        \item homework/
+    \end{itemize}
+    \item /course2cat/
+    \item /rm/grade/
+\end{itemize}
+
+Django abstracts most of these calls into less than 300 lines written by our team. The remove calls were only allowed on grades due to referential constraints between all of the other models. The course2cat was a modification added in late in the project. Course2cat returns a list of all courses which use a category.
+
+\subsection{Java/Django Communication}
+
+When it was decided Django would be used as the backend server, it meant there would have to be communication with Django and the backend Java, sending and receiving both ways. In order to do this efficiently, we used a JSONObject library and the built in HTTP library for Java. The JSONObject library could convert to and from Strings, allowing a lot of versatility for receiving and returning variables for communicating with Django. The HTTP library allowed us to contact the Django server and send it the JSON it needed to add, modify, or delete data. 
+
+The actual implementation involved a few varying functions since Django needed different JSON for different functionality. For reading, adding, editing, and removing, the functions would receive the user ID, token, what category the data is under (course, grade, etc.), and the JSON query for what Django will read, add, remove, or edit. In order to authenticate a user, the function would be passed the username and password, then pass those onto Django to compare them to what the server has saved, ensuring the login information is valid.
+
+Originally, registration went through these Java functions. It would accept a username, password, and email, pass those to the Django server through JSON, and Django would then add them to the database server. However, we decided it would be best to register through Django itself, and so these functions are not implemented.
+
+All these functions are returned JSON with any data the need, such as access getting back the information it requested, and a return value of true or false. If true, the functions would then return success and any data as JSON to the Java backend. If false, the function would throw an exception. The Add function can be found in Section \ref{Jabba Code}.
+\subsection{Java Backend}
+The Java backend is comprised of a structure of four java classes: User, Course, WeightedGrades, and Assignment. The way these four classes interact to create the data structure can be seen in the UML Diagram below. A user has a username, an ID and token used to log in and access the database. Additionally the user has a list of courses. Each course has a list of Weighted Grades. Each 
+
+\centerline{\includegraphics[scale=.45]{CS3100.png}}
+This is our Unified Modeling Language diagram.
+
+\subsection{Android Frontend}
+For the front end, Android, as a platform, consists of XML and Java. The XML is used to create and manage the visuals of each layout. This includes creating the Text Views, the Edit Text boxes, the drop down menus, etc. The XML is also used to house strings, defined elements and the style references as well as manged how each element of the interface appears and interacts with the others on each page. Java is used to give the layouts functionality, such as switching layouts (screens) and sending data to other layouts, and giving the application dynamic capabilities. With Java we were able to create XML code to display new Text Views as classes were added, dynamically create and edit strings for use by the user and make the data persistent across layouts.
+
+\textbf{Login page}:\\
+The login page has little XML compared to the others. This page allowed a user to login and, if they did not already have an account, navigate to the sign up page and create an account. Using Java, mixed with the DJango server, we were able to incorporate login credential checking. To prevent users from returning to the login page and causing confusion, we have the login layout process destroy itself on when the new activity is called. 
+
+\textbf{Home Page}:\\ 
+The homepage contains an array list that would pull the class name from the table housed on the server and displays them as a clickable button. Having them as a clickable button gave a cleaner interface with a straightforward idea of how to navigate to individual class views. 
+
+\textbf{Class Overview Page}:\\
+We went through many design iterations for this page trying to get the content to be organized in a manner that was clear, made sense, and presented the pages functionality. We finally landed on a divider design that distinctly displayed each assignment in a visually appealing way. Each category is displayed as a header and bolded so it will stand out. Included in the header will be the letter grade and the total grade caculated from each assignment. Next to each of the individual assignment there will be a button that is named details. When this details button is clicked it will open up a dialog box that will display more information about the current assignment. Inside this dialog box it will give the user three options delete, modify, or return.
+
+At the top of the class overview page contains three buttons; return home, add category, and add assignments page. When the user first creates a class and tries to enter an assignment before they have a category the app will throw up an alert dialog. This will inform the user that it is impossible to add and assignment before a category. Underneath the buttons contains the total grade of the class. This grade is calculate from the weighted grades from each of the category.
 
 
-\section*{Appendix}
+\textbf{Add/Delete/Modify}:\\
 
-Source Code: https://github.com/ArthurSemilla/cs3100 \\
-\vspace{3mm}
-Django API Documentation: https://github.com/ArthurSemilla/cs3100/blob/master/chalkboard/
+
+\section{First Sprint}
+
+The first sprint meeting took place on <bla>. This sprint was short and mostly detailed what we wanted out of the project. Our initial goal was to design a product that we could use personally in our every day life and that other students could also benefit from. We had a total of three initial ideas. The two that had lost out were a rent keeping and payment reminder application and check/tip splitter. We decided against the rent keeper because we felt we would not use it frequently enough and we decided against the check/tip splitter because that would have incorporated using people's credit or debit cards and did not feel like we had time to implement that feature securely. After ruling those two ideas out, we loosely outlined requirements and decided on an idea to implement. A grade tracking program was selected by the group. 
+\\
+We set out to design a program which was:
+
+\begin{itemize}
+  \item On mobile or other high-accessibility platform
+    \item A tool that was useful to us
+    \item Centralized server for user data access
+    \item Secure user authentication system
+\end{itemize}
+
+Functional constraints were also decided. A user should be able to add a grade in under 10 seconds to a course, barring other setup requirements. Additionally, our sprint cycle was set at 5 weeks, with a short cycle for a week. Our scrum meetings were planned every four days. Teams were decided as follows: \\
+ 
+\textbf{Backend}: Jacob Drilling, Sam Pilla, Billy Rhoades
+\textbf{UI}: Dzu Pham, Justin Brown \\
+
+The teams for the backend and the user interface we chosen based on a combination of volunteering to learn a particular aspect of working with an android application, the preference to work on a particular portion and the opportunity to apply current skills to a new project. 
+\\
+
+Tasks for each team were also decided and delegated:
+
+\textbf{Backend}:
+\begin{itemize}
+  \item Create database schema
+    \item Implement database schema in Django
+    \item Create basic data structure for transactions in Android
+    \item Accessor functions for the database in Android
+% * <sjpn96@mst.edu> 2015-05-08T00:18:39.043Z:
+%
+% 
+%
+% * <sjpn96@mst.edu> 2015-05-08T00:18:35.673Z:
+%
+% 
+%
+\end{itemize}
+
+\textbf{Frontend}:
+\begin{itemize}
+  \item Design application icon
+  \item Create login page
+    \item Create overview page
+    \item Create addClass page
+\end{itemize}
+
+
+\subsection{First Scrum}
+
+The second meeting took place on 4/8/15. All group members were present. This meeting consisted mostly of demoing progress and outling future issues.
+
+Presentables:
+\begin{itemize}
+  \item Jacob brought a schema for the database
+    \item Justin brought a basic app implemented in Android
+\end{itemize}
+%
+% <INSERT REFERNECE TO SCHEMA APPENDIX> %
+% Schema is available on gdocs
+%
+
+\centerline{\includegraphics[scale=.75]{Picture1.png}}
+
+During this meeting version control methods were decided and implemented. We decided on a target Android version, 4.0 ICS API 15, because we felt it encompassed a large enough percentage of current Android phones on the market. \\
+
+\subsection{Second Scrum}
+
+The second scrum took place on 4/15/15. Due to Spring Break, this scrum was offset by a week. During this meeting modules from individual teams begun to integrate. We really started getting in to connecting the backend to the user interface. The modules we connected at this time were the login page to the server that was to house a users login credentials. We then began working with the overall API's for both the Android application and the DJango driven server. \\
+
+Presentables:
+\begin{itemize}
+  \item Django API was added for getting and adding elements
+    \item Basic API accessing was started for the Android app
+\end{itemize}
+
+%
+% <Show Django API basics, doc?>
+%
+
+\subsection{Third Scrum} \label{First Sprint Third Scrum}
+
+The third scrum took place on 4/20/14.
+
+Presentables:
+\begin{itemize}
+  \item Moved weight in the schema to category
+    \item Implemented the registration API
+    \item Fully documented Django API
+    \item Sam and Jacob showed prototype Java API interface
+\end{itemize}
+
+\section{Second Sprint}
+
+The second sprint was marked by division of effort. Roughly half of the application had been put down, with a little more than half remaining. The first sprint's conclusion was marked by the basic add, get, and display implementation within the application by both frontend and backend teams. Additionally, the team collectively agreed to add functionality to complete the interface. This sprint cycle was shorter than the first, so meetings were more frequent. This included:
+
+\begin{itemize}
+  \item Modification of all tables (courses, grades, categories, homeworks)
+    \item Deletion of grades
+\end{itemize}
+
+Tasks: \\
+
+\textbf{Backend}:
+\begin{itemize}
+  \item Modification of tables through API
+    \item Polishing accessing in Java
+    \item Deletion of grades through API
+    \item Clean error handling to pass to UI
+\end{itemize}
+
+\textbf{Frontend}:
+\begin{itemize}
+  \item User-friendly errors
+    \item Backend integration
+    \item Interface details: box for additional information, prefilled categories, toasts
+    \item Dynamic table for category integration
+    \item Modification page and handling
+    \item Deletion button
+\end{itemize}
+
+\subsection{First Scrum}
+
+4/22/15
+
+Presentables: 
+
+\begin{itemize}
+  \item Sam completed Android backend support for add, register, and get 
+    \item Java data structure for Android backend finished
+    \item Homepage class array completed
+\end{itemize}
+
+\subsection{Second Scrum}
+
+This scrum session was when the back end data was able to be visualize on the front end. Homepage was able to display the different classes and go to the appropriate class over page. From the class over view page we were able to pull the data for each category and display the following assignments. 
+
+%Jacob & Dzu
+
+4/24/15
+
+Presentables: 
+
+\begin{itemize}
+  \item Completed frontend and backend integration
+    \item Spruce up the interface
+    \item Added return button
+    \item Optimize user login and display data
+\end{itemize}
+
+\subsection{Third Scrum}
+
+This scrum session consisted of integration between API and backend, backend with frontend. It included full implementation of modification and deletion. Testing was mostly done this day as well, as a mock demo was conducted with the entire team. 
+
+4/26/15
+
+% Met at Justin's
+
+Presentables: 
+
+\begin{itemize}
+  \item Implemented deletion for grades for API
+    \item Implemented modification for all tables for API
+    \item Migrated for SQLite to PostgreSQL
+    \item Further debugging with Java API accessors
+\end{itemize}
+
+
+\section{Future2}
+
+\section{References}
+
+Insert References here.
+
+\section{Appendix}
+
+Source Code: https://github.com/ArthurSemilla/cs3100
+
+
+\pagebreak
+\subsection{Django Models} \label{Django Models}
+
+\begin{lstlisting}[language=Python]
+from django.db import models
+from django.contrib.auth.models import User
+
+class Category( models.Model ):
+    name = models.CharField( max_length=100 )
+    weight = models.FloatField( default=1 )
+
+class Course( models.Model ):
+    school = models.CharField( max_length=255 )
+    name = models.CharField( max_length=100 )
+
+class Homework( models.Model ):
+    category = models.ForeignKey( Category )
+    name = models.CharField( max_length=100 )
+
+    points_possible = models.FloatField( default=0 )
+
+class Grade( models.Model ):
+    course = models.ForeignKey( Course )
+    user = models.ForeignKey( User )
+    homework = models.ForeignKey( Homework )
+    
+    points_received = models.FloatField( default=0 )
+\end{lstlisting}
+
+\pagebreak
+\subsection{Add Function for Java/Django Communication} \label{Jabba Code}
+\begin{lstlisting}[language=Java]
+public JSONObject add(final String dataToAdd, final String userID, final String token, JSONObject query)
+{
+    String urlString = "http://cs3100.brod.es:3100/add/" + dataToAdd + "/?user=" + userID + "&token=" + token;
+    JSONObject returnJSON = null;
+
+    try
+    {
+        //HTTP code to contact the Django server and send it the JSON to register
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpPost httppost = new HttpPost(urlString);
+
+        //passes the Django server the JSON for registration
+        StringEntity regString = new StringEntity(query.toString());
+        httppost.addHeader("content-type", "application/x-www-form-urlencoded");
+        httppost.setEntity(regString);
+
+        HttpResponse response = httpclient.execute(httppost);
+
+        //return string from Django server
+        HttpEntity httpEntity = response.getEntity();
+        String resultString = EntityUtils.toString(httpEntity);
+
+        returnJSON = new JSONObject(resultString);
+    }
+    catch(Exception e)
+    {
+        e.printStackTrace();
+    }
+    return returnJSON;
+}
+\end{lstlisting}
 
 \end{document}
+
